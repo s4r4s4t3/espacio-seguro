@@ -1,0 +1,47 @@
+body {
+    font-family: 'Quicksand', sans-serif;
+    background-color: #f0f8f5;
+    color: #333;
+    text-align: center;
+    padding: 40px;
+    margin: 0;
+}
+
+h1 {
+    color: #2e8b57;
+}
+
+form, p, ul {
+    max-width: 600px;
+    margin: auto;
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    resize: vertical;
+}
+
+button {
+    background-color: #2e8b57;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #256d46;
+}
+
+a {
+    color: #2e8b57;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Frases de contención 🌈</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilos.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+</head>
+<body>
+    <h1>💌 Elegí el tipo de frase que necesitás</h1>
+
+    <form method="POST">
+        <button type="submit" name="categoria" value="1">Aliento y empoderamiento</button><br><br>
+        <button type="submit" name="categoria" value="2">Calmar la mente</button><br><br>
+        <button type="submit" name="categoria" value="3">Buscar apoyo</button><br><br>
+        <button type="submit" name="categoria" value="4">Recordar tu fuerza</button>
+    </form>
+
+    {% if frase %}
+        <p style="margin-top: 30px;">💬 <strong>{{ frase }}</strong></p>
+    {% endif %}
+
+    <p><a href="/">⬅️ Volver al inicio</a></p>
+</body>
+</html>

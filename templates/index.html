@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/estilos.css">
+    <meta charset="UTF-8">
+    <title>Tu espacio seguro 🌱</title>
+</head>
+<body>
+    <h1>Bienvenido/a a tu espacio seguro</h1>
+
+    {% if mensaje %}
+        <p><strong>Mensaje recibido:</strong> {{ mensaje }}</p>
+        <p>💌 {{ frase }}</p>
+    {% else %}
+        <form method="POST">
+            <label for="mensaje">¿Cómo te sentís hoy?</label><br>
+            <textarea name="mensaje" rows="4" cols="50" required></textarea><br>
+            <button type="submit">Compartir</button>
+        </form>
+    {% endif %}
+    <p><a href="/mensajes">📖 Ver los últimos mensajes compartidos</a></p>
+    <p><a href="/historial">🗂️ Ver historial completo de publicaciones</a></p>
+    <p><a href="/frases">📚 Quiero leer una frase de contención</a></p>
+    <p><a href="/contencion">🚨 Necesito contención emocional</a></p>
+    <p><a href="/contactos">👥 Agregar contacto de confianza</a></p>
+    <p><a href="/diario">📝 Escribir en mi espacio privado</a></p>
+    <p><a href="/ver_diario">📖 Leer mis entradas privadas</a></p>
+    <footer style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #ccc; font-size: 0.9em; color: #666;">
+    <p><a href="/logout">🔒 Cerrar sesión</a></p>
+</footer>
+</body>
+</html>

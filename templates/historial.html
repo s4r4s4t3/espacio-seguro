@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Historial completo 🗂️</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilos.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+</head>
+<body>
+    <h1>🗂️ Historial completo de publicaciones</h1>
+
+    {% if publicaciones %}
+        <ul style="list-style: none; padding-left: 0;">
+            {% for p in publicaciones %}
+                <li style="margin-bottom: 10px; background: #f5f5f5; padding: 8px; border-radius: 6px;">
+                    {{ p }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No hay publicaciones guardadas aún.</p>
+    {% endif %}
+
+    <p><a href="/">⬅️ Volver al inicio</a></p>
+</body>
+</html>
