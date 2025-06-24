@@ -137,6 +137,11 @@ def ver_diario():
         entradas = []
     return render_template("ver_diario.html", entradas=entradas)
 
+@app.route("/")
+def inicio():
+    return render_template("inicio.html")
+
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     error = None
