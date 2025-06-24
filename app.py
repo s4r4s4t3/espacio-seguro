@@ -14,20 +14,9 @@ frases_apoyo = [
     "Eres más fuerte de lo que creés.",
 ]
 
-@app.route("/", methods=["GET", "POST"])
-def index():
-    mensaje_guardado = None
-    frase = random.choice(frases_apoyo)
-
-    if request.method == "POST":
-        mensaje = request.form.get("mensaje", "").strip()
-        if mensaje:
-            fecha = datetime.now().strftime("%Y-%m-%d %H:%M")
-            with open("publicaciones.txt", "a", encoding="utf-8") as f:
-                f.write(f"[{fecha}] {mensaje}\n")
-            mensaje_guardado = mensaje
-
-    return render_template("index.html", frase=frase, mensaje=mensaje_guardado)
+@app.route("/")
+def inicio():
+    return render_template("inicio.html")
 
 @app.route("/mensajes")
 def ver_mensajes():
@@ -136,10 +125,6 @@ def ver_diario():
     except FileNotFoundError:
         entradas = []
     return render_template("ver_diario.html", entradas=entradas)
-
-@app.route("/")
-def inicio():
-    return render_template("inicio.html")
 
 
 @app.route("/login", methods=["GET", "POST"])
