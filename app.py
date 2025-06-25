@@ -2,26 +2,66 @@ from flask import Flask, render_template, request, redirect, session
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 from frases import frases_por_categoria
-from utils import leer_archivo, escribir_archivo
+import sqlite3
 import os
 import random
 
 app = Flask(__name__)
-app.secret_key = "espacio_seguro_123"  # Clave secreta para usar sesiones
+app.secret_key = "espacio_seguro_123"
+DATABASE = 'database.db'
 
-def cargar_usuarios():
-    """Carga usuarios desde el archivo usuarios.txt"""
-    usuarios = {}
-    lineas = leer_archivo("usuarios.txt")
-    for linea in lineas:
-        usuario, clave_hash, emoji, color = linea.strip().split(",")
-        usuarios[usuario] = {
-            "clave": clave_hash,
-            "emoji": emoji,
-            "color": color
-        }
-    return usuarios
+# ---- Funciones de Base de Datos ----
+def get_db():
+    db = sqlite3.connect(DATABASE)
+    db.row_factory = sqlite3.Row
+    return db
 
+def init_db():
+    with get_db() as db:
+        # Tabla de usuarios
+        db.execute('''
+            CREATE TABLE IF NOT EXISTS usuarios (
+                usuario TEXT PRIMARY KEY,
+                clave TEXT NOT NULL,
+                emoji TEXT,
+                color TEXT
+            )
+        ''')
+        # Tabla de publicaciones
+        db.execute('''
+            CREATE TABLE IF NOT EXISTS publicaciones (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                fecha TEXT NOT NULL,
+                mensaje TEXT NOT NULL
+            )
+        ''')
+        # Tabla de diario
+        db.execute('''
+            CREATE TABLE IF NOT EXISTS diario (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                fecha TEXT NOT NULL,
+                entrada TEXT NOT NULL
+            )
+        ''')
+        # Tabla de contactos
+        db.execute('''
+            CREATE TABLE IF NOT EXISTS contactos (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                nombre TEXT NOT NULL
+            )
+        ''')
+        
+        # Usuario demo
+        if not db.execute('SELECT 1 FROM usuarios WHERE usuario = "eze"').fetchone():
+            db.execute(
+                'INSERT INTO usuarios VALUES (?, ?, ?, ?)',
+                ("eze", generate_password_hash("verde123"), "🌿", "#2e8b57")
+            )
+        db.commit()
+
+init_db()
+
+# ---- Rutas ----
 @app.route("/")
 def inicio():
     if "usuario" in session:
@@ -30,7 +70,11 @@ def inicio():
 
 @app.route("/mensajes")
 def ver_mensajes():
-    mensajes = leer_archivo("publicaciones.txt")[-5:]  # solo últimos 5
+    with get_db() as db:
+        mensajes = db.execute('''
+            SELECT fecha, mensaje FROM publicaciones 
+            ORDER BY fecha DESC LIMIT 5
+        ''').fetchall()
     return render_template("mensajes.html", mensajes=mensajes)
 
 @app.route("/frases", methods=["GET", "POST"])
@@ -44,7 +88,8 @@ def frases():
 
 @app.route("/contencion")
 def contencion():
-    contactos = leer_archivo("contactos.txt")
+    with get_db() as db:
+        contactos = db.execute('SELECT nombre FROM contactos').fetchall()
     return render_template("contencion.html", contactos=contactos)
 
 @app.route("/contactos", methods=["GET", "POST"])
@@ -53,29 +98,35 @@ def contactos():
     if request.method == "POST":
         nombre = request.form.get("nombre", "").strip()
         if nombre:
-            escribir_archivo("contactos.txt", nombre)
-            mensaje = f"El contacto '{nombre}' fue agregado correctamente."
+            with get_db() as db:
+                db.execute('INSERT INTO contactos (nombre) VALUES (?)', (nombre,))
+                db.commit()
+            mensaje = f"Contacto '{nombre}' agregado"
     return render_template("contactos.html", mensaje=mensaje)
 
 @app.route("/historial")
 def historial():
-    publicaciones = leer_archivo("publicaciones.txt")
+    with get_db() as db:
+        publicaciones = db.execute('SELECT fecha, mensaje FROM publicaciones ORDER BY fecha DESC').fetchall()
     return render_template("historial.html", publicaciones=publicaciones)
 
 @app.route("/diario", methods=["GET", "POST"])
 def diario():
     mensaje = None
     if request.method == "POST":
-        pensamiento = request.form.get("pensamiento", "").strip()
-        if pensamiento:
+        entrada = request.form.get("pensamiento", "").strip()
+        if entrada:
             fecha = datetime.now().strftime("%Y-%m-%d %H:%M")
-            escribir_archivo("diario_personal.txt", f"[{fecha}] {pensamiento}")
-            mensaje = "Tu pensamiento fue guardado en privado."
+            with get_db() as db:
+                db.execute('INSERT INTO diario (fecha, entrada) VALUES (?, ?)', (fecha, entrada))
+                db.commit()
+            mensaje = "Entrada guardada en tu diario"
     return render_template("diario.html", mensaje=mensaje)
 
 @app.route("/ver_diario")
 def ver_diario():
-    entradas = leer_archivo("diario_personal.txt")
+    with get_db() as db:
+        entradas = db.execute('SELECT fecha, entrada FROM diario ORDER BY fecha DESC').fetchall()
     return render_template("ver_diario.html", entradas=entradas)
 
 @app.route("/login", methods=["GET", "POST"])
@@ -84,22 +135,24 @@ def login():
     if request.method == "POST":
         usuario = request.form.get("usuario", "").strip()
         contrasena = request.form.get("contrasena", "").strip()
-        usuarios = cargar_usuarios()
+        
+        with get_db() as db:
+            user = db.execute('SELECT * FROM usuarios WHERE usuario = ?', (usuario,)).fetchone()
 
-        if usuario in usuarios and check_password_hash(usuarios[usuario]["clave"], contrasena):
-            session["usuario"] = usuario
-            session["emoji"] = usuarios[usuario]["emoji"]
-            session["color"] = usuarios[usuario]["color"]
+        if user and check_password_hash(user['clave'], contrasena):
+            session["usuario"] = user['usuario']
+            session["emoji"] = user['emoji']
+            session["color"] = user['color']
             return redirect("/inicio-personalizado")
         else:
-            error = "Usuario o contraseña incorrectos. Intentá de nuevo."
-
+            error = "Credenciales incorrectas"
+    
     return render_template("inicio.html", error=error)
 
 @app.route("/logout")
 def logout():
     session.clear()
-    return redirect("/login")
+    return redirect("/")
 
 @app.route("/inicio-personalizado")
 def inicio_personalizado():
@@ -115,14 +168,21 @@ def registro():
     mensaje = None
     if request.method == "POST":
         usuario = request.form.get("usuario").strip()
-        contrasena = request.form.get("contrasena").strip()
+        contrasena = generate_password_hash(request.form.get("contrasena").strip())
         emoji = request.form.get("emoji").strip()
         color = request.form.get("color").strip()
 
-        clave_hash = generate_password_hash(contrasena)
-        escribir_archivo("usuarios.txt", f"{usuario},{clave_hash},{emoji},{color}")
-
-        mensaje = f"Cuenta creada para '{usuario}' 🌿"
+        try:
+            with get_db() as db:
+                db.execute(
+                    'INSERT INTO usuarios VALUES (?, ?, ?, ?)',
+                    (usuario, contrasena, emoji, color)
+                )
+                db.commit()
+            mensaje = f"Cuenta creada para '{usuario}' 🌿"
+        except sqlite3.IntegrityError:
+            mensaje = "⚠️ El usuario ya existe"
+    
     return render_template("registro.html", mensaje=mensaje)
 
 if __name__ == "__main__":
