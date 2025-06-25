@@ -4,6 +4,7 @@ from datetime import datetime
 from frases import frases_por_categoria
 from utils import leer_archivo, escribir_archivo
 import os
+import random
 
 app = Flask(__name__)
 app.secret_key = "espacio_seguro_123"  # Clave secreta para usar sesiones
