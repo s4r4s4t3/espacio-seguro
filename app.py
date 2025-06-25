@@ -9,7 +9,9 @@ usuarios = {
 }
 
 def cargar_usuarios():
-    usuarios = {}
+    usuarios = {
+        "eze": {"clave": "verde123", "emoji": "🌿", "color": "#2e8b57"}
+    }
     if os.path.exists("usuarios.txt"):
         with open("usuarios.txt", "r", encoding="utf-8") as f:
             for linea in f:
@@ -31,6 +33,8 @@ frases_apoyo = [
 
 @app.route("/")
 def inicio():
+    if "usuario" in session:
+        return redirect("/inicio-personalizado")
     return render_template("inicio.html")
 
 @app.route("/mensajes")
