@@ -7,13 +7,15 @@
 </head>
 <body class="inicio-body">
     <div class="contenedor-inicio">
-        <div class="caja-bienvenida">
-            <h1>🌿 Bienvenido a tu Espacio Seguro</h1>
-            <p class="mensaje-inicial">Un rincón emocional hecho para vos. Cuidate, expresate, conectá.</p>
-            <form action="/login" method="get">
-                <button class="boton-ingresar">Ingresar</button>
+        <div class="caja-login">
+            <h1>🌿 Espacio Seguro</h1>
+            <p class="mensaje-inicial">Tu rincón para conectar con vos mismo.</p>
+            <form action="/login" method="post" class="form-login">
+                <input type="text" name="usuario" placeholder="Usuario" required>
+                <input type="password" name="contrasena" placeholder="Contraseña" required>
+                <button type="submit">Ingresar</button>
             </form>
-            <p class="registro-opcion">¿Todavía no tenés cuenta? <a href="/registro">Creá una acá</a></p>
+            <a href="/registro" class="boton-registro">Crear cuenta nueva</a>
         </div>
     </div>
 </body>
