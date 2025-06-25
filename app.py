@@ -3,6 +3,20 @@ import random
 from datetime import datetime
 import os
 
+def cargar_usuarios():
+    usuarios = {}
+    if os.path.exists("usuarios.txt"):
+        with open("usuarios.txt", "r", encoding="utf-8") as f:
+            for linea in f:
+                usuario, clave, emoji, color = linea.strip().split(",")
+                usuarios[usuario] = {"clave": clave, "emoji": emoji, "color": color}
+    return usuarios
+
+# Usuario temporal para pruebas
+usuarios = {
+    "eze": "verde123"
+}
+
 app = Flask(__name__)
 app.secret_key = "espacio_seguro_123"  # Clave secreta para usar sesiones
 
@@ -131,20 +145,53 @@ def ver_diario():
 def login():
     error = None
     if request.method == "POST":
-        clave = request.form.get("clave", "").strip()
-        if clave == "mi_clave_segura":
-            session["autenticado"] = True
-            return render_template("bienvenida.html")
-        else:
-            error = "Contraseña incorrecta. Intentá de nuevo."
+        usuario = request.form.get("usuario", "").strip()
+        contrasena = request.form.get("contrasena", "").strip()
+        usuarios = cargar_usuarios()
 
-    return render_template("login.html", error=error)
+        if usuario in usuarios and usuarios[usuario]["clave"] == contrasena:
+            session["usuario"] = usuario
+            session["emoji"] = usuarios[usuario]["emoji"]
+            session["color"] = usuarios[usuario]["color"]
+            return redirect("/inicio-personalizado")
+        else:
+            error = "Usuario o contraseña incorrectos. Intentá de nuevo."
+
+    return render_template("inicio.html", error=error)
 
 @app.route("/logout")
 def logout():
     session.clear()
     return redirect("/login")
 
+@app.route("/inicio-personalizado")
+def inicio_personalizado():
+    if "usuario" in session:
+        return render_template("inicio_personalizado.html",
+                               usuario=session["usuario"],
+                               emoji=session.get("emoji", ""),
+                               color=session.get("color", "#2e8b57"))
+    else:
+        return redirect("/")
+    
+@app.route("/registro", methods=["GET", "POST"])
+def registro():
+    mensaje = None
+    if request.method == "POST":
+        usuario = request.form.get("usuario").strip()
+        contrasena = request.form.get("contrasena").strip()
+        emoji = request.form.get("emoji").strip()
+        color = request.form.get("color").strip()
+
+        if not os.path.exists("usuarios.txt"):
+            with open("usuarios.txt", "w", encoding="utf-8") as f:
+                pass
+
+        with open("usuarios.txt", "a", encoding="utf-8") as f:
+            f.write(f"{usuario},{contrasena},{emoji},{color}\n")
+
+        mensaje = f"Cuenta creada para '{usuario}' 🌿"
+    return render_template("registro.html", mensaje=mensaje)
 
 if __name__ == "__main__":
     app.run(debug=True)

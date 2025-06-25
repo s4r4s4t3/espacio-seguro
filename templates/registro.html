@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilos.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+    <title>Crear cuenta</title>
+</head>
+<body>
+    <h2>Creá tu cuenta</h2>
+    <form method="post">
+        <input type="text" name="usuario" placeholder="Nuevo usuario" required>
+        <input type="password" name="contrasena" placeholder="Contraseña" required>
+        <input type="text" name="emoji" placeholder="Elegí tu emoji 🌟" required>
+        <input type="text" name="color" placeholder="Color preferido (ej. #2e8b57)" required>
+        <button type="submit">Registrarme</button>
+    </form>
+    {% if mensaje %}
+        <p>{{ mensaje }}</p>
+    {% endif %}
+</body>
+</html>
