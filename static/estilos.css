@@ -45,3 +45,67 @@ a {
 a:hover {
     text-decoration: underline;
 }
+
+.inicio-body {
+    background: linear-gradient(to right, #e0f2f1, #f1f8e9);
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.contenedor-inicio {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.caja-bienvenida {
+    background-color: #ffffffdd;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+}
+
+.caja-bienvenida h1 {
+    margin-bottom: 15px;
+    color: #388e3c;
+}
+
+.mensaje-inicial {
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 25px;
+}
+
+.boton-ingresar {
+    background-color: #43a047;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.boton-ingresar:hover {
+    background-color: #2e7d32;
+}
+
+.registro-opcion {
+    margin-top: 20px;
+    font-size: 0.9em;
+}
+
+.registro-opcion a {
+    color: #1e88e5;
+    text-decoration: none;
+}
+
+.registro-opcion a:hover {
+    text-decoration: underline;
+}

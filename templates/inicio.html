@@ -2,14 +2,19 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Bienvenido 🌿</title>
+    <title>Espacio Seguro 🌿</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='estilos.css') }}">
 </head>
-<body>
-    <div style="max-width: 500px; margin: 80px auto; text-align: center;">
-        <h1>🌿 Bienvenido</h1>
-        <p>Este es tu espacio seguro. Sentite libre. Sentite vos.</p>
-        <a href="/login" style="display: inline-block; margin-top: 30px; padding: 10px 20px; background-color: #4caf50; color: white; text-decoration: none; border-radius: 8px;">Ingresar</a>
+<body class="inicio-body">
+    <div class="contenedor-inicio">
+        <div class="caja-bienvenida">
+            <h1>🌿 Bienvenido a tu Espacio Seguro</h1>
+            <p class="mensaje-inicial">Un rincón emocional hecho para vos. Cuidate, expresate, conectá.</p>
+            <form action="/login" method="get">
+                <button class="boton-ingresar">Ingresar</button>
+            </form>
+            <p class="registro-opcion">¿Todavía no tenés cuenta? <a href="/registro">Creá una acá</a></p>
+        </div>
     </div>
 </body>
 </html>
