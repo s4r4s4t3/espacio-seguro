@@ -3,6 +3,11 @@ import random
 from datetime import datetime
 import os
 
+# Usuario temporal para pruebas
+usuarios = {
+    "eze": "verde123"
+}
+
 def cargar_usuarios():
     usuarios = {}
     if os.path.exists("usuarios.txt"):
@@ -12,10 +17,6 @@ def cargar_usuarios():
                 usuarios[usuario] = {"clave": clave, "emoji": emoji, "color": color}
     return usuarios
 
-# Usuario temporal para pruebas
-usuarios = {
-    "eze": "verde123"
-}
 
 app = Flask(__name__)
 app.secret_key = "espacio_seguro_123"  # Clave secreta para usar sesiones
