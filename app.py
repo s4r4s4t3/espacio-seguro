@@ -267,6 +267,20 @@ def diario():
         return render_template("diario.html", mensaje="Entrada guardada")
     return render_template("diario.html")
 
+@app.route("/musica")
+@login_required
+def musica():
+    return render_template("musica.html")  # Necesitarás crear este archivo
+
+@app.route("/perfil")
+@login_required
+def perfil():
+    with get_db() as db:
+        usuario = db.execute(
+            "SELECT * FROM usuarios WHERE id = ?", 
+            (session["usuario_id"],)
+        ).fetchone()
+    return render_template("perfil.html", usuario=usuario)
 
 
 if __name__ == "__main__":
