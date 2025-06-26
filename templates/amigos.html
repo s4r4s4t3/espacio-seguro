@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Tus Amigos 👥</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilos.css') }}">
+</head>
+<body>
+    <h1>👥 Tus Contactos</h1>
+    
+    <section>
+        <h2>Solicitudes Pendientes</h2>
+        {% for solicitud in solicitudes %}
+        <div class="solicitud">
+            <span>@{{ solicitud.usuario }}</span>
+            <button onclick="aceptarAmigo('{{ solicitud.id }}')">✓ Aceptar</button>
+        </div>
+        {% endfor %}
+    </section>
+
+    <section>
+        <h2>Amigos</h2>
+        {% for amigo in amigos %}
+        <div class="amigo">@{{ amigo.usuario }}</div>
+        {% endfor %}
+    </section>
+
+    <script>
+        function aceptarAmigo(amigoId) {
+            fetch(`/amigos/aceptar/${amigoId}`, { method: 'POST' })
+                .then(response => location.reload());
+        }
+    </script>
+</body>
+</html>

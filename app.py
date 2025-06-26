@@ -1,189 +1,261 @@
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, jsonify, flash, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
-from frases import frases_por_categoria
 import sqlite3
 import os
-import random
+import json
+from functools import wraps
+from flask_socketio import SocketIO, emit  # Para chat en tiempo real
+from flask import redirect, url_for
 
 app = Flask(__name__)
-app.secret_key = "espacio_seguro_123"
-DATABASE = 'database.db'
+app.secret_key = os.urandom(24)  # Clave aleatoria (¡cambiar en producción!)
+app.config['DATABASE'] = 'database.db'
+socketio = SocketIO(app)  # Inicializar WebSockets
 
-# ---- Funciones de Base de Datos ----
+# --- Decorador para rutas protegidas ---
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'usuario_id' not in session:
+            return redirect(url_for('login'))
+        return f(*args, **kwargs)
+    return decorated_function
+
+# --- Conexión DB con FK habilitadas ---
 def get_db():
-    db = sqlite3.connect(DATABASE)
-    db.row_factory = sqlite3.Row
-    return db
+    conn = sqlite3.connect(app.config['DATABASE'])
+    conn.row_factory = sqlite3.Row
+    conn.execute("PRAGMA foreign_keys = ON")  # ¡Clave para integridad referencial!
+    return conn
 
+# --- Inicialización DB (mejorado) ---
 def init_db():
     with get_db() as db:
-        # Tabla de usuarios
         db.execute('''
             CREATE TABLE IF NOT EXISTS usuarios (
-                usuario TEXT PRIMARY KEY,
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                usuario TEXT UNIQUE NOT NULL,
                 clave TEXT NOT NULL,
-                emoji TEXT,
-                color TEXT
-            )
-        ''')
-        # Tabla de publicaciones
-        db.execute('''
-            CREATE TABLE IF NOT EXISTS publicaciones (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                fecha TEXT NOT NULL,
-                mensaje TEXT NOT NULL
-            )
-        ''')
-        # Tabla de diario
-        db.execute('''
-            CREATE TABLE IF NOT EXISTS diario (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                fecha TEXT NOT NULL,
-                entrada TEXT NOT NULL
-            )
-        ''')
-        # Tabla de contactos
-        db.execute('''
-            CREATE TABLE IF NOT EXISTS contactos (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                nombre TEXT NOT NULL
+                email TEXT UNIQUE,
+                pais TEXT DEFAULT 'Desconocido',
+                intereses TEXT DEFAULT '',
+                playlist TEXT DEFAULT '',
+                suscripcion BOOLEAN DEFAULT FALSE
             )
         ''')
         
-        # Usuario demo
+        db.execute('''
+            CREATE TABLE IF NOT EXISTS amistades (
+                usuario_id INTEGER NOT NULL,
+                amigo_id INTEGER NOT NULL,
+                estado TEXT DEFAULT 'pendiente',
+                PRIMARY KEY (usuario_id, amigo_id),
+                FOREIGN KEY(usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+                FOREIGN KEY(amigo_id) REFERENCES usuarios(id) ON DELETE CASCADE
+            )
+        ''')
+        
+        db.execute('''
+            CREATE TABLE IF NOT EXISTS mensajes (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                remitente_id INTEGER NOT NULL,
+                destinatario_id INTEGER,
+                mensaje TEXT NOT NULL,
+                fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY(remitente_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+                FOREIGN KEY(destinatario_id) REFERENCES usuarios(id) ON DELETE CASCADE
+            )
+        ''')
+        
+        # Usuario demo (si no existe)
         if not db.execute('SELECT 1 FROM usuarios WHERE usuario = "eze"').fetchone():
             db.execute(
-                'INSERT INTO usuarios VALUES (?, ?, ?, ?)',
-                ("eze", generate_password_hash("verde123"), "🌿", "#2e8b57")
+                'INSERT INTO usuarios (usuario, clave) VALUES (?, ?)',
+                ("eze", generate_password_hash("verde123"))
             )
         db.commit()
 
 init_db()
 
-# ---- Rutas ----
-@app.route("/")
-def inicio():
-    if "usuario" in session:
-        return redirect("/inicio-personalizado")
-    return render_template("inicio.html")
+# --- Filtro de palabras sensibles ---
+try:
+    with open('palabras_prohibidas.json', encoding='utf-8') as f:
+        palabras_prohibidas = json.load(f)
+except FileNotFoundError:
+    palabras_prohibidas = ["odio", "violencia"]  # Lista básica por defecto
 
-@app.route("/mensajes")
-def ver_mensajes():
-    with get_db() as db:
-        mensajes = db.execute('''
-            SELECT fecha, mensaje FROM publicaciones 
-            ORDER BY fecha DESC LIMIT 5
-        ''').fetchall()
-    return render_template("mensajes.html", mensajes=mensajes)
+def filtrar_mensaje(texto):
+    if not texto:
+        return texto
+    for palabra in palabras_prohibidas:
+        texto = texto.replace(palabra, "***")
+    return texto
 
-@app.route("/frases", methods=["GET", "POST"])
-def frases():
-    frase_elegida = None
+# --- Rutas de Autenticación ---
+@app.route("/registro", methods=["GET", "POST"])
+def registro():
     if request.method == "POST":
-        categoria = request.form.get("categoria")
-        if categoria in frases_por_categoria:
-            frase_elegida = random.choice(frases_por_categoria[categoria])
-    return render_template("frases.html", frase=frase_elegida)
-
-@app.route("/contencion")
-def contencion():
-    with get_db() as db:
-        contactos = db.execute('SELECT nombre FROM contactos').fetchall()
-    return render_template("contencion.html", contactos=contactos)
-
-@app.route("/contactos", methods=["GET", "POST"])
-def contactos():
-    mensaje = None
-    if request.method == "POST":
-        nombre = request.form.get("nombre", "").strip()
-        if nombre:
+        usuario = request.form.get("usuario", "").strip()
+        clave = request.form.get("clave", "").strip()
+        email = request.form.get("email", "").strip()
+        
+        if len(usuario) < 4 or len(clave) < 6:
+            flash("Usuario (mín. 4 caracteres) y contraseña (mín. 6) son obligatorios", "error")
+            return redirect(url_for('registro'))
+        
+        try:
             with get_db() as db:
-                db.execute('INSERT INTO contactos (nombre) VALUES (?)', (nombre,))
+                db.execute(
+                    "INSERT INTO usuarios (usuario, clave, email) VALUES (?, ?, ?)",
+                    (usuario, generate_password_hash(clave), email)
+                )
                 db.commit()
-            mensaje = f"Contacto '{nombre}' agregado"
-    return render_template("contactos.html", mensaje=mensaje)
-
-@app.route("/historial")
-def historial():
-    with get_db() as db:
-        publicaciones = db.execute('SELECT fecha, mensaje FROM publicaciones ORDER BY fecha DESC').fetchall()
-    return render_template("historial.html", publicaciones=publicaciones)
-
-@app.route("/diario", methods=["GET", "POST"])
-def diario():
-    mensaje = None
-    if request.method == "POST":
-        entrada = request.form.get("pensamiento", "").strip()
-        if entrada:
-            fecha = datetime.now().strftime("%Y-%m-%d %H:%M")
-            with get_db() as db:
-                db.execute('INSERT INTO diario (fecha, entrada) VALUES (?, ?)', (fecha, entrada))
-                db.commit()
-            mensaje = "Entrada guardada en tu diario"
-    return render_template("diario.html", mensaje=mensaje)
-
-@app.route("/ver_diario")
-def ver_diario():
-    with get_db() as db:
-        entradas = db.execute('SELECT fecha, entrada FROM diario ORDER BY fecha DESC').fetchall()
-    return render_template("ver_diario.html", entradas=entradas)
+            flash("¡Registro exitoso! Por favor inicia sesión.", "success")
+            return redirect(url_for('login'))
+        except sqlite3.IntegrityError:
+            flash("El usuario o email ya existe", "error")
+    
+    return render_template("registro.html")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    error = None
     if request.method == "POST":
-        usuario = request.form.get("usuario", "").strip()
-        contrasena = request.form.get("contrasena", "").strip()
+        usuario = request.form.get("usuario")
+        clave = request.form.get("clave")
         
         with get_db() as db:
-            user = db.execute('SELECT * FROM usuarios WHERE usuario = ?', (usuario,)).fetchone()
-
-        if user and check_password_hash(user['clave'], contrasena):
-            session["usuario"] = user['usuario']
-            session["emoji"] = user['emoji']
-            session["color"] = user['color']
-            return redirect("/inicio-personalizado")
-        else:
-            error = "Credenciales incorrectas"
-    
-    return render_template("inicio.html", error=error)
+            user = db.execute(
+                "SELECT * FROM usuarios WHERE usuario = ?", 
+                (usuario,)
+            ).fetchone()
+            
+            if user and check_password_hash(user["clave"], clave):
+                session["usuario_id"] = user["id"]
+                return redirect(url_for('home'))
+        
+        flash("Usuario o contraseña incorrectos", "error")
+    return render_template("login.html")
 
 @app.route("/logout")
 def logout():
     session.clear()
-    return redirect("/")
+    return redirect(url_for('login'))
 
-@app.route("/inicio-personalizado")
-def inicio_personalizado():
-    if "usuario" in session:
-        return render_template("inicio_personalizado.html",
-                            usuario=session["usuario"],
-                            emoji=session.get("emoji", ""),
-                            color=session.get("color", "#2e8b57"))
-    return redirect("/")
-
-@app.route("/registro", methods=["GET", "POST"])
-def registro():
-    mensaje = None
-    if request.method == "POST":
-        usuario = request.form.get("usuario").strip()
-        contrasena = generate_password_hash(request.form.get("contrasena").strip())
-        emoji = request.form.get("emoji").strip()
-        color = request.form.get("color").strip()
-
-        try:
-            with get_db() as db:
-                db.execute(
-                    'INSERT INTO usuarios VALUES (?, ?, ?, ?)',
-                    (usuario, contrasena, emoji, color)
-                )
-                db.commit()
-            mensaje = f"Cuenta creada para '{usuario}' 🌿"
-        except sqlite3.IntegrityError:
-            mensaje = "⚠️ El usuario ya existe"
+# --- Rutas Principales ---
+@app.route("/home")
+@login_required
+def home():
+    with get_db() as db:
+        usuario = db.execute(
+            "SELECT * FROM usuarios WHERE id = ?", 
+            (session["usuario_id"],)
+        ).fetchone()
+        
+        posts = db.execute('''
+            SELECT u.usuario as autor, m.mensaje, m.fecha 
+            FROM mensajes m
+            JOIN usuarios u ON m.remitente_id = u.id
+            WHERE m.destinatario_id IS NULL
+            ORDER BY m.fecha DESC
+            LIMIT 20
+        ''').fetchall()
+        
+        amigos = db.execute('''
+            SELECT u.id, u.usuario 
+            FROM amistades a 
+            JOIN usuarios u ON a.amigo_id = u.id 
+            WHERE a.usuario_id = ? AND a.estado = "aceptada"
+        ''', (session["usuario_id"],)).fetchall()
     
-    return render_template("registro.html", mensaje=mensaje)
+    return render_template("home.html", usuario=usuario, posts=posts, amigos=amigos)
+
+# --- Sistema de Amigos ---
+@app.route("/amigos")
+@login_required
+def lista_amigos():
+    with get_db() as db:
+        amigos = db.execute('''
+            SELECT u.id, u.usuario 
+            FROM amistades a 
+            JOIN usuarios u ON a.amigo_id = u.id 
+            WHERE a.usuario_id = ? AND a.estado = "aceptada"
+        ''', (session["usuario_id"],)).fetchall()
+        
+        solicitudes = db.execute('''
+            SELECT u.id, u.usuario 
+            FROM amistades a 
+            JOIN usuarios u ON a.usuario_id = u.id 
+            WHERE a.amigo_id = ? AND a.estado = "pendiente"
+        ''', (session["usuario_id"],)).fetchall()
+    
+    return render_template("amigos.html", amigos=amigos, solicitudes=solicitudes)
+
+@app.route("/amigos/agregar/<int:amigo_id>", methods=["POST"])
+@login_required
+def agregar_amigo(amigo_id):
+    with get_db() as db:
+        try:
+            db.execute(
+                "INSERT INTO amistades (usuario_id, amigo_id) VALUES (?, ?)",
+                (session["usuario_id"], amigo_id)
+            )
+            db.commit()
+            return jsonify({"status": "success"})
+        except sqlite3.IntegrityError:
+            return jsonify({"status": "error", "message": "Solicitud ya enviada"}), 400
+
+@app.route("/amigos/aceptar/<int:amigo_id>", methods=["POST"])
+@login_required
+def aceptar_amigo(amigo_id):
+    with get_db() as db:
+        db.execute(
+            "UPDATE amistades SET estado = 'aceptada' WHERE usuario_id = ? AND amigo_id = ?",
+            (amigo_id, session["usuario_id"])
+        )
+        db.commit()
+    return jsonify({"status": "success"})
+
+# --- Botón de Pánico ---
+@app.route("/panic", methods=["POST"])
+@login_required
+def panic_button():
+    with get_db() as db:
+        amigos = db.execute('''
+            SELECT u.usuario, u.email 
+            FROM amistades a
+            JOIN usuarios u ON a.amigo_id = u.id
+            WHERE a.usuario_id = ? AND a.estado = 'aceptada'
+            ORDER BY RANDOM() 
+            LIMIT 3
+        ''', (session["usuario_id"],)).fetchall()
+        
+        # Simular notificación (en producción usarías WebSockets o un servicio de emails)
+        print(f"🚨 ALERTA: Notificando a {[a['usuario'] for a in amigos]}")
+    
+    return jsonify({
+        "status": "success",
+        "message": "Tus contactos han sido notificados",
+        "notified": [a["usuario"] for a in amigos]
+    })
+
+# --- WebSockets (Chat) ---
+@socketio.on('mensaje')
+def handle_message(data):
+    mensaje_filtrado = filtrar_mensaje(data['mensaje'])
+    emit('nuevo_mensaje', {
+        'remitente': session.get("usuario_id"),
+        'mensaje': mensaje_filtrado
+    }, broadcast=True)
+    
+
+@app.route("/")
+def index():
+    return redirect(url_for('login'))  # Redirige al login
+
+
+    
+
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    socketio.run(app, debug=True)

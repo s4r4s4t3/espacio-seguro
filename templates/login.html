@@ -2,23 +2,27 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Acceso privado 🌙</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='estilos.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+    <title>Acceso - SafeSpace</title>
+    <link rel="stylesheet" href="../static/estilos.css">
 </head>
 <body>
-    <div style="max-width: 400px; margin: 60px auto; text-align: center;">
-        <h1>🌙 Ingresá a tu espacio seguro</h1>
+    <div class="login-container">
+        <h1>🌿 Ingresá a tu espacio seguro</h1>
         <p>Este es tu refugio personal. Protegido, íntimo, tuyo.</p>
 
+        {% if error %}
+        <div class="error-message">{{ error }}</div>
+        {% endif %}
+
         <form method="POST">
-            <input type="password" name="clave" placeholder="Ingresá tu contraseña" required><br><br>
+            <input type="text" name="usuario" placeholder="Usuario" required>
+            <input type="password" name="clave" placeholder="Contraseña" required>
             <button type="submit">Ingresar</button>
         </form>
 
-        {% if error %}
-            <p style="color: red;">{{ error }}</p>
-        {% endif %}
+        <div class="register-link">
+            ¿Primera vez? <a href="/registro">Creá tu cuenta</a>
+        </div>
     </div>
 </body>
 </html>
