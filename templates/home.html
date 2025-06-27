@@ -6,56 +6,14 @@
     <link rel="stylesheet" href="../static/estilos.css">
 </head>
 <body>
-    <div class="container">
-        <!-- Barra superior -->
-        <header>
-            <h1>🌱 SafeSpace</h1>
-            <nav>
-                <a href="/amigos">👥 Amigos</a>
-                <a href="/diario">📝 Publicar</a>
-                <a href="/musica">🎵 Música</a>
-                <a href="/perfil">⚙️ Mi Perfil</a>
-                <a href="/logout">🔒 Salir</a>
-            </nav>
-        </header>
-
-        <!-- Área de Contenido -->
-        <main>
-            <!-- Botón de Pánico (Floating Button) -->
-            <button id="panic-btn" class="panic-button">🚨 Botón de Emergencia</button>
-
-            <!-- Feed de la Comunidad -->
-            <section class="feed">
-                <h2>📢 Comunidad</h2>
-                {% for post in posts %}
-                <div class="post">
-                    <p>{{ post.mensaje }}</p>
-                    <small>Publicado por @{{ post.autor }} el {{ post.fecha }}</small>
-                </div>
-                {% endfor %}
-            </section>
-        </main>
-    </div>
-
-    <!-- Script para el botón de pánico -->
-    <script>
-        document.getElementById('panic-btn').addEventListener('click', () => {
-            fetch('/panic', { method: 'POST' })
-                .then(response => alert('¡Tus contactos han sido notificados!'));
-        });
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
-<script>
-    const socket = io();
-    socket.on('nuevo_mensaje', (data) => {
-        const feed = document.querySelector('.feed');
-        feed.insertAdjacentHTML('afterbegin', `
-            <div class="post">
-                <p>${data.mensaje}</p>
-                <small>Nuevo mensaje</small>
-            </div>
-        `);
-    });
-</script>
+    {% extends "base.html" %}
+{% block content %}
+<h1>Bienvenido a SafeSpace</h1>
+<a href="{{ url_for('chat') }}">Ir al Chat</a>
+<a href="{{ url_for('amigos') }}">Ver Amigos</a>
+{% endblock %}
+    <footer>
+        <p>© 2023 SafeSpace. Todos los derechos reservados.</p>
+    </footer>
 </body>
 </html>

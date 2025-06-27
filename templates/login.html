@@ -6,23 +6,17 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='estilos.css') }}">
 </head>
 <body>
-    <div class="login-container">
-        <h1>🌿 Ingresá a tu espacio seguro</h1>
-        <p>Este es tu refugio personal. Protegido, íntimo, tuyo.</p>
-
-        {% if error %}
-        <div class="error-message">{{ error }}</div>
-        {% endif %}
-
-        <form method="POST">
-            <input type="text" name="usuario" placeholder="Usuario" required>
-            <input type="password" name="clave" placeholder="Contraseña" required>
-            <button type="submit">Ingresar</button>
-        </form>
-
-        <div class="register-link">
-            ¿Primera vez? <a href="/registro">Creá tu cuenta</a>
-        </div>
-    </div>
+    {% extends "base.html" %}
+{% block content %}
+<h1>Iniciar Sesión</h1>
+<form action="/login" method="post">
+    <input type="email" name="email" placeholder="Email" required>
+    <input type="password" name="password" placeholder="Contraseña" required>
+    <button type="submit">Entrar</button>
+</form>
+{% endblock %}
+    <p>¿No tienes una cuenta? <a href="/register">Regístrate aquí</a></p>
+    <p><a href="/forgot-password">¿Olvidaste tu contraseña?</a></p>
+{% endblock %}
 </body>
 </html>
