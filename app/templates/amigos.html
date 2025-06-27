@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Amigos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h2>👥 Tus Amigos</h2>
+    {% for amigo in amigos %}
+    <p>
+    ✅ {{ amigo.username }}
+    <a href="{{ url_for('chat.chat', friend_id=amigo.id) }}">💬 Chatear</a>
+    </p>
+
+    {% else %}
+        <p>No tenés amigos todavía.</p>
+    {% endfor %}
+
+    <h3>📥 Solicitudes Recibidas</h3>
+    {% for solicitud in solicitudes %}
+        <p>
+            Usuario ID {{ solicitud.sender_id }} →
+            <a href="/aceptar/{{ solicitud.id }}">Aceptar</a> |
+            <a href="/rechazar/{{ solicitud.id }}">Rechazar</a>
+        </p>
+    {% else %}
+        <p>No tenés solicitudes nuevas.</p>
+    {% endfor %}
+
+    <h3>🌍 Otros usuarios</h3>
+    {% for user in usuarios %}
+        <p>
+            {{ user.username }}
+            <a href="/enviar_solicitud/{{ user.id }}">[Agregar amigo]</a>
+        </p>
+    {% endfor %}
+
+    <p><a href="/">Volver al inicio</a></p>
+</body>
+</html>
+

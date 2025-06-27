@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Chat con {{ friend.username }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+  <style>
+    .chat-box {
+      background: #fff;
+      padding: 15px;
+      border-radius: 10px;
+      max-height: 400px;
+      overflow-y: auto;
+      margin-bottom: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+
+    .mensaje {
+      margin: 10px 0;
+      padding: 10px 15px;
+      border-radius: 15px;
+      max-width: 70%;
+      word-wrap: break-word;
+    }
+
+    .yo {
+      background: #c8e6c9;
+      align-self: flex-end;
+      text-align: right;
+      margin-left: auto;
+    }
+
+    .otro {
+      background: #e0e0e0;
+      align-self: flex-start;
+      text-align: left;
+      margin-right: auto;
+    }
+
+    .mensajes {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    form {
+      display: flex;
+      gap: 10px;
+    }
+
+    input[type="text"] {
+      flex: 1;
+    }
+  </style>
+</head>
+<body>
+  <h2>💬 Chat con {{ friend.username }}</h2>
+
+  <div class="chat-box mensajes" id="mensajes">
+    {% for message in messages %}
+      <div class="mensaje {% if message.sender.id == current_user.id %}yo{% else %}otro{% endif %}">
+        <strong>{{ message.sender.username }}:</strong><br>
+        {{ message.content }}
+      </div>
+    {% endfor %}
+  </div>
+
+  <form id="formulario">
+    <input type="text" id="mensaje" placeholder="Escribí tu mensaje..." required>
+    <button type="submit">Enviar</button>
+  </form>
+
+  <p><a href="/amigos">⬅ Volver a amigos</a></p>
+
+  <script>
+  const socket = io();
+  const mensajes = document.getElementById('mensajes');
+  const formulario = document.getElementById('formulario');
+  const input = document.getElementById('mensaje');
+
+  // Convertimos en string para evitar errores de sintaxis en el editor
+  const sender_id = "{{ current_user.id }}";
+  const receiver_id = "{{ friend_id }}";
+
+  formulario.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (input.value.trim() !== "") {
+      socket.emit('mensaje_privado', {
+        sender_id: sender_id,
+        receiver_id: receiver_id,
+        content: input.value
+      });
+      input.value = '';
+    }
+  });
+
+  socket.on('mensaje_privado', (data) => {
+    if (
+      (data.sender_id == sender_id && data.receiver_id == receiver_id) ||
+      (data.sender_id == receiver_id && data.receiver_id == sender_id)
+    ) {
+      const div = document.createElement('div');
+      div.className = 'mensaje ' + (data.sender_id == sender_id ? 'yo' : 'otro');
+      div.innerHTML = `<strong>${data.sender_username}:</strong><br>${data.content}`;
+      mensajes.appendChild(div);
+      mensajes.scrollTop = mensajes.scrollHeight;
+    }
+  });
+</script>
+
+</body>
+</html>

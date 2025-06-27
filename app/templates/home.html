@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Inicio - Espacio Seguro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card a {
+            text-decoration: none;
+            color: #2e7d32;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h2>Bienvenido, {{ user.username }}</h2>
+    <div class="grid">
+    <div class="card"><a href="/chat">💬 Chat Global</a></div>
+    <div class="card"><a href="/amigos">👥 Perfiles / Amigos</a></div>
+    <div class="card"><a href="/panico">🚨 Botón de Pánico</a></div>
+    <div class="card"><a href="/musica">🎵 Playlist Musical</a></div>
+    <div class="card"><a href="/ia">🤖 IA de Apoyo</a></div>
+    <div class="card"><a href="/diario">📝 Diario</a></div>
+    <div class="card"><a href="/config">⚙️ Configuración</a></div>
+    <div class="card"><a href="/logout">🔒 Cerrar sesión</a></div>
+</div>
+    
+</body>
+</html>
