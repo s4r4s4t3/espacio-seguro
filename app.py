@@ -1,49 +1,39 @@
+import os
 from flask import Flask, render_template, request, redirect, session, jsonify, flash, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_socketio import SocketIO, emit
 from datetime import datetime
 import sqlite3
-import os
 import json
 from functools import wraps
 
+# Initialize Flask app
 app = Flask(__name__)
-app.secret_key = os.urandom(24)
+app.secret_key = os.environ.get('APP_SECRET_KEY', os.urandom(24))
 app.config['DATABASE'] = 'database.db'
 socketio = SocketIO(app)
 
-# Decorador para rutas protegidas
-def login_required(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if 'usuario_id' not in session:
-            return redirect(url_for('login'))
-        return f(*args, **kwargs)
-    return decorated_function
-
-# Conexión a la base de datos
+# Database setup
 def get_db():
     conn = sqlite3.connect(app.config['DATABASE'])
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA foreign_keys = ON")
     return conn
 
-# Inicialización de la base de datos
 def init_db():
     with get_db() as db:
+        # Users table
         db.execute('''
             CREATE TABLE IF NOT EXISTS usuarios (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 usuario TEXT UNIQUE NOT NULL,
                 clave TEXT NOT NULL,
                 email TEXT UNIQUE,
-                pais TEXT DEFAULT 'Desconocido',
-                intereses TEXT DEFAULT '',
-                playlist TEXT DEFAULT '',
-                suscripcion BOOLEAN DEFAULT FALSE
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         ''')
         
+        # Friendships table
         db.execute('''
             CREATE TABLE IF NOT EXISTS amistades (
                 usuario_id INTEGER NOT NULL,
@@ -55,6 +45,7 @@ def init_db():
             )
         ''')
         
+        # Messages table
         db.execute('''
             CREATE TABLE IF NOT EXISTS mensajes (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -67,7 +58,7 @@ def init_db():
             )
         ''')
         
-        # Usuario demo
+        # Demo user
         if not db.execute('SELECT 1 FROM usuarios WHERE usuario = "demo"').fetchone():
             db.execute(
                 'INSERT INTO usuarios (usuario, clave) VALUES (?, ?)',
@@ -77,7 +68,16 @@ def init_db():
 
 init_db()
 
-# Filtro de palabras sensibles
+# Security middleware
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'usuario_id' not in session:
+            return redirect(url_for('login'))
+        return f(*args, **kwargs)
+    return decorated_function
+
+# Word filter
 try:
     with open('palabras_prohibidas.json', encoding='utf-8') as f:
         palabras_prohibidas = json.load(f)
@@ -89,7 +89,7 @@ def filtrar_mensaje(texto):
         texto = texto.replace(palabra, "***")
     return texto
 
-# Rutas de autenticación
+# Auth routes
 @app.route("/registro", methods=["GET", "POST"])
 def registro():
     if request.method == "POST":
@@ -139,7 +139,7 @@ def logout():
     session.clear()
     return redirect(url_for('login'))
 
-# Rutas principales
+# Main routes
 @app.route("/")
 def index():
     return redirect(url_for('login'))
@@ -171,60 +171,11 @@ def home():
     
     return render_template("home.html", usuario=usuario, posts=posts, amigos=amigos)
 
-# Sistema de amigos
-@app.route("/amigos")
-@login_required
-def lista_amigos():
-    with get_db() as db:
-        amigos = db.execute('''
-            SELECT u.id, u.usuario 
-            FROM amistades a 
-            JOIN usuarios u ON a.amigo_id = u.id 
-            WHERE a.usuario_id = ? AND a.estado = "aceptada"
-        ''', (session["usuario_id"],)).fetchall()
-        
-        solicitudes = db.execute('''
-            SELECT u.id, u.usuario 
-            FROM amistades a 
-            JOIN usuarios u ON a.usuario_id = u.id 
-            WHERE a.amigo_id = ? AND a.estado = "pendiente"
-        ''', (session["usuario_id"],)).fetchall()
-    
-    return render_template("amigos.html", amigos=amigos, solicitudes=solicitudes)
-
-@app.route("/amigos/agregar/<int:amigo_id>", methods=["POST"])
-@login_required
-def agregar_amigo(amigo_id):
-    with get_db() as db:
-        try:
-            db.execute(
-                "INSERT INTO amistades (usuario_id, amigo_id) VALUES (?, ?)",
-                (session["usuario_id"], amigo_id)
-            )
-            db.commit()
-            return jsonify({"status": "success"})
-        except sqlite3.IntegrityError:
-            return jsonify({"status": "error", "message": "Solicitud ya enviada"}), 400
-
-@app.route("/amigos/aceptar/<int:amigo_id>", methods=["POST"])
-@login_required
-def aceptar_amigo(amigo_id):
-    with get_db() as db:
-        db.execute(
-            "UPDATE amistades SET estado = 'aceptada' WHERE usuario_id = ? AND amigo_id = ?",
-            (amigo_id, session["usuario_id"])
-        )
-        db.commit()
-    return jsonify({"status": "success"})
-
-# Botón de Pánico
+# Emergency button
 @app.route("/panic", methods=["POST"])
+@login_required
 def panic_button():
-    if "usuario_id" not in session:
-        return jsonify({"status": "error", "message": "Sesión no válida"}), 401
-    
     with get_db() as db:
-        # Verificar amigos existentes
         amigos = db.execute('''
             SELECT u.usuario, u.email 
             FROM amistades a
@@ -236,55 +187,30 @@ def panic_button():
         if not amigos:
             return jsonify({"status": "error", "message": "No tienes amigos agregados"}), 400
             
-        # Simular notificación (luego usaremos Twilio)
+        # In production: Integrate with Twilio here
         print(f"🚨 Notificando a: {[a['usuario'] for a in amigos]}")
         return jsonify({
             "status": "success",
             "notified": [a['usuario'] for a in amigos]
         })
 
-@app.route("/contactos", methods=["GET", "POST"])
-@login_required
-def contactos():
-    if request.method == "POST":
-        nombre = request.form.get("nombre")
-        # Lógica para guardar el contacto (ajusta según necesites)
-        return render_template("contactos.html", mensaje="Contacto guardado")
-    return render_template("contactos.html")
+# WebSocket handlers
+@socketio.on('connect')
+def handle_connect():
+    if 'usuario_id' not in session:
+        return False
 
-# WebSockets (Chat)
 @socketio.on('mensaje')
 def handle_message(data):
+    if 'usuario_id' not in session:
+        return
+    
     mensaje_filtrado = filtrar_mensaje(data['mensaje'])
     emit('nuevo_mensaje', {
         'remitente': session.get("usuario_id"),
-        'mensaje': mensaje_filtrado
+        'mensaje': mensaje_filtrado,
+        'timestamp': datetime.now().isoformat()
     }, broadcast=True)
-
-@app.route("/diario", methods=["GET", "POST"])
-@login_required
-def diario():
-    if request.method == "POST":
-        pensamiento = request.form.get("pensamiento")
-        # Lógica para guardar en el diario
-        return render_template("diario.html", mensaje="Entrada guardada")
-    return render_template("diario.html")
-
-@app.route("/musica")
-@login_required
-def musica():
-    return render_template("musica.html")  # Necesitarás crear este archivo
-
-@app.route("/perfil")
-@login_required
-def perfil():
-    with get_db() as db:
-        usuario = db.execute(
-            "SELECT * FROM usuarios WHERE id = ?", 
-            (session["usuario_id"],)
-        ).fetchone()
-    return render_template("perfil.html", usuario=usuario)
-
 
 if __name__ == "__main__":
     socketio.run(app, debug=True)
