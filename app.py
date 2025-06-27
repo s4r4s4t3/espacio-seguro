@@ -219,26 +219,29 @@ def aceptar_amigo(amigo_id):
 
 # Botón de Pánico
 @app.route("/panic", methods=["POST"])
-@login_required
 def panic_button():
+    if "usuario_id" not in session:
+        return jsonify({"status": "error", "message": "Sesión no válida"}), 401
+    
     with get_db() as db:
+        # Verificar amigos existentes
         amigos = db.execute('''
             SELECT u.usuario, u.email 
             FROM amistades a
             JOIN usuarios u ON a.amigo_id = u.id
             WHERE a.usuario_id = ? AND a.estado = 'aceptada'
-            ORDER BY RANDOM() 
             LIMIT 3
         ''', (session["usuario_id"],)).fetchall()
         
-        # Simular notificación
-        print(f"🚨 ALERTA: Notificando a {[a['usuario'] for a in amigos]}")
-    
-    return jsonify({
-        "status": "success",
-        "message": "Tus contactos han sido notificados",
-        "notified": [a["usuario"] for a in amigos]
-    })
+        if not amigos:
+            return jsonify({"status": "error", "message": "No tienes amigos agregados"}), 400
+            
+        # Simular notificación (luego usaremos Twilio)
+        print(f"🚨 Notificando a: {[a['usuario'] for a in amigos]}")
+        return jsonify({
+            "status": "success",
+            "notified": [a['usuario'] for a in amigos]
+        })
 
 @app.route("/contactos", methods=["GET", "POST"])
 @login_required
