@@ -1,22 +1,29 @@
-# Ignorar carpetas y archivos temporales
+# 🗑️ Cache de Python
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 
-# Archivos de entorno virtual
+# 🗑️ Entornos virtuales
 venv/
 env/
+.venv/
+
+# 🗑️ Variables de entorno
 *.env
 
-# Archivos de sistema
+# 🗑️ Archivos de sistema
 .DS_Store
 Thumbs.db
 
-# Archivos de configuración de VSCode
+# 🗑️ Configs locales de editores
 .vscode/
 
-# Archivos de base de datos locales (opcional si subís a PostgreSQL)
+# 🗑️ Bases de datos SQLite locales (para dev)
 *.sqlite3
 *.db
-instance/db.sqlite3
+instance/
+
+# 🗑️ Archivos de logs (si los generás)
+*.log
+

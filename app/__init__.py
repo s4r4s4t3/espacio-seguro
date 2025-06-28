@@ -1,19 +1,25 @@
+# app/__init__.py
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_socketio import SocketIO
 
+# Inicializa extensiones
 db = SQLAlchemy()
-socketio = SocketIO()
+socketio = SocketIO(cors_allowed_origins="*")  # Permitir CORS para SocketIO si lo usas en prod
 login_manager = LoginManager()
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object("config.Config")
 
+    # Inicializa extensiones con la app
     db.init_app(app)
-    socketio.init_app(app)
+    socketio.init_app(app, async_mode='eventlet')  # Asegura compatibilidad con eventlet
     login_manager.init_app(app)
+
+    # Redirigir al login si el usuario no está autenticado
+    login_manager.login_view = 'auth.login'
 
     from app.models import User
 
@@ -21,17 +27,18 @@ def create_app():
     def load_user(user_id):
         return User.query.get(int(user_id))
 
+    # Registra Blueprints
     from app.routes.auth import auth_bp
     app.register_blueprint(auth_bp)
-    
+
     from app.routes.home import home_bp
     app.register_blueprint(home_bp)
-    
+
     from app.routes.friends import friends_bp
     app.register_blueprint(friends_bp)
-    
-    from .routes.chat import chat_bp
+
+    from app.routes.chat import chat_bp
     app.register_blueprint(chat_bp)
 
-
     return app
+
