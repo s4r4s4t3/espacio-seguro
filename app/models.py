@@ -9,7 +9,7 @@ from . import db
 # Tabla de Usuarios
 # --------------------
 class User(UserMixin, db.Model):
-    __tablename__ = 'user'  # nombre explícito para evitar problemas
+    __tablename__ = 'user'
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(150), nullable=False, unique=True)
@@ -24,43 +24,20 @@ class User(UserMixin, db.Model):
                                         foreign_keys='Message.receiver_id',
                                         backref='receiver',
                                         lazy=True)
-
-    # Relación con Diario Personal
     diary_entries = db.relationship('DiaryEntry',
                                     backref='author',
                                     lazy=True)
+    panic_logs = db.relationship('PanicLog',
+                                 backref='author',
+                                 lazy=True)
 
 # --------------------
-# Solicitudes de Amistad
+# Botón de Pánico - Logs
 # --------------------
-class FriendRequest(db.Model):
-    __tablename__ = 'friend_request'
+class PanicLog(db.Model):
+    __tablename__ = 'panic_log'
 
     id = db.Column(db.Integer, primary_key=True)
-    sender_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    receiver_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    status = db.Column(db.String(10), default='pending')  # pending, accepted, rejected
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
-
-# --------------------
-# Mensajes Privados
-# --------------------
-class Message(db.Model):
-    __tablename__ = 'message'
-
-    id = db.Column(db.Integer, primary_key=True)
-    sender_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    receiver_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    content = db.Column(db.Text, nullable=False)
-    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
-
-# --------------------
-# Entradas del Diario Personal
-# --------------------
-class DiaryEntry(db.Model):
-    __tablename__ = 'diary_entry'
-
-    id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.Text, nullable=False)
-    date_created = db.Column(db.DateTime, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    message = db.Column(db.String(256), nullable=False)

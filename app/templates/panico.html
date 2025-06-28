@@ -1,0 +1,30 @@
+<!-- panico.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Botón de Pánico</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .panic-btn {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 30px 60px;
+            font-size: 24px;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+        .panic-btn:hover {
+            background-color: darkred;
+        }
+    </style>
+</head>
+<body>
+    <h2>🚨 Botón de Pánico</h2>
+    <form method="POST">
+        <button type="submit" class="panic-btn">ACTIVAR BOTÓN DE PÁNICO</button>
+    </form>
+    <a href="{{ url_for('home.home') }}">Volver al inicio</a>
+</body>
+</html>
