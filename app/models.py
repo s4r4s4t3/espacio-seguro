@@ -32,6 +32,29 @@ class User(UserMixin, db.Model):
                                  lazy=True)
 
 # --------------------
+# Mensajes Privados
+# --------------------
+class Message(db.Model):
+    __tablename__ = 'message'
+
+    id = db.Column(db.Integer, primary_key=True)
+    sender_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    receiver_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    content = db.Column(db.Text, nullable=False)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+# --------------------
+# Entradas del Diario Personal
+# --------------------
+class DiaryEntry(db.Model):
+    __tablename__ = 'diary_entry'
+
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.Text, nullable=False)
+    date_created = db.Column(db.DateTime, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+# --------------------
 # Botón de Pánico - Logs
 # --------------------
 class PanicLog(db.Model):
