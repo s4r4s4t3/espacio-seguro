@@ -32,6 +32,18 @@ class User(UserMixin, db.Model):
                                  lazy=True)
 
 # --------------------
+# Solicitudes de Amistad
+# --------------------
+class FriendRequest(db.Model):
+    __tablename__ = 'friend_request'
+
+    id = db.Column(db.Integer, primary_key=True)
+    sender_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    receiver_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    status = db.Column(db.String(10), default='pending')  # pending, accepted, rejected
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+# --------------------
 # Mensajes Privados
 # --------------------
 class Message(db.Model):
