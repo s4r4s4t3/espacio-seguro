@@ -52,3 +52,27 @@ p {
     margin-top: 15px;
     font-size: 0.9em;
 }
+
+/* =======================
+   🚨 Botón de Pánico custom
+   ======================= */
+.panic-btn {
+    background-color: red;
+    color: white;
+    border: none;
+    width: 120px;
+    height: 120px;
+    font-size: 48px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.panic-btn:hover {
+    background-color: darkred;
+    transform: scale(1.1);
+}
