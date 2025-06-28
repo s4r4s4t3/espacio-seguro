@@ -34,9 +34,9 @@ def musica():
 def ia():
     return "<h3>🤖 Asistente IA en desarrollo</h3>"
 
-@home_bp.route('/diario')
-def diario():
-    return "<h3>📝 Diario en desarrollo</h3>"
+#@home_bp.route('/diario')
+#def diario():
+#    return "<h3>📝 Diario en desarrollo</h3>"
 
 @home_bp.route('/config')
 def config():
