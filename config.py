@@ -1,3 +1,6 @@
+SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL", "sqlite:///db.sqlite3")
+
+
 import os
 
 class Config:
