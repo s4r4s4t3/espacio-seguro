@@ -19,3 +19,4 @@ Thumbs.db
 # Archivos de base de datos locales (opcional si subís a PostgreSQL)
 *.sqlite3
 *.db
+instance/db.sqlite3
