@@ -27,9 +27,9 @@ def create_app():
     # Redirigir al login si no está autenticado
     login_manager.login_view = 'auth.login'
 
-    from app.models import User, FriendRequest, Message, DiaryEntry  # <-- Asegurate de importar DiaryEntry si querés usarlo
+    from app.models import User, FriendRequest, Message, DiaryEntry  # ✅ Import correcto
 
-    # 🔑 CREA LAS TABLAS SI NO EXISTEN — Render free sin Shell
+    # 🔑 CREA LAS TABLAS SI NO EXISTEN
     with app.app_context():
         db.create_all()
 
@@ -44,14 +44,14 @@ def create_app():
     from app.routes.home import home_bp
     app.register_blueprint(home_bp)
 
-    from app.routes.friends import friends_bp
-    app.register_blueprint(friends_bp)
-
     from app.routes.chat import chat_bp
     app.register_blueprint(chat_bp)
 
-    # ✅ Diario Personal
     from app.routes.diary import diary_bp
     app.register_blueprint(diary_bp)
+
+    # ✅ Sistema de Amigos (renombrado)
+    from app.routes.amigos import amigos_bp
+    app.register_blueprint(amigos_bp)
 
     return app

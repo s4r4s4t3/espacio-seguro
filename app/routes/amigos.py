@@ -1,10 +1,12 @@
+# app/routes/amigos.py
+
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import login_required, current_user
 from app.models import User, FriendRequest, db
 
-friends_bp = Blueprint('friends', __name__)
+amigos_bp = Blueprint('amigos', __name__)
 
-@friends_bp.route('/amigos')
+@amigos_bp.route('/amigos')
 @login_required
 def amigos():
     # Amigos aceptados
@@ -22,7 +24,7 @@ def amigos():
 
     return render_template("amigos.html", usuarios=usuarios, amigos=amigos, solicitudes=solicitudes)
 
-@friends_bp.route('/enviar_solicitud/<int:user_id>')
+@amigos_bp.route('/enviar_solicitud/<int:user_id>')
 @login_required
 def enviar_solicitud(user_id):
     if not FriendRequest.query.filter_by(sender_id=current_user.id, receiver_id=user_id).first():
@@ -30,9 +32,9 @@ def enviar_solicitud(user_id):
         db.session.add(nueva)
         db.session.commit()
         flash("Solicitud enviada", "info")
-    return redirect(url_for('friends.amigos'))
+    return redirect(url_for('amigos.amigos'))
 
-@friends_bp.route('/aceptar/<int:solicitud_id>')
+@amigos_bp.route('/aceptar/<int:solicitud_id>')
 @login_required
 def aceptar(solicitud_id):
     solicitud = FriendRequest.query.get_or_404(solicitud_id)
@@ -40,9 +42,9 @@ def aceptar(solicitud_id):
         solicitud.status = 'accepted'
         db.session.commit()
         flash("Solicitud aceptada", "success")
-    return redirect(url_for('friends.amigos'))
+    return redirect(url_for('amigos.amigos'))
 
-@friends_bp.route('/rechazar/<int:solicitud_id>')
+@amigos_bp.route('/rechazar/<int:solicitud_id>')
 @login_required
 def rechazar(solicitud_id):
     solicitud = FriendRequest.query.get_or_404(solicitud_id)
@@ -50,5 +52,5 @@ def rechazar(solicitud_id):
         solicitud.status = 'rejected'
         db.session.commit()
         flash("Solicitud rechazada", "danger")
-    return redirect(url_for('friends.amigos'))
+    return redirect(url_for('amigos.amigos'))
 
