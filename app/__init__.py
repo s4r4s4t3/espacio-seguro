@@ -27,7 +27,7 @@ def create_app():
     # Redirigir al login si no está autenticado
     login_manager.login_view = 'auth.login'
 
-    from app.models import User, FriendRequest, Message
+    from app.models import User, FriendRequest, Message, DiaryEntry  # <-- Asegurate de importar DiaryEntry si querés usarlo
 
     # 🔑 CREA LAS TABLAS SI NO EXISTEN — Render free sin Shell
     with app.app_context():
@@ -50,6 +50,8 @@ def create_app():
     from app.routes.chat import chat_bp
     app.register_blueprint(chat_bp)
 
+    # ✅ Diario Personal
+    from app.routes.diary import diary_bp
+    app.register_blueprint(diary_bp)
+
     return app
-
-

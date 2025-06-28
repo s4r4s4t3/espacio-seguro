@@ -1,4 +1,5 @@
 # app/models.py
+
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 from datetime import datetime
@@ -24,6 +25,11 @@ class User(UserMixin, db.Model):
                                         backref='receiver',
                                         lazy=True)
 
+    # Relación con Diario Personal
+    diary_entries = db.relationship('DiaryEntry',
+                                    backref='author',
+                                    lazy=True)
+
 # --------------------
 # Solicitudes de Amistad
 # --------------------
@@ -48,4 +54,13 @@ class Message(db.Model):
     content = db.Column(db.Text, nullable=False)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
-#Falta todavía..
+# --------------------
+# Entradas del Diario Personal
+# --------------------
+class DiaryEntry(db.Model):
+    __tablename__ = 'diary_entry'
+
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.Text, nullable=False)
+    date_created = db.Column(db.DateTime, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
