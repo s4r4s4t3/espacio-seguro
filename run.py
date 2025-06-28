@@ -1,4 +1,7 @@
-from app import create_app, socketio, db  # 👈 agregado db
+import eventlet
+eventlet.monkey_patch()
+
+from app import create_app, socketio, db
 
 app = create_app()
 
@@ -21,11 +24,11 @@ def handle_mensaje_privado(data):
         'content': content
     })
 
-
 @socketio.on('mensaje')
 def manejar_mensaje(msg):
     print("Mensaje recibido:", msg)
     socketio.emit('mensaje', msg)
+
 
 if __name__ == "__main__":
     socketio.run(app, debug=True)
