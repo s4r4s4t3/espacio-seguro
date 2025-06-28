@@ -33,3 +33,7 @@ def diario():
 @home_bp.route('/config')
 def config():
     return "<h3>⚙️ Configuración en desarrollo</h3>"
+
+@home_bp.route('/prueba')
+def prueba():
+    return "<h1>✅ Ruta pública funcionando</h1>"
