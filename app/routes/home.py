@@ -3,7 +3,13 @@ from flask_login import login_required, current_user
 
 home_bp = Blueprint('home', __name__)
 
+# Ruta raíz pública para verificar deploy
 @home_bp.route('/')
+def index():
+    return "<h1>✅ Servidor Render funcionando</h1>"
+
+# Ruta protegida con login
+@home_bp.route('/home')
 @login_required
 def home():
     return render_template("home.html", user=current_user)
@@ -12,7 +18,6 @@ def home():
 @login_required
 def chat():
     return render_template("chat.html", user=current_user)
-
 
 @home_bp.route('/panico')
 def panico():
@@ -36,4 +41,6 @@ def config():
 
 @home_bp.route('/prueba')
 def prueba():
-    return "<h1>✅ Ruta pública funcionando</h1>"
+    return "<h1>✅ Ruta de prueba pública funcionando</h1>"
+
+
