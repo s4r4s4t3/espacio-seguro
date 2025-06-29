@@ -1,12 +1,14 @@
+<!-- templates/config.html -->
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>👤 Mi Perfil</title>
+  <title>Mi Perfil</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  <h2>👤 Mi Perfil</h2>
+  <h2>✨ Mi Perfil</h2>
 
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
@@ -18,7 +20,6 @@
 
   <form method="POST" enctype="multipart/form-data">
     <label for="profile_picture" class="profile-label">Foto de perfil:</label>
-
     {% if user.profile_picture %}
       <img src="{{ url_for('static', filename='profile_pics/' ~ user.profile_picture) }}" class="profile">
     {% else %}
@@ -26,7 +27,7 @@
     {% endif %}
 
     <label class="upload-btn">
-      📁 Subir foto de perfil
+      Subir foto de perfil
       <input type="file" name="profile_picture" accept="image/*" hidden>
     </label>
 
@@ -40,21 +41,28 @@
       autocorrect="on"
     >{{ user.bio }}</textarea>
 
-    <button type="submit">💾 Guardar cambios</button>
+    <button type="submit">Guardar cambios</button>
   </form>
 
   <p><a href="{{ url_for('home.home') }}">Volver al inicio</a></p>
+
+  <script>
+    // Vista previa instantánea de imagen
+    document.querySelector('.upload-btn input').addEventListener('change', function() {
+      if (this.files && this.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          let img = document.querySelector('.profile');
+          if (!img) {
+            img = document.createElement('img');
+            img.className = 'profile';
+            document.querySelector('form').insertBefore(img, document.querySelector('.upload-btn'));
+          }
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(this.files[0]);
+      }
+    });
+  </script>
 </body>
 </html>
-<script>
-  // JavaScript para manejar la carga de la foto de perfil
-  document.querySelector('.upload-btn input').addEventListener('change', function() {
-    if (this.files && this.files[0]) {
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const img = document.querySelector('.profile');
-        img.src = e.target.result;
-      };
-      reader.readAsDataURL(this.files[0]);
-    }
-  });

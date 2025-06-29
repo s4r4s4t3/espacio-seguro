@@ -32,11 +32,17 @@ def config():
             if allowed_file(file.filename):
                 ext = file.filename.rsplit('.', 1)[1].lower()
                 filename = f"{uuid.uuid4().hex}.{ext}"
-                upload_folder_abs = os.path.join(current_app.root_path, 'static/profile_pics')
+                upload_folder_abs = os.path.join(current_app.root_path, 'static', 'profile_pics')
                 if not os.path.exists(upload_folder_abs):
                     os.makedirs(upload_folder_abs)
                 filepath = os.path.join(upload_folder_abs, filename)
                 file.save(filepath)
+
+                # ✅ Eliminar foto anterior si existe (opcional, para no llenar tu server)
+                if user.profile_picture and user.profile_picture != "default.jpg":
+                    old_file = os.path.join(upload_folder_abs, user.profile_picture)
+                    if os.path.exists(old_file):
+                        os.remove(old_file)
 
                 user.profile_picture = filename
             else:
