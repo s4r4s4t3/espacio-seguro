@@ -1,10 +1,85 @@
-<!-- templates/config.html -->
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>⚙️ Configuración de Perfil</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 40px;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        .flash {
+            padding: 10px 20px;
+            margin: 10px auto;
+            max-width: 500px;
+            border-radius: 5px;
+        }
+        .flash.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .flash.danger {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .flash.message {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            display: inline-block;
+            text-align: left;
+            max-width: 500px;
+            width: 100%;
+        }
+        label {
+            font-weight: bold;
+        }
+        textarea {
+            width: 100%;
+            border-radius: 4px;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+        input[type="file"] {
+            margin-top: 10px;
+        }
+        img.profile {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #ddd;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+            margin: 10px 0;
+        }
+        button {
+            background: #4CAF50;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            color: #007BFF;
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
     <h1>⚙️ Configuración de Perfil</h1>
@@ -12,21 +87,19 @@
     <!-- ✅ Mostrar mensajes flash -->
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
-        <ul>
-          {% for category, message in messages %}
-            <li><strong>{{ category }}:</strong> {{ message }}</li>
-          {% endfor %}
-        </ul>
+        {% for category, message in messages %}
+          <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
       {% endif %}
     {% endwith %}
 
     <form method="POST" enctype="multipart/form-data">
         <label>Bio:</label><br>
-        <textarea name="bio" rows="4" cols="50">{{ user.bio }}</textarea><br><br>
+        <textarea name="bio" rows="4" placeholder="Contanos algo de vos...">{{ user.bio }}</textarea><br><br>
 
         <label>Foto de perfil:</label><br>
         {% if user.profile_picture %}
-            <img src="{{ url_for('static', filename='profile_pics/' ~ user.profile_picture) }}" width="150"><br>
+            <img src="{{ url_for('static', filename='profile_pics/' ~ user.profile_picture) }}" class="profile">
         {% else %}
             <p>No hay foto de perfil.</p>
         {% endif %}
