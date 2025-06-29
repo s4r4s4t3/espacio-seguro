@@ -37,11 +37,11 @@
 <body>
     <h2>Bienvenido, {{ user.username }}</h2>
     <div class="grid">
+        <div class="card"><a href="/config">⚙️ Configuración</a></div>
         <div class="card"><a href="/chat">💬 Chat Global</a></div>
         <div class="card"><a href="/amigos">👥 Perfiles / Amigos</a></div>
         <div class="card"><a href="/panico">🚨 Botón de Pánico</a></div>
         <div class="card"><a href="{{ url_for('diary.diary') }}">📝 Diario</a></div>
-        <div class="card"><a href="/config">⚙️ Configuración</a></div>
         <div class="card"><a href="/logout">🔒 Cerrar sesión</a></div>
     </div>
 </body>
