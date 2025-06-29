@@ -17,7 +17,7 @@
   {% endwith %}
 
   <form method="POST" enctype="multipart/form-data">
-    <label for="profile_picture">📸 Foto de perfil:</label>
+    <label for="profile_picture" class="profile-label">Foto de perfil:</label>
 
     {% if user.profile_picture %}
       <img src="{{ url_for('static', filename='profile_pics/' ~ user.profile_picture) }}" class="profile">
@@ -30,7 +30,7 @@
       <input type="file" name="profile_picture" accept="image/*" hidden>
     </label>
 
-    <label for="bio">📝 Bio:</label>
+    <label for="bio" class="profile-label">Bio:</label>
     <textarea 
       id="bio" 
       name="bio" 
@@ -44,16 +44,17 @@
   </form>
 
   <p><a href="{{ url_for('home.home') }}">Volver al inicio</a></p>
-
-  <script>
-    // Validación de la bio
-    document.querySelector('form').addEventListener('submit', function(event) {
-      const bio = document.getElementById('bio').value.trim();
-      if (bio.length > 500) {
-        event.preventDefault();
-        alert('La bio no puede exceder los 500 caracteres.');
-      }
-    });
-  </script>
 </body>
 </html>
+<script>
+  // JavaScript para manejar la carga de la foto de perfil
+  document.querySelector('.upload-btn input').addEventListener('change', function() {
+    if (this.files && this.files[0]) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = document.querySelector('.profile');
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(this.files[0]);
+    }
+  });

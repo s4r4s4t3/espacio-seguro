@@ -166,3 +166,17 @@ p {
   align-items: center;
   justify-content: center;
 }
+/* Etiquetas limpias del perfil */
+.profile-label {
+  font-family: 'Segoe UI', sans-serif;
+  font-weight: 600;
+  font-size: 1em;
+  color: #2e7d32;
+  margin-bottom: 5px;
+}
+.profile-value {
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 1em;
+  color: #333;
+  margin-bottom: 15px;
+}
