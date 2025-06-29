@@ -9,22 +9,34 @@
 <body>
     <h1>⚙️ Configuración de Perfil</h1>
 
+    <!-- ✅ Mostrar mensajes flash -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul>
+          {% for category, message in messages %}
+            <li><strong>{{ category }}:</strong> {{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
     <form method="POST" enctype="multipart/form-data">
         <label>Bio:</label><br>
-        <textarea name="bio">{{ user.bio }}</textarea><br><br>
+        <textarea name="bio" rows="4" cols="50">{{ user.bio }}</textarea><br><br>
 
         <label>Foto de perfil:</label><br>
         {% if user.profile_picture %}
-            <img src="{{ url_for('static', filename='profile_pics/' ~ user.profile_picture) }}" width="150">
+            <img src="{{ url_for('static', filename='profile_pics/' ~ user.profile_picture) }}" width="150"><br>
         {% else %}
             <p>No hay foto de perfil.</p>
         {% endif %}
-        <br><br>
-        <input type="file" name="profile_picture"><br><br>
+        <br>
+        <input type="file" name="profile_picture" accept="image/*"><br><br>
 
         <button type="submit">Guardar cambios</button>
     </form>
 
+    <br>
     <a href="{{ url_for('home.home') }}">Volver al inicio</a>
 </body>
 </html>
