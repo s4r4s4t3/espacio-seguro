@@ -7,7 +7,7 @@ from flask_login import LoginManager
 from flask_socketio import SocketIO
 from dotenv import load_dotenv
 
-# ✅ Cargar variables de entorno desde .env (opcional, OK)
+# ✅ Cargar variables de entorno desde .env (opcional)
 load_dotenv()
 
 # ✅ Inicializa extensiones
@@ -53,13 +53,8 @@ def create_app():
     from app.routes.amigos import amigos_bp
     app.register_blueprint(amigos_bp)
 
-    # ✅ IA simulada (si ya existe ai_bp)
-    from app.routes.ai import ai_bp
-    app.register_blueprint(ai_bp)
-
-    # ✅ Configuración/Perfil (nuevo módulo)
+    # ✅ Configuración/Perfil
     from app.routes.config import config_bp
     app.register_blueprint(config_bp)
 
     return app
-
