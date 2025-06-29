@@ -63,17 +63,15 @@ def panico():
 def musica():
     return render_template("musica.html", user=current_user)
 
-
-# ⚙️ Configuración
-@home_bp.route('/config')
-@login_required
-def config():
-    return "<h3>⚙️ Configuración en desarrollo</h3>"
+# ✅ ⚙️ Configuración — ¡RUTA VIEJA ELIMINADA!
+# Ya no existe aquí. Ahora la maneja config_bp.
 
 # Ruta de prueba pública
 @home_bp.route('/prueba')
 def prueba():
     return "<h1>✅ Ruta de prueba pública funcionando</h1>"
+
+
 
 
 
