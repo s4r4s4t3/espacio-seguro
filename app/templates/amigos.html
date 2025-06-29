@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h2>👥 Tus Amigos</h2>
+    <h2>🤝 Tus Amigos</h2>
     {% for amigo in amigos %}
     <p>
     ✅ {{ amigo.username }}
@@ -14,7 +14,7 @@
     </p>
 
     {% else %}
-        <p>No tenés amigos todavía.</p>
+        <p>Aún no agregaste amigos. 💚</p>
     {% endfor %}
 
     <h3>📥 Solicitudes Recibidas</h3>
