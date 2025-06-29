@@ -56,5 +56,9 @@ def create_app():
     # ✅ Nuevo: Blueprint IA de Apoyo
     from app.routes.ai import ai_bp
     app.register_blueprint(ai_bp)
+    
+    from app.routes.config import config_bp
+    app.register_blueprint(config_bp)
+
 
     return app

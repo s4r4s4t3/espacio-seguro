@@ -1,0 +1,30 @@
+<!-- templates/config.html -->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>⚙️ Configuración de Perfil</title>
+</head>
+<body>
+    <h1>⚙️ Configuración de Perfil</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        <label>Bio:</label><br>
+        <textarea name="bio">{{ user.bio }}</textarea><br><br>
+
+        <label>Foto de perfil:</label><br>
+        {% if user.profile_picture %}
+            <img src="{{ url_for('static', filename='profile_pics/' ~ user.profile_picture) }}" width="150">
+        {% else %}
+            <p>No hay foto de perfil.</p>
+        {% endif %}
+        <br><br>
+        <input type="file" name="profile_picture"><br><br>
+
+        <button type="submit">Guardar cambios</button>
+    </form>
+
+    <a href="{{ url_for('home.home') }}">Volver al inicio</a>
+</body>
+</html>

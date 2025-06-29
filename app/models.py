@@ -16,6 +16,12 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(256), nullable=False)
 
+    # ✅ Nuevo campo: Bio
+    bio = db.Column(db.String(300), default="")
+
+    # ✅ Nuevo campo: Ruta foto de perfil
+    profile_picture = db.Column(db.String(300), default="default.jpg")
+
     sent_messages = db.relationship('Message',
                                     foreign_keys='Message.sender_id',
                                     backref='sender',
@@ -30,6 +36,7 @@ class User(UserMixin, db.Model):
     panic_logs = db.relationship('PanicLog',
                                  backref='author',
                                  lazy=True)
+
 
 # --------------------
 # Solicitudes de Amistad
