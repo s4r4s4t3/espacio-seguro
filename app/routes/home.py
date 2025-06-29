@@ -61,7 +61,8 @@ def panico():
 @home_bp.route('/musica')
 @login_required
 def musica():
-    return "<h3>🎵 Playlist Musical en desarrollo</h3>"
+    return render_template("musica.html", user=current_user)
+
 
 # ⚙️ Configuración
 @home_bp.route('/config')

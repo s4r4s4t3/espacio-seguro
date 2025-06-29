@@ -145,3 +145,23 @@ p {
     cursor: pointer;
 }
 
+/* =======================
+   Estilos Música Libre
+   ======================= */
+
+.musica-body {
+    font-family: Arial, sans-serif;
+    background-color: #f1f8f4;
+    padding: 20px;
+}
+
+.musica-titulo {
+    color: #4CAF50;
+    text-align: center;
+}
+
+.musica-box {
+    max-width: 800px;
+    margin: 20px auto;
+}
+
