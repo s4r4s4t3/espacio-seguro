@@ -50,8 +50,11 @@ def create_app():
     from app.routes.diary import diary_bp
     app.register_blueprint(diary_bp)
 
-    # ✅ Sistema de Amigos (renombrado)
     from app.routes.amigos import amigos_bp
     app.register_blueprint(amigos_bp)
+
+    # ✅ Nuevo: Blueprint IA de Apoyo
+    from app.routes.ai import ai_bp
+    app.register_blueprint(ai_bp)
 
     return app

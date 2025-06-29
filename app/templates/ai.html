@@ -1,0 +1,30 @@
+<!-- templates/ai.html -->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Espacio IA de Apoyo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="ia-body">
+    <h1 class="ia-titulo">🤖 Espacio IA de Apoyo</h1>
+    <div class="ia-chat-box">
+        {% if historial %}
+            {% for remitente, mensaje in historial %}
+                <div class="ia-mensaje">
+                    <span class="ia-usuario">{{ remitente }}:</span>
+                    <span class="ia-respuesta">{{ mensaje }}</span>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No hay mensajes todavía. Comenzá la conversación.</p>
+        {% endif %}
+
+        <form method="POST">
+            <textarea name="mensaje" placeholder="Escribí tu mensaje..." class="ia-textarea"></textarea>
+            <button type="submit" class="ia-boton">Enviar</button>
+        </form>
+    </div>
+</body>
+</html>

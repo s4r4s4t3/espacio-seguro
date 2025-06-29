@@ -63,12 +63,6 @@ def panico():
 def musica():
     return "<h3>🎵 Playlist Musical en desarrollo</h3>"
 
-# IA de Apoyo
-@home_bp.route('/ia')
-@login_required
-def ia():
-    return "<h3>🤖 Asistente IA en desarrollo</h3>"
-
 # ⚙️ Configuración
 @home_bp.route('/config')
 @login_required
@@ -79,5 +73,6 @@ def config():
 @home_bp.route('/prueba')
 def prueba():
     return "<h1>✅ Ruta de prueba pública funcionando</h1>"
+
 
 
