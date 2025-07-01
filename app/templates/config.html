@@ -2,11 +2,11 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>👤 Mi Perfil</title>
+  <title>🧑‍🦱 Mi Perfil</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  <h2>👤 Mi Perfil</h2>
+  <h2>🧑‍🦱 Mi Perfil</h2>
 
   <!-- ✅ Flashes bonitos -->
   {% with messages = get_flashed_messages(with_categories=true) %}
@@ -23,19 +23,21 @@
       <!-- ✅ Foto arriba, clicable para abrir -->
       <a href="{{ url_for('static', filename='profile_pics/' ~ user.profile_picture) }}" target="_blank">
         <img src="{{ url_for('static', filename='profile_pics/' ~ user.profile_picture) }}"
-             alt="Foto de perfil"
+             alt=""
              class="profile">
       </a>
     {% else %}
-      <p class="no-photo">No hay foto de perfil.</p>
+      <!-- Círculo vacío sin texto -->
+      <div class="profile empty"></div>
     {% endif %}
 
-    <!-- ✅ Botón de subir foto -->
-    <label class="label-pretty" for="profile_picture">📷 Foto de Perfil</label>
-    <input type="file" id="profile_picture" name="profile_picture" accept="image/*" class="upload-btn">
+    <!-- ✅ Botón subir foto de perfil estilizado -->
+    <label class="label-pretty" for="profile_picture">Foto de Perfil</label>
+    <label for="profile_picture" class="upload-btn">Subir Foto de Perfil</label>
+    <input type="file" id="profile_picture" name="profile_picture" accept="image/*" class="hidden-file">
 
     <!-- ✅ Bio abajo -->
-    <label class="label-pretty" for="bio">📝 Bio</label>
+    <label class="label-pretty" for="bio">Bio</label>
     <textarea id="bio" name="bio" rows="4" placeholder="Contanos algo de vos...">{{ user.bio }}</textarea>
 
     <button type="submit" class="save-btn">Guardar cambios</button>

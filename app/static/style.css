@@ -74,6 +74,16 @@ p {
   margin: 10px auto;
 }
 
+/* ✅ Círculo vacío cuando no hay foto */
+.profile.empty {
+  background: transparent;
+}
+
+/* ✅ Ocultar input de archivo real */
+.hidden-file {
+  display: none;
+}
+
 /* ✅ Labels bonitos para bio y foto */
 .label-pretty {
   font-family: 'Segoe UI', sans-serif;
@@ -84,6 +94,7 @@ p {
 
 /* ✅ Botón subir foto de perfil */
 .upload-btn {
+  display: inline-block;
   background: #66bb6a;
   color: white;
   border: none;
@@ -92,6 +103,7 @@ p {
   cursor: pointer;
   font-weight: bold;
   transition: background-color 0.2s;
+  text-align: center;
 }
 
 .upload-btn:hover {
