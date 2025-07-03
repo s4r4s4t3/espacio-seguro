@@ -16,12 +16,13 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(256), nullable=False)
 
-    # ✅ Nuevo campo: Bio
+    # ✅ Bio del perfil
     bio = db.Column(db.String(300), default="")
 
-    # ✅ Nuevo campo: Ruta foto de perfil
+    # ✅ Foto de perfil
     profile_picture = db.Column(db.String(300), default="default.jpg")
 
+    # ✅ Relaciones
     sent_messages = db.relationship('Message',
                                     foreign_keys='Message.sender_id',
                                     backref='sender',
@@ -50,17 +51,20 @@ class FriendRequest(db.Model):
     status = db.Column(db.String(10), default='pending')  # pending, accepted, rejected
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
+
 # --------------------
-# Mensajes Privados
+# Mensajes (Global y Privado)
 # --------------------
 class Message(db.Model):
     __tablename__ = 'message'
 
     id = db.Column(db.Integer, primary_key=True)
     sender_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    receiver_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    content = db.Column(db.Text, nullable=False)
+    receiver_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)  # Null = Chat Global
+    content = db.Column(db.Text, nullable=True)
+    image_url = db.Column(db.String(500), nullable=True)   # ✅ Soporta imágenes Cloudinary
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
 
 # --------------------
 # Entradas del Diario Personal
@@ -72,6 +76,7 @@ class DiaryEntry(db.Model):
     content = db.Column(db.Text, nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
 
 # --------------------
 # Botón de Pánico - Logs

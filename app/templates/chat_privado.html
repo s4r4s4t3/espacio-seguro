@@ -5,54 +5,6 @@
   <title>Chat con {{ friend.username }}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
-  <style>
-    .chat-box {
-      background: #fff;
-      padding: 15px;
-      border-radius: 10px;
-      max-height: 400px;
-      overflow-y: auto;
-      margin-bottom: 15px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-    }
-
-    .mensaje {
-      margin: 10px 0;
-      padding: 10px 15px;
-      border-radius: 15px;
-      max-width: 70%;
-      word-wrap: break-word;
-    }
-
-    .yo {
-      background: #c8e6c9;
-      align-self: flex-end;
-      text-align: right;
-      margin-left: auto;
-    }
-
-    .otro {
-      background: #e0e0e0;
-      align-self: flex-start;
-      text-align: left;
-      margin-right: auto;
-    }
-
-    .mensajes {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    form {
-      display: flex;
-      gap: 10px;
-    }
-
-    input[type="text"] {
-      flex: 1;
-    }
-  </style>
 </head>
 <body>
   <h2>💬 Chat con {{ friend.username }}</h2>
@@ -61,53 +13,90 @@
     {% for message in messages %}
       <div class="mensaje {% if message.sender.id == current_user.id %}yo{% else %}otro{% endif %}">
         <strong>{{ message.sender.username }}:</strong><br>
-        {{ message.content }}
+        {% if message.content %}
+          <p>{{ message.content }}</p>
+        {% endif %}
+        {% if message.image_url %}
+          <img src="{{ message.image_url }}" class="chat-image">
+        {% endif %}
       </div>
     {% endfor %}
   </div>
 
-  <form id="formulario">
-    <input type="text" id="mensaje" placeholder="Escribí tu mensaje..." required>
+  <form id="formulario" enctype="multipart/form-data">
+    <input type="text" id="mensaje" placeholder="Escribí tu mensaje...">
+    <input type="file" id="imagen" accept="image/*">
     <button type="submit">Enviar</button>
   </form>
 
   <p><a href="/amigos">⬅ Volver a amigos</a></p>
 
   <script>
-  const socket = io();
-  const mensajes = document.getElementById('mensajes');
-  const formulario = document.getElementById('formulario');
-  const input = document.getElementById('mensaje');
+    const socket = io();
+    const mensajes = document.getElementById('mensajes');
+    const formulario = document.getElementById('formulario');
+    const inputMensaje = document.getElementById('mensaje');
+    const inputImagen = document.getElementById('imagen');
 
-  // Convertimos en string para evitar errores de sintaxis en el editor
-  const sender_id = "{{ current_user.id }}";
-  const receiver_id = "{{ friend_id }}";
+    const sender_id = "{{ current_user.id }}";
+    const receiver_id = "{{ friend.id }}";
 
-  formulario.addEventListener('submit', (e) => {
-    e.preventDefault();
-    if (input.value.trim() !== "") {
-      socket.emit('mensaje_privado', {
-        sender_id: sender_id,
-        receiver_id: receiver_id,
-        content: input.value
+    formulario.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const mensaje = inputMensaje.value.trim();
+      const imagen = inputImagen.files[0];
+
+      if (!mensaje && !imagen) {
+        alert("Debes escribir un mensaje o subir una imagen.");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('content', mensaje);
+      formData.append('receiver_id', receiver_id);
+      if (imagen) {
+        formData.append('image', imagen);
+      }
+
+      const response = await fetch('/send_message_privado', {
+        method: 'POST',
+        body: formData
       });
-      input.value = '';
-    }
-  });
 
-  socket.on('mensaje_privado', (data) => {
-    if (
-      (data.sender_id == sender_id && data.receiver_id == receiver_id) ||
-      (data.sender_id == receiver_id && data.receiver_id == sender_id)
-    ) {
-      const div = document.createElement('div');
-      div.className = 'mensaje ' + (data.sender_id == sender_id ? 'yo' : 'otro');
-      div.innerHTML = `<strong>${data.sender_username}:</strong><br>${data.content}`;
-      mensajes.appendChild(div);
-      mensajes.scrollTop = mensajes.scrollHeight;
-    }
-  });
-</script>
+      const result = await response.json();
 
+      socket.emit('mensaje_privado', result);
+
+      inputMensaje.value = '';
+      inputImagen.value = '';
+    });
+
+    socket.on('mensaje_privado', (data) => {
+      if (
+        (data.sender_id == sender_id && data.receiver_id == receiver_id) ||
+        (data.sender_id == receiver_id && data.receiver_id == sender_id)
+      ) {
+        const div = document.createElement('div');
+        div.className = 'mensaje ' + (data.sender_id == sender_id ? 'yo' : 'otro');
+
+        if (data.content) {
+          const p = document.createElement('p');
+          p.textContent = data.content;
+          div.appendChild(p);
+        }
+
+        if (data.image_url) {
+          const img = document.createElement('img');
+          img.src = data.image_url;
+          img.className = 'chat-image';
+          div.appendChild(img);
+        }
+
+        mensajes.appendChild(div);
+        mensajes.scrollTop = mensajes.scrollHeight;
+      }
+    });
+  </script>
 </body>
 </html>
