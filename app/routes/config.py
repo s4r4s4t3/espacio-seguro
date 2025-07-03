@@ -20,7 +20,7 @@ config_bp = Blueprint('config', __name__)
 
 UPLOAD_FOLDER = os.path.join('app', 'static', 'profile_pics')
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
-MAX_FILE_SIZE = 2 * 1024 * 1024  # 2 MB
+MAX_FILE_SIZE = 8 * 1024 * 1024  # 8 MB
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
