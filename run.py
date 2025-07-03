@@ -1,11 +1,9 @@
-# run.py
 import eventlet
 eventlet.monkey_patch()
 
 from app import create_app, socketio, db
 from app.models import User, Message
 
-# Crea la app Flask
 app = create_app()
 
 # Evento: mensaje privado
@@ -36,7 +34,6 @@ def manejar_mensaje(msg):
     print("Mensaje recibido:", msg)
     socketio.emit('mensaje', msg)
 
-# Ejecutar la app
 if __name__ == "__main__":
     socketio.run(app, debug=True)
 
