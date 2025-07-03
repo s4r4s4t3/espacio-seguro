@@ -20,7 +20,7 @@ config_bp = Blueprint('config', __name__)
 
 UPLOAD_FOLDER = os.path.join('app', 'static', 'profile_pics')
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
-MAX_FILE_SIZE = 8 * 1024 * 1024  # 8 MB
+MAX_FILE_SIZE = 10 * 1024 * 1024  # 10 MB
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -63,11 +63,16 @@ def config():
                 file.seek(0)
 
                 if file_length > MAX_FILE_SIZE:
-                    flash('La imagen excede el tamaño máximo de 2 MB.', 'danger')
+                    flash('La imagen excede el tamaño máximo de 10 MB.', 'danger')
                     return redirect(url_for('config.config'))
 
                 try:
-                    upload_result = cloudinary.uploader.upload(file)
+                    upload_result = cloudinary.uploader.upload(
+                        file,
+                        transformation=[
+                            {'quality': 'auto', 'fetch_format': 'auto'}
+                        ]
+                    )
                     user.profile_picture = upload_result['secure_url']
                     flash('Imagen subida a Cloudinary correctamente.', 'success')
                 except Exception as e:

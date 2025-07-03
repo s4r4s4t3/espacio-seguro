@@ -41,7 +41,7 @@
 
     <!-- ✅ Botón para eliminar foto de perfil -->
     {% if user.profile_picture %}
-      <button type="submit" name="delete_photo" value="1" class="delete-btn">Eliminar Foto de Perfil</button>
+      <button type="submit" name="delete_photo" value="1" class="upload-btn">Eliminar Foto de Perfil</button>
     {% endif %}
 
     <label class="label-pretty" for="bio">Bio</label>
@@ -59,8 +59,8 @@
   <p><a href="{{ url_for('home.home') }}">Volver al inicio</a></p>
 
   <script>
-    // ✅ Mostrar mensaje de éxito al guardar cambios
     document.addEventListener('DOMContentLoaded', function() {
+      // ✅ Flashes
       const flashMessages = document.querySelectorAll('.flash.success');
       if (flashMessages.length > 0) {
         setTimeout(() => {
@@ -88,6 +88,16 @@
           modal.style.display = "none";
         }
       }
+
+      // ✅ Vista previa inmediata de la imagen
+      const fileInput = document.getElementById('profile_picture');
+      fileInput.addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+          const previewUrl = URL.createObjectURL(file);
+          img.src = previewUrl;
+        }
+      });
     });
   </script>
 </body>

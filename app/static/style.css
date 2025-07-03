@@ -219,7 +219,7 @@ p {
 }
 
 .delete-btn {
-  background: #f44336;
+  background: #66bb6a;
   color: white;
   border: none;
   padding: 10px;
@@ -230,5 +230,5 @@ p {
 }
 
 .delete-btn:hover {
-  background: #d32f2f;
+  background: #388e3c;
 }
