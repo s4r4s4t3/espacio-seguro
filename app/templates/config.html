@@ -1,4 +1,3 @@
-<!-- config.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -39,6 +38,11 @@
     <label class="label-pretty" for="profile_picture">Foto de Perfil</label>
     <label for="profile_picture" class="upload-btn">Subir Foto de Perfil</label>
     <input type="file" id="profile_picture" name="profile_picture" accept="image/*" class="hidden-file">
+
+    <!-- ✅ Botón para eliminar foto de perfil -->
+    {% if user.profile_picture %}
+      <button type="submit" name="delete_photo" value="1" class="delete-btn">Eliminar Foto de Perfil</button>
+    {% endif %}
 
     <label class="label-pretty" for="bio">Bio</label>
     <textarea id="bio" name="bio" rows="4" placeholder="Contanos algo de vos...">{{ user.bio }}</textarea>
