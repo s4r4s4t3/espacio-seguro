@@ -1,3 +1,4 @@
+<!-- config.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -20,17 +21,19 @@
   <form method="POST" enctype="multipart/form-data">
     {% if user.profile_picture %}
       {% if 'http' in user.profile_picture %}
-        <a href="{{ user.profile_picture }}" target="_blank" rel="noopener noreferrer">
-          <img src="{{ user.profile_picture }}" alt="" class="profile">
-        </a>
+        <div class="profile-container">
+          <img src="{{ user.profile_picture }}" alt="" class="profile" id="profileImage">
+        </div>
       {% else %}
-        <a href="{{ url_for('static', filename='profile_pics/' ~ user.profile_picture) }}" target="_blank">
-          <img src="{{ url_for('static', filename='profile_pics/' ~ user.profile_picture) }}" alt="" class="profile">
-        </a>
+        <div class="profile-container">
+          <img src="{{ url_for('static', filename='profile_pics/' ~ user.profile_picture) }}" alt="" class="profile" id="profileImage">
+        </div>
       {% endif %}
     {% else %}
       <!-- ✅ Imagen por defecto -->
-      <img src="{{ url_for('static', filename='profile_pics/default.png') }}" alt="" class="profile">
+      <div class="profile-container">
+        <img src="{{ url_for('static', filename='profile_pics/default.png') }}" alt="" class="profile" id="profileImage">
+      </div>
     {% endif %}
 
     <label class="label-pretty" for="profile_picture">Foto de Perfil</label>
@@ -43,17 +46,45 @@
     <button type="submit" class="save-btn">Guardar cambios</button>
   </form>
 
+  <!-- ✅ Modal Lightbox -->
+  <div id="modal" class="modal">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="modalImage">
+  </div>
+
   <p><a href="{{ url_for('home.home') }}">Volver al inicio</a></p>
+
+  <script>
+    // ✅ Mostrar mensaje de éxito al guardar cambios
+    document.addEventListener('DOMContentLoaded', function() {
+      const flashMessages = document.querySelectorAll('.flash.success');
+      if (flashMessages.length > 0) {
+        setTimeout(() => {
+          flashMessages.forEach(msg => msg.remove());
+        }, 3000);
+      }
+
+      // ✅ Modal Lightbox
+      const modal = document.getElementById("modal");
+      const img = document.getElementById("profileImage");
+      const modalImg = document.getElementById("modalImage");
+      const closeBtn = document.getElementsByClassName("close")[0];
+
+      img.onclick = function(){
+        modal.style.display = "block";
+        modalImg.src = this.src;
+      }
+
+      closeBtn.onclick = function() {
+        modal.style.display = "none";
+      }
+
+      window.onclick = function(event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      }
+    });
+  </script>
 </body>
 </html>
-
-<script>
-  // ✅ Mostrar mensaje de éxito al guardar cambios
-  document.addEventListener('DOMContentLoaded', function() {
-    const flashMessages = document.querySelectorAll('.flash.success');
-    if (flashMessages.length > 0) {
-      setTimeout(() => {
-        flashMessages.forEach(msg => msg.remove());
-      }, 3000); // Eliminar mensaje después de 3 segundos
-    }
-  });
