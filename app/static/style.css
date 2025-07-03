@@ -62,29 +62,26 @@ p {
   font-size: 0.9em;
 }
 
-/* ✅ Foto de perfil redonda */
+/* ✅ Foto de perfil redonda con borde verde */
 .profile {
   width: 150px;
   height: 150px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #66bb6a;
+  border: 3px solid #4CAF50;
   box-shadow: 0 0 5px rgba(0,0,0,0.1);
   display: block;
   margin: 10px auto;
 }
 
-/* ✅ Círculo vacío cuando no hay foto */
 .profile.empty {
   background: transparent;
 }
 
-/* ✅ Ocultar input de archivo real */
 .hidden-file {
   display: none;
 }
 
-/* ✅ Labels bonitos para bio y foto */
 .label-pretty {
   font-family: 'Segoe UI', sans-serif;
   font-size: 1.1em;
@@ -92,7 +89,6 @@ p {
   color: #2e7d32;
 }
 
-/* ✅ Botón subir foto de perfil */
 .upload-btn {
   display: inline-block;
   background: #66bb6a;
@@ -110,14 +106,12 @@ p {
   background: #388e3c;
 }
 
-/* ✅ Texto "No hay foto" */
 .no-photo {
   color: #999;
   text-align: center;
   font-style: italic;
 }
 
-/* ✅ Flashes */
 .flash {
   padding: 10px 20px;
   margin: 10px auto;
@@ -144,7 +138,6 @@ p {
   border: 1px solid #bee5eb;
 }
 
-/* 🚨 Botón de Pánico custom */
 .panic-btn {
   background-color: red;
   color: white;
