@@ -21,11 +21,19 @@
   <form method="POST" enctype="multipart/form-data">
     {% if user.profile_picture %}
       <!-- ✅ Foto arriba, clicable para abrir -->
-      <a href="{{ url_for('static', filename='profile_pics/' ~ user.profile_picture) }}" target="_blank">
-        <img src="{{ url_for('static', filename='profile_pics/' ~ user.profile_picture) }}"
-             alt=""
-             class="profile">
-      </a>
+      {% if 'http' in user.profile_picture %}
+        <a href="{{ user.profile_picture }}" target="_blank">
+          <img src="{{ user.profile_picture }}"
+               alt=""
+               class="profile">
+        </a>
+      {% else %}
+        <a href="{{ url_for('static', filename='profile_pics/' ~ user.profile_picture) }}" target="_blank">
+          <img src="{{ url_for('static', filename='profile_pics/' ~ user.profile_picture) }}"
+               alt=""
+               class="profile">
+        </a>
+      {% endif %}
     {% else %}
       <!-- Círculo vacío sin texto -->
       <div class="profile empty"></div>
