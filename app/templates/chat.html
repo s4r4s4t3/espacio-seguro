@@ -2,18 +2,25 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Chat Global</title>
+  <title>💬 Chat Global</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
 </head>
 <body>
   <h2>💬 Chat Global</h2>
 
-  <div id="mensajes"></div>
+  <div id="mensajes">
+    <p class="placeholder-msg">No hay mensajes todavía...</p>
+  </div>
 
   <form id="formulario" enctype="multipart/form-data">
     <input type="text" id="mensaje" placeholder="Escribí tu mensaje..." autocomplete="off">
-    <input type="file" id="imagen" accept="image/*">
+    
+    <label class="upload-btn">
+      📷 Adjuntar imagen
+      <input type="file" id="imagen" accept="image/*" class="hidden-file">
+    </label>
+
     <button type="submit">Enviar</button>
   </form>
 
@@ -43,7 +50,6 @@
         formData.append('image', imagen);
       }
 
-      // ✅ Usamos fetch para POST al backend Flask
       const response = await fetch('/send_message_global', {
         method: 'POST',
         body: formData
@@ -76,6 +82,7 @@
 
       mensajes.appendChild(div);
       mensajes.scrollTop = mensajes.scrollHeight;
+      document.querySelector('.placeholder-msg')?.remove();
     });
   </script>
 </body>
