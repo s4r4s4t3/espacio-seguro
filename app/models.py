@@ -19,8 +19,8 @@ class User(UserMixin, db.Model):
     # ✅ Bio del perfil
     bio = db.Column(db.String(300), default="")
 
-    # ✅ Foto de perfil
-    profile_picture = db.Column(db.String(300), default="default.jpg")
+    # ✅ Foto de perfil - Forzamos default.png si no hay
+    profile_picture = db.Column(db.String(300), nullable=False, default="default.png")
 
     # ✅ Relaciones
     sent_messages = db.relationship('Message',

@@ -9,10 +9,21 @@
     <h2>Iniciar Sesión</h2>
     <form method="POST">
         <input type="text" name="username" placeholder="Usuario" required>
-        <input type="password" name="password" placeholder="Contraseña" required>
+
+        <input type="password" name="password" id="loginPassword" placeholder="Contraseña" required>
+        <label><input type="checkbox" id="toggleLoginPassword"> Ver contraseña</label>
+
         <button type="submit">Entrar</button>
     </form>
     <p>¿No tenés cuenta? <a href="/register">Registrate acá</a></p>
+
+    <script>
+      const toggleLoginPassword = document.getElementById('toggleLoginPassword');
+      const loginPassword = document.getElementById('loginPassword');
+
+      toggleLoginPassword.addEventListener('change', function () {
+        loginPassword.type = this.checked ? 'text' : 'password';
+      });
+    </script>
 </body>
 </html>
-

@@ -44,7 +44,7 @@ def register():
 
         hashed_password = generate_password_hash(password)
 
-        new_user = User(username=username, password=hashed_password)
+        new_user = User(username=username, password=hashed_password, profile_picture='default.png')
         db.session.add(new_user)
         db.session.commit()
 
@@ -61,4 +61,5 @@ def register():
 def logout():
     logout_user()
     return redirect(url_for('auth.login'))
+
 

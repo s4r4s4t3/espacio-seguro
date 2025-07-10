@@ -25,7 +25,7 @@
         </div>
       {% else %}
         <div class="profile-container">
-          <img src="{{ url_for('static', filename='profile_pics/' ~ user.profile_picture) }}" alt="" class="profile" id="profileImage">
+          <img src="{{ url_for('static', filename='profile_pics/' ~ (user.profile_picture or 'default.png')) }}" alt="" class="profile" id="profileImage">
         </div>
       {% endif %}
     {% else %}

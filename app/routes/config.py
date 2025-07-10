@@ -49,7 +49,7 @@ def config():
                     cloudinary.uploader.destroy(public_id)
                 except Exception:
                     pass  # No detener flujo si falla
-            user.profile_picture = None
+            user.profile_picture = 'default.png'  # ✅ Siempre dejar default.png
             flash('Foto de perfil eliminada.', 'success')
             db.session.commit()
             return redirect(url_for('config.config'))
