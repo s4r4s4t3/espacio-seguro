@@ -10,12 +10,26 @@
   <h2>💬 Chat Global</h2>
 
   <div id="mensajes">
-    <p class="placeholder-msg">No hay mensajes todavía...</p>
+    {% if messages %}
+      {% for msg in messages %}
+        <div class="mensaje-global">
+          {% if msg.content %}
+            <p>{{ msg.content }}</p>
+          {% endif %}
+          {% if msg.image_url %}
+            <img src="{{ msg.image_url }}" alt="Imagen" class="chat-image">
+          {% endif %}
+          <p class="mensaje-meta">👤 {{ msg.sender_id }} | 🕒 {{ msg.timestamp }}</p>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p class="placeholder-msg">No hay mensajes todavía...</p>
+    {% endif %}
   </div>
 
   <form id="formulario" enctype="multipart/form-data">
     <input type="text" id="mensaje" placeholder="Escribí tu mensaje..." autocomplete="off">
-    
+
     <label class="upload-btn">
       📷 Adjuntar imagen
       <input type="file" id="imagen" accept="image/*" class="hidden-file">
@@ -79,6 +93,11 @@
         img.className = 'chat-image';
         div.appendChild(img);
       }
+
+      const meta = document.createElement('p');
+      meta.className = 'mensaje-meta';
+      meta.textContent = `👤 ${data.sender_username} | 🕒 ahora`;
+      div.appendChild(meta);
 
       mensajes.appendChild(div);
       mensajes.scrollTop = mensajes.scrollHeight;

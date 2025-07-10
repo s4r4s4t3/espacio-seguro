@@ -64,6 +64,7 @@ class Message(db.Model):
     content = db.Column(db.Text, nullable=True)
     image_url = db.Column(db.String(500), nullable=True)   # ✅ Soporta imágenes Cloudinary
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    is_read = db.Column(db.Boolean, default=False)  # ✅ Nuevo campo para marcar como leído
 
 
 # --------------------
@@ -88,3 +89,7 @@ class PanicLog(db.Model):
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     message = db.Column(db.String(256), nullable=False)
+    is_read = db.Column(db.Boolean, default=False)  # ✅ Nuevo campo para marcar como leído
+    location = db.Column(db.String(256), nullable=True)  # ✅ Ubicación opcional
+    user = db.relationship('User', backref='panic_logs', lazy=True)
+    
