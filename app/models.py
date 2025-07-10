@@ -89,7 +89,10 @@ class PanicLog(db.Model):
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     message = db.Column(db.String(256), nullable=False)
-    is_read = db.Column(db.Boolean, default=False)  # ✅ Nuevo campo para marcar como leído
+    is_read = db.Column(db.Boolean, default=False)  # ✅ Nuevo campo para leído
     location = db.Column(db.String(256), nullable=True)  # ✅ Ubicación opcional
-    user = db.relationship('User', backref='panic_logs', lazy=True)
+
+    # ❌ NO uses user = db.relationship(...) aquí
+    # La relación ya está definida en User: panic_logs = db.relationship('PanicLog', backref='author')
+
     
