@@ -6,13 +6,12 @@ from ..models import db, PanicLog, User, Message
 
 home_bp = Blueprint('home', __name__)
 
-# Ruta raíz → ahora sirve la plantilla home.html y requiere login
+# 🚩 NUEVO: Ruta raíz → Landing pública (sin login)
 @home_bp.route('/')
-@login_required
-def index():
-    return render_template("home.html", user=current_user)
+def landing():
+    return render_template("landing.html")
 
-# Alternativa: ruta /home (opcional)
+# Ruta /home → solo para usuarios logueados (tu dashboard)
 @home_bp.route('/home')
 @login_required
 def home():
@@ -62,7 +61,6 @@ def panico():
 @home_bp.route('/prueba')
 def prueba():
     return "<h1>✅ Ruta de prueba pública funcionando</h1>"
-
 
 
 

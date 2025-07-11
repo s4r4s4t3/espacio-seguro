@@ -46,7 +46,7 @@ def create_app():
     app.register_blueprint(auth_bp)
 
     from app.routes.home import home_bp
-    app.register_blueprint(home_bp)
+    app.register_blueprint(home_bp, url_prefix="/")  # 🗝️ Se asegura que la landing / funcione
 
     from app.routes.chat import chat_bp
     app.register_blueprint(chat_bp)
@@ -61,4 +61,3 @@ def create_app():
     app.register_blueprint(config_bp)
 
     return app
-

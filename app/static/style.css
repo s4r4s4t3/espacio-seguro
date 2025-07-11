@@ -329,3 +329,97 @@ button:hover {
   transform: scale(1.05);
 }
 
+/* === LANDING PAGE === */
+header {
+  width: 100%;
+  max-width: 1200px;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo h1 {
+  font-size: 2em;
+  color: #2e7d32;
+  margin: 0;
+}
+
+.language-selector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.language-selector select {
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1em;
+}
+
+.hero {
+  text-align: center;
+  margin: 60px 20px;
+}
+
+.hero h2 {
+  font-size: 2em;
+  margin-bottom: 15px;
+  color: #2e7d32;
+}
+
+.hero p {
+  font-size: 1.2em;
+  color: #555;
+  max-width: 600px;
+  margin: 0 auto 30px auto;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-block;
+  background: #66bb6a;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 5px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.btn:hover {
+  background: #388e3c;
+}
+
+.btn.secondary {
+  background: #2e7d32;
+}
+
+.btn.secondary:hover {
+  background: #1b5e20;
+}
+
+footer {
+  margin-top: auto;
+  text-align: center;
+  padding: 40px 20px;
+  font-size: 0.9em;
+  color: #555;
+}
+
+footer a {
+  color: #2e7d32;
+  margin: 0 5px;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
