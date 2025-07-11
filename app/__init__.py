@@ -59,5 +59,9 @@ def create_app():
 
     from app.routes.config import config_bp
     app.register_blueprint(config_bp)
+    
+    from app.routes.legales import legales_bp
+    app.register_blueprint(legales_bp)
+
 
     return app

@@ -2,22 +2,25 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Espacio Seguro - Tu lugar de contención</title>
+  <title>SafeSpace - Your place of support</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  <!-- Header con logo y selector idioma -->
+  <!-- Header con logo y selector idioma con banderas -->
   <header>
     <div class="logo">
-      <h1>Espacio Seguro</h1>
+      <h1>SafeSpace</h1>
     </div>
-    <div class="language-selector">
-      <label for="language">🌐 Idioma:</label>
-      <select id="language" name="language">
-        <option value="es" selected>Español</option>
-        <option value="en">English</option>
-        <option value="pt">Português</option>
-      </select>
+    <div class="language-selector dropdown">
+      <button class="dropbtn">🌐 Idioma</button>
+      <div class="dropdown-content">
+        <a href="#"><img src="{{ url_for('static', filename='flags/es.png') }}" alt="Español"> Español</a>
+        <a href="#"><img src="{{ url_for('static', filename='flags/en.png') }}" alt="English"> English</a>
+        <a href="#"><img src="{{ url_for('static', filename='flags/pt.png') }}" alt="Português"> Português</a>
+        <a href="#"><img src="{{ url_for('static', filename='flags/de.png') }}" alt="Deutsch"> Deutsch</a>
+        <a href="#"><img src="{{ url_for('static', filename='flags/fr.png') }}" alt="Français"> Français</a>
+        <a href="#"><img src="{{ url_for('static', filename='flags/it.png') }}" alt="Italiano"> Italiano</a>
+      </div>
     </div>
   </header>
 
@@ -30,14 +33,20 @@
         <a href="{{ url_for('auth.login') }}" class="btn">Iniciar Sesión</a>
         <a href="{{ url_for('auth.register') }}" class="btn secondary">Crear Cuenta</a>
       </div>
+      <div class="google-btn">
+        <a href="/login/google" class="btn google">Iniciar sesión con Google</a>
+      </div>
     </section>
   </main>
 
-  <!-- Footer profesional -->
+  <!-- Footer con enlaces reales -->
   <footer>
-    <p>&copy; 2025 Espacio Seguro. Todos los derechos reservados.</p>
-    <p><a href="#">Términos y Condiciones</a> | <a href="#">Política de Privacidad</a></p>
-    <p>Siguenos en <a href="#">Instagram</a> y <a href="#">TikTok</a></p>
+    <p>&copy; 2025 SafeSpace. Todos los derechos reservados.</p>
+    <p>
+      <a href="{{ url_for('legales.terms') }}">Términos y Condiciones</a> |
+      <a href="{{ url_for('legales.privacy') }}">Política de Privacidad</a>
+    </p>
+    <p>Síguenos en Instagram y TikTok</p>
   </footer>
 </body>
 </html>
