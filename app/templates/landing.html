@@ -34,7 +34,10 @@
         <a href="{{ url_for('auth.register') }}" class="btn secondary">Crear Cuenta</a>
       </div>
       <div class="google-btn">
-        <a href="/login/google" class="btn google">Iniciar sesión con Google</a>
+        <a href="/login/google" class="btn google">
+          <img src="{{ url_for('static', filename='icons/google.svg') }}" alt="Google Icon">
+          Iniciar sesión con Google
+        </a>
       </div>
     </section>
   </main>
@@ -50,3 +53,4 @@
   </footer>
 </body>
 </html>
+

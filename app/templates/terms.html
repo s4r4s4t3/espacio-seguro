@@ -6,7 +6,29 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  <h2>Términos y Condiciones</h2>
-  <p>Aquí irán tus términos legales cuando estén listos.</p>
+  <header>
+    <div class="logo">
+      <h1>SafeSpace</h1>
+    </div>
+  </header>
+
+  <main>
+    <section class="legal">
+      <h2>Términos y Condiciones</h2>
+      <p>Aquí irán tus términos legales completos cuando estén listos.</p>
+      <p>Este documento describe los términos de uso de la plataforma, las responsabilidades y derechos de los usuarios y de SafeSpace.</p>
+      <p>Recomendación: redactar con ayuda de un profesional legal para adaptarse a la normativa local.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 SafeSpace. Todos los derechos reservados.</p>
+    <p>
+      <a href="{{ url_for('legales.terms') }}">Términos y Condiciones</a> |
+      <a href="{{ url_for('legales.privacy') }}">Política de Privacidad</a>
+    </p>
+    <p>Síguenos en Instagram y TikTok</p>
+  </footer>
 </body>
 </html>
+
