@@ -9,7 +9,7 @@ from app import db
 auth_bp = Blueprint('auth', __name__)
 
 # ----------------------------
-# Ruta de Login
+# Ruta de Login Normal
 # ----------------------------
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
@@ -62,4 +62,13 @@ def logout():
     logout_user()
     return redirect(url_for('auth.login'))
 
+# ----------------------------
+# Ruta de Login con Google
+# ----------------------------
+@auth_bp.route('/login/google')
+def login_google():
+    # 👇 Aquí pondrás la lógica de OAuth real
+    # Por ahora, dejaremos un redirect de prueba
+    flash('Función de login con Google aún en desarrollo.')
+    return redirect(url_for('auth.login'))
 
