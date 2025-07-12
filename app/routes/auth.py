@@ -1,10 +1,14 @@
 # app/routes/auth.py
 
 from flask import Blueprint, render_template, redirect, url_for, request, flash
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from app.models import User
 from app import db
+
+# 🚫 OAuth Google comentado hasta que actives credenciales reales
+# from flask_dance.contrib.google import make_google_blueprint, google
+# from flask import current_app as app
 
 auth_bp = Blueprint('auth', __name__)
 
@@ -63,12 +67,32 @@ def logout():
     return redirect(url_for('auth.login'))
 
 # ----------------------------
-# Ruta de Login con Google
+# 🚫 Ruta de Login con Google comentada
 # ----------------------------
+"""
 @auth_bp.route('/login/google')
 def login_google():
-    # 👇 Aquí pondrás la lógica de OAuth real
-    # Por ahora, dejaremos un redirect de prueba
-    flash('Función de login con Google aún en desarrollo.')
-    return redirect(url_for('auth.login'))
+    if not google.authorized:
+        return redirect(url_for("google.login"))
+
+    resp = google.get("/oauth2/v2/userinfo")
+    if not resp.ok:
+        flash("Error al obtener datos de Google.")
+        return redirect(url_for('auth.login'))
+
+    user_info = resp.json()
+    email = user_info["email"]
+    username = user_info.get("name", email.split("@")[0])
+
+    user = User.query.filter_by(username=username).first()
+    if not user:
+        new_user = User(username=username, password="oauth_google", profile_picture='default.png')
+        db.session.add(new_user)
+        db.session.commit()
+        user = new_user
+
+    login_user(user)
+    flash(f"Bienvenido {username}!")
+    return redirect(url_for('home.index'))
+"""
 
