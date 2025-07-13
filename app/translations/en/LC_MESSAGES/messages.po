@@ -42,3 +42,5 @@ msgstr "Privacy Policy"
 msgid "Siguenos en Instagram y TikTok"
 msgstr "Follow us on Instagram and TikTok"
 
+msgid "© 2025 SafeSpace. Todos los derechos reservados."
+msgstr "© 2025 SafeSpace. All rights reserved."
