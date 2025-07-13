@@ -21,7 +21,19 @@
           <img src="{{ url_for('static', filename='flags/en.png') }}" alt="English"> English
         </a>
         <a href="{{ url_for('home.set_language', lang_code='pt') }}">
-          <img src="{{ url_for('static', filename='flags/br.png') }}" alt="Português"> Português
+          <img src="{{ url_for('static', filename='flags/pt.png') }}" alt="Português"> Português
+        </a>
+        <a href="{{ url_for('home.set_language', lang_code='br') }}">
+          <img src="{{ url_for('static', filename='flags/br.png') }}" alt="Português (Brasil)"> Português (Brasil)
+        </a>
+        <a href="{{ url_for('home.set_language', lang_code='de') }}">
+          <img src="{{ url_for('static', filename='flags/de.png') }}" alt="Deutsch"> Deutsch
+        </a>
+        <a href="{{ url_for('home.set_language', lang_code='fr') }}">
+          <img src="{{ url_for('static', filename='flags/fr.png') }}" alt="Français"> Français
+        </a>
+        <a href="{{ url_for('home.set_language', lang_code='it') }}">
+          <img src="{{ url_for('static', filename='flags/it.png') }}" alt="Italiano"> Italiano
         </a>
       </div>
     </div>
