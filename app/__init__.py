@@ -62,11 +62,12 @@ def create_app():
     from app.routes.legales import legales_bp
     app.register_blueprint(legales_bp)
 
+    # ✅ Flask-Babel selector correcto para version 2.x
     @babel.localeselector
     def get_locale():
         return request.cookies.get('lang') or app.config['BABEL_DEFAULT_LOCALE']
 
-    # 🚫 Registrar Blueprint OAuth Google comentado
+    # 🚫 Registrar Blueprint OAuth Google comentado hasta activar
     """
     from config import Config
     google_bp = make_google_blueprint(
@@ -79,4 +80,3 @@ def create_app():
     """
 
     return app
-
