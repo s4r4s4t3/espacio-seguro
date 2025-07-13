@@ -1,11 +1,12 @@
 # app/__init__.py
 
 import os
-from flask import Flask
+from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_socketio import SocketIO
 from dotenv import load_dotenv
+from flask_babel import Babel
 
 # 🚫 OAuth Google comentado hasta activar
 # from flask_dance.contrib.google import make_google_blueprint
@@ -15,6 +16,7 @@ load_dotenv()
 db = SQLAlchemy()
 socketio = SocketIO(cors_allowed_origins="*")
 login_manager = LoginManager()
+babel = Babel()
 
 def create_app():
     app = Flask(__name__)
@@ -26,6 +28,7 @@ def create_app():
     db.init_app(app)
     socketio.init_app(app, async_mode='eventlet')
     login_manager.init_app(app)
+    babel.init_app(app)
 
     login_manager.login_view = 'auth.login'
 
@@ -58,6 +61,10 @@ def create_app():
 
     from app.routes.legales import legales_bp
     app.register_blueprint(legales_bp)
+
+    @babel.localeselector
+    def get_locale():
+        return request.cookies.get('lang') or app.config['BABEL_DEFAULT_LOCALE']
 
     # 🚫 Registrar Blueprint OAuth Google comentado
     """

@@ -1,0 +1,44 @@
+# Spanish translations for PROJECT.
+# Copyright (C) 2025 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# Ezequiel Sarasate <sarasate8@gmail.com>, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2025-07-13 16:32-0300\n"
+"PO-Revision-Date: 2025-07-13 16:17-0300\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: es\n"
+"Language-Team: es <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+msgid "Tu espacio de contencion y apoyo real"
+msgstr "Tu espacio de contencion y apoyo real"
+
+msgid "Conecta con personas que entienden lo que sentis, sin juicios."
+msgstr "Conecta con personas que entienden lo que sentis, sin juicios."
+
+msgid "Iniciar Sesion"
+msgstr "Iniciar Sesion"
+
+msgid "Crear Cuenta"
+msgstr "Crear Cuenta"
+
+msgid "Iniciar sesion con Google"
+msgstr "Iniciar sesion con Google"
+
+msgid "Terminos y Condiciones"
+msgstr "Terminos y Condiciones"
+
+msgid "Politica de Privacidad"
+msgstr "Politica de Privacidad"
+
+msgid "Siguenos en Instagram y TikTok"
+msgstr "Siguenos en Instagram y TikTok"
+

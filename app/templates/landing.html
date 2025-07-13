@@ -14,12 +14,15 @@
     <div class="language-selector dropdown">
       <button class="dropbtn">🌐 Idioma</button>
       <div class="dropdown-content">
-        <a href="#"><img src="{{ url_for('static', filename='flags/es.png') }}" alt="Español"> Español</a>
-        <a href="#"><img src="{{ url_for('static', filename='flags/en.png') }}" alt="English"> English</a>
-        <a href="#"><img src="{{ url_for('static', filename='flags/br.png') }}" alt="Português"> Português</a>
-        <a href="#"><img src="{{ url_for('static', filename='flags/de.png') }}" alt="Deutsch"> Deutsch</a>
-        <a href="#"><img src="{{ url_for('static', filename='flags/fr.png') }}" alt="Français"> Français</a>
-        <a href="#"><img src="{{ url_for('static', filename='flags/it.png') }}" alt="Italiano"> Italiano</a>
+        <a href="{{ url_for('home.set_language', lang_code='es') }}">
+          <img src="{{ url_for('static', filename='flags/es.png') }}" alt="Español"> Español
+        </a>
+        <a href="{{ url_for('home.set_language', lang_code='en') }}">
+          <img src="{{ url_for('static', filename='flags/en.png') }}" alt="English"> English
+        </a>
+        <a href="{{ url_for('home.set_language', lang_code='pt') }}">
+          <img src="{{ url_for('static', filename='flags/br.png') }}" alt="Português"> Português
+        </a>
       </div>
     </div>
   </header>
@@ -27,30 +30,29 @@
   <!-- Hero principal -->
   <main>
     <section class="hero">
-      <h2>Tu espacio de contención y apoyo real</h2>
-      <p>Conecta con personas que entienden lo que sentís, sin juicios.</p>
+      <h2>{{ _('Tu espacio de contencion y apoyo real') }}</h2>
+      <p>{{ _('Conecta con personas que entienden lo que sentis, sin juicios.') }}</p>
       <div class="cta-buttons">
-        <a href="{{ url_for('auth.login') }}" class="btn">Iniciar Sesión</a>
-        <a href="{{ url_for('auth.register') }}" class="btn secondary">Crear Cuenta</a>
+        <a href="{{ url_for('auth.login') }}" class="btn">{{ _('Iniciar Sesion') }}</a>
+        <a href="{{ url_for('auth.register') }}" class="btn secondary">{{ _('Crear Cuenta') }}</a>
       </div>
       <div class="google-btn">
         <a href="/login/google" class="btn google">
           <img src="{{ url_for('static', filename='icons/google.svg') }}" alt="Google Icon">
-          Iniciar sesión con Google
+          {{ _('Iniciar sesion con Google') }}
         </a>
       </div>
     </section>
   </main>
 
-  <!-- Footer con enlaces reales -->
+  <!-- Footer -->
   <footer>
     <p>&copy; 2025 SafeSpace. Todos los derechos reservados.</p>
     <p>
-      <a href="{{ url_for('legales.terms') }}">Términos y Condiciones</a> |
-      <a href="{{ url_for('legales.privacy') }}">Política de Privacidad</a>
+      <a href="{{ url_for('legales.terms') }}">{{ _('Terminos y Condiciones') }}</a> |
+      <a href="{{ url_for('legales.privacy') }}">{{ _('Politica de Privacidad') }}</a>
     </p>
-    <p>Síguenos en Instagram y TikTok</p>
+    <p>{{ _('Siguenos en Instagram y TikTok') }}</p>
   </footer>
 </body>
 </html>
-
