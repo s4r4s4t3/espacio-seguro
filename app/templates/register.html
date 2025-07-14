@@ -2,21 +2,21 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Registro - Espacio Seguro</title>
+    <title>{{ _('Registro - Espacio Seguro') }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h2>Crear Cuenta</h2>
+    <h2>{{ _('Crear Cuenta') }}</h2>
     <form method="POST">
-        <input type="text" name="username" placeholder="Usuario" required>
-        <input type="email" name="email" placeholder="Email" required>
+        <input type="text" name="username" placeholder="{{ _('Usuario') }}" required>
+        <input type="email" name="email" placeholder="{{ _('Email') }}" required>
 
-        <input type="password" name="password" id="registerPassword" placeholder="Contraseña" required>
-        <label><input type="checkbox" id="toggleRegisterPassword"> Ver contraseña</label>
+        <input type="password" name="password" id="registerPassword" placeholder="{{ _('Contraseña') }}" required>
+        <label><input type="checkbox" id="toggleRegisterPassword"> {{ _('Ver contraseña') }}</label>
 
-        <button type="submit">Registrar</button>
+        <button type="submit">{{ _('Registrar') }}</button>
     </form>
-    <p>¿Ya tenés cuenta? <a href="/login">Ingresá acá</a></p>
+    <p>{{ _('¿Ya tenés cuenta?') }} <a href="/login">{{ _('Ingresá acá') }}</a></p>
 
     <script>
       const toggleRegisterPassword = document.getElementById('toggleRegisterPassword');

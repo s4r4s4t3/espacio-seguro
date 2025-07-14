@@ -2,20 +2,20 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Login - Espacio Seguro</title>
+    <title>{{ _('Login - Espacio Seguro') }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h2>Iniciar Sesión</h2>
+    <h2>{{ _('Iniciar Sesión') }}</h2>
     <form method="POST">
-        <input type="text" name="username" placeholder="Usuario" required>
+        <input type="text" name="username" placeholder="{{ _('Usuario') }}" required>
 
-        <input type="password" name="password" id="loginPassword" placeholder="Contraseña" required>
-        <label><input type="checkbox" id="toggleLoginPassword"> Ver contraseña</label>
+        <input type="password" name="password" id="loginPassword" placeholder="{{ _('Contraseña') }}" required>
+        <label><input type="checkbox" id="toggleLoginPassword"> {{ _('Ver contraseña') }}</label>
 
-        <button type="submit">Entrar</button>
+        <button type="submit">{{ _('Entrar') }}</button>
     </form>
-    <p>¿No tenés cuenta? <a href="/register">Registrate acá</a></p>
+    <p>{{ _('¿No tenés cuenta?') }} <a href="/register">{{ _('Registrate acá') }}</a></p>
 
     <script>
       const toggleLoginPassword = document.getElementById('toggleLoginPassword');

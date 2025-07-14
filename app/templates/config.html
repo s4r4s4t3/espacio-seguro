@@ -2,11 +2,11 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>🧑‍🦱 Mi Perfil</title>
+  <title>{{ _('🧑‍🦱 Mi Perfil') }}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  <h2>🧑‍🦱 Mi Perfil</h2>
+  <h2>{{ _('🧑‍🦱 Mi Perfil') }}</h2>
 
   <!-- ✅ Flashes -->
   {% with messages = get_flashed_messages(with_categories=true) %}
@@ -35,19 +35,19 @@
       </div>
     {% endif %}
 
-    <label class="label-pretty" for="profile_picture">Foto de Perfil</label>
-    <label for="profile_picture" class="upload-btn">Subir Foto de Perfil</label>
+    <label class="label-pretty" for="profile_picture">{{ _('Foto de Perfil') }}</label>
+    <label for="profile_picture" class="upload-btn">{{ _('Subir Foto de Perfil') }}</label>
     <input type="file" id="profile_picture" name="profile_picture" accept="image/*" class="hidden-file">
 
     <!-- ✅ Botón para eliminar foto de perfil -->
     {% if user.profile_picture %}
-      <button type="submit" name="delete_photo" value="1" class="upload-btn">Eliminar Foto de Perfil</button>
+      <button type="submit" name="delete_photo" value="1" class="upload-btn">{{ _('Eliminar Foto de Perfil') }}</button>
     {% endif %}
 
-    <label class="label-pretty" for="bio">Bio</label>
-    <textarea id="bio" name="bio" rows="4" placeholder="Contanos algo de vos...">{{ user.bio }}</textarea>
+    <label class="label-pretty" for="bio">{{ _('Bio') }}</label>
+    <textarea id="bio" name="bio" rows="4" placeholder="{{ _('Contanos algo de vos...') }}">{{ user.bio }}</textarea>
 
-    <button type="submit" class="save-btn">Guardar cambios</button>
+    <button type="submit" class="save-btn">{{ _('Guardar cambios') }}</button>
   </form>
 
   <!-- ✅ Modal Lightbox -->
@@ -56,7 +56,7 @@
     <img class="modal-content" id="modalImage">
   </div>
 
-  <p><a href="{{ url_for('home.home') }}">Volver al inicio</a></p>
+  <p><a href="{{ url_for('home.home') }}">⬅ {{ _('Volver al inicio') }}</a></p>
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {

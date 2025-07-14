@@ -1,0 +1,166 @@
+# Italian translations for PROJECT.
+# Copyright (C) 2025 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# Ezequiel Sarasate <sarasate8@gmail.com>, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2025-07-13 16:32-0300\n"
+"PO-Revision-Date: 2025-07-13 16:18-0300\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: it\n"
+"Language-Team: it <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+msgid "Tu espacio de contencion y apoyo real"
+msgstr "Il tuo spazio di supporto e accoglienza reale"
+
+msgid "Conecta con personas que entienden lo que sentis, sin juicios."
+msgstr "Connettiti con persone che capiscono come ti senti, senza giudizi."
+
+msgid "Iniciar Sesion"
+msgstr "Accedi"
+
+msgid "Crear Cuenta"
+msgstr "Crea un account"
+
+msgid "Iniciar sesion con Google"
+msgstr "Accedi con Google"
+
+msgid "Terminos y Condiciones"
+msgstr "Termini e Condizioni"
+
+msgid "Politica de Privacidad"
+msgstr "Informativa sulla Privacy"
+
+msgid "Siguenos en Instagram y TikTok"
+msgstr "Seguici su Instagram e TikTok"
+
+msgid "© 2025 SafeSpace. Todos los derechos reservados."
+msgstr "© 2025 SafeSpace. Tutti i diritti riservati."
+
+msgid "🌐 Idioma"
+msgstr "🌐 Lingua"
+
+msgid "Bienvenido, %(username)s"
+msgstr "Benvenuto, %(username)s"
+
+msgid "Perfil"
+msgstr "Profilo"
+
+msgid "Chat Global"
+msgstr "Chat Globale"
+
+msgid "Amigos"
+msgstr "Amici"
+
+msgid "Botón de Pánico"
+msgstr "Pulsante di Emergenza"
+
+msgid "Diario"
+msgstr "Diario"
+
+msgid "Cerrar sesión"
+msgstr "Disconnetti"
+
+msgid "Volver al inicio"
+msgstr "Torna alla Home"
+
+msgid "Bienvenido a SafeSpace"
+msgstr "Benvenuto su SafeSpace"
+
+msgid "¡Hola, "
+msgstr "Ciao, "
+
+msgid "Gracias por unirte a SafeSpace, tu espacio de apoyo y contención."
+msgstr "Grazie per esserti unito a SafeSpace, il tuo spazio di supporto e accoglienza."
+
+msgid "Por favor, acepta nuestros términos para continuar."
+msgstr "Accetta i nostri termini per continuare."
+
+msgid "Aceptar y Continuar"
+msgstr "Accetta e Continua"
+
+msgid "Escribí tu mensaje..."
+msgstr "Scrivi il tuo messaggio..."
+
+msgid "Adjuntar imagen"
+msgstr "Allega immagine"
+
+msgid "Enviar"
+msgstr "Invia"
+
+msgid "Debes escribir un mensaje o subir una imagen."
+msgstr "Devi scrivere un messaggio o caricare un'immagine."
+
+msgid "Usuario"
+msgstr "Nome utente"
+
+msgid "Contraseña"
+msgstr "Password"
+
+msgid "Ver contraseña"
+msgstr "Mostra password"
+
+msgid "Entrar"
+msgstr "Accedi"
+
+msgid "¿No tenés cuenta?"
+msgstr "Non hai un account?"
+
+msgid "Registrate acá"
+msgstr "Registrati qui"
+
+msgid "¿Ya tenés cuenta?"
+msgstr "Hai già un account?"
+
+msgid "Ingresá acá"
+msgstr "Accedi qui"
+
+msgid "Mi Diario"
+msgstr "Il mio Diario"
+
+msgid "Mi Diario Personal"
+msgstr "Il mio Diario Personale"
+
+msgid "Escribí tu entrada..."
+msgstr "Scrivi la tua nota..."
+
+msgid "Guardar Entrada"
+msgstr "Salva Nota"
+
+msgid "Entradas Anteriores"
+msgstr "Note precedenti"
+
+msgid "No tenés entradas aún."
+msgstr "Non hai ancora note."
+
+msgid "Botón de Pánico"
+msgstr "Pulsante di Emergenza"
+
+msgid "Este botón enviará una alerta inmediata a tus contactos de confianza. Úsalo solo si realmente lo necesitás."
+msgstr "Questo pulsante invierà un allarme immediato ai tuoi contatti di fiducia. Usalo solo se davvero necessario."
+
+msgid "Solicitud enviada"
+msgstr "Richiesta inviata"
+
+msgid "Solicitud aceptada"
+msgstr "Richiesta accettata"
+
+msgid "Solicitud rechazada"
+msgstr "Richiesta rifiutata"
+
+msgid "No podés guardar una entrada vacía."
+msgstr "Non puoi salvare una nota vuota."
+
+msgid "Entrada guardada con éxito."
+msgstr "Nota salvata con successo."
+
+msgid "Botón de Pánico activado. Tus contactos recibirán una alerta."
+msgstr "Pulsante di Emergenza attivato. I tuoi contatti riceveranno un avviso."

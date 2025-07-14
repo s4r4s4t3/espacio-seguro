@@ -22,7 +22,7 @@ def login():
 
         if user and check_password_hash(user.password, password):
             login_user(user)
-            flash(_('Bienvenido de nuevo, ') + username + '!', 'success')
+            flash(_('Bienvenido de nuevo, %(username)s!', username=username), 'success')
             return redirect(url_for('home.welcome'))  # Redirige a vista intermedia pro
         else:
             flash(_('Credenciales inválidas. Intenta de nuevo.'), 'danger')
@@ -41,7 +41,7 @@ def register():
 
         existing_user = User.query.filter_by(username=username).first()
         if existing_user:
-            flash(_('El usuario ya existe. Elige otro nombre.'), 'warning')
+            flash(_('El usuario "%(username)s" ya existe. Elige otro nombre.', username=username), 'warning')
             return redirect(url_for('auth.register'))
 
         hashed_password = generate_password_hash(password)
@@ -66,9 +66,8 @@ def logout():
     flash(_('Sesión cerrada correctamente.'), 'info')
     return redirect(url_for('auth.login'))
 
-
 # ----------------------------
-# 🚫 Ruta de Login con Google comentada
+# 🚫 Ruta de Login con Google (comentada)
 # ----------------------------
 """
 @auth_bp.route('/login/google')
@@ -78,7 +77,7 @@ def login_google():
 
     resp = google.get("/oauth2/v2/userinfo")
     if not resp.ok:
-        flash("Error al obtener datos de Google.")
+        flash(_('Error al obtener datos de Google.'), 'danger')
         return redirect(url_for('auth.login'))
 
     user_info = resp.json()
@@ -93,7 +92,6 @@ def login_google():
         user = new_user
 
     login_user(user)
-    flash(f"Bienvenido {username}!")
+    flash(_('Bienvenido %(username)s!', username=username), 'success')
     return redirect(url_for('home.index'))
 """
-

@@ -1,7 +1,8 @@
-# app/routes/amigos.py
+# app/routes/friends.py
 
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import login_required, current_user
+from flask_babel import _
 from app.models import User, FriendRequest, db
 
 amigos_bp = Blueprint('amigos', __name__)
@@ -10,11 +11,12 @@ amigos_bp = Blueprint('amigos', __name__)
 @login_required
 def amigos():
     # Amigos aceptados
-    amigos = User.query.join(FriendRequest, ((FriendRequest.sender_id == User.id) | (FriendRequest.receiver_id == User.id)))\
-        .filter(FriendRequest.status == 'accepted')\
-        .filter((FriendRequest.sender_id == current_user.id) | (FriendRequest.receiver_id == current_user.id))\
-        .filter(User.id != current_user.id)\
-        .all()
+    amigos = User.query.join(
+        FriendRequest, ((FriendRequest.sender_id == User.id) | (FriendRequest.receiver_id == User.id))
+    ).filter(FriendRequest.status == 'accepted') \
+     .filter((FriendRequest.sender_id == current_user.id) | (FriendRequest.receiver_id == current_user.id)) \
+     .filter(User.id != current_user.id) \
+     .all()
 
     # Solicitudes recibidas
     solicitudes = FriendRequest.query.filter_by(receiver_id=current_user.id, status='pending').all()
@@ -31,7 +33,7 @@ def enviar_solicitud(user_id):
         nueva = FriendRequest(sender_id=current_user.id, receiver_id=user_id)
         db.session.add(nueva)
         db.session.commit()
-        flash("Solicitud enviada", "info")
+        flash(_("Solicitud enviada"), "info")
     return redirect(url_for('amigos.amigos'))
 
 @amigos_bp.route('/aceptar/<int:solicitud_id>')
@@ -41,7 +43,7 @@ def aceptar(solicitud_id):
     if solicitud.receiver_id == current_user.id:
         solicitud.status = 'accepted'
         db.session.commit()
-        flash("Solicitud aceptada", "success")
+        flash(_("Solicitud aceptada"), "success")
     return redirect(url_for('amigos.amigos'))
 
 @amigos_bp.route('/rechazar/<int:solicitud_id>')
@@ -51,6 +53,6 @@ def rechazar(solicitud_id):
     if solicitud.receiver_id == current_user.id:
         solicitud.status = 'rejected'
         db.session.commit()
-        flash("Solicitud rechazada", "danger")
+        flash(_("Solicitud rechazada"), "danger")
     return redirect(url_for('amigos.amigos'))
 

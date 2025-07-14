@@ -1,6 +1,8 @@
-# diary.py
+# app/routes/diary.py
+
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
+from flask_babel import _
 from ..models import db, DiaryEntry
 
 # Creamos el Blueprint para el diario
@@ -13,13 +15,13 @@ def diary():
     if request.method == 'POST':
         content = request.form.get('content')
         if not content:
-            flash('No podés guardar una entrada vacía.')
+            flash(_('No podés guardar una entrada vacía.'))
         else:
             # Crear nueva entrada asociada al usuario actual
             new_entry = DiaryEntry(content=content, author=current_user)
             db.session.add(new_entry)
             db.session.commit()
-            flash('Entrada guardada con éxito.')
+            flash(_('Entrada guardada con éxito.'))
             return redirect(url_for('diary.diary'))
 
     # Mostrar todas las entradas del usuario ordenadas por fecha

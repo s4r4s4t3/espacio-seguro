@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Política de Privacidad - SafeSpace</title>
+  <title>{{ _('Política de Privacidad - SafeSpace') }}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
@@ -14,20 +14,20 @@
 
   <main>
     <section class="legal">
-      <h2>Política de Privacidad</h2>
-      <p>Aquí irá tu política de privacidad completa cuando esté lista.</p>
-      <p>Este documento explica cómo SafeSpace recopila, utiliza y protege la información personal de los usuarios.</p>
-      <p>Recomendación: redactar con ayuda de un profesional legal para cumplir con leyes de protección de datos (por ejemplo GDPR o similares).</p>
+      <h2>{{ _('Política de Privacidad') }}</h2>
+      <p>{{ _('Aquí irá tu política de privacidad completa cuando esté lista.') }}</p>
+      <p>{{ _('Este documento explica cómo SafeSpace recopila, utiliza y protege la información personal de los usuarios.') }}</p>
+      <p>{{ _('Recomendación: redactar con ayuda de un profesional legal para cumplir con leyes de protección de datos (por ejemplo GDPR o similares).') }}</p>
     </section>
   </main>
 
   <footer>
-    <p>&copy; 2025 SafeSpace. Todos los derechos reservados.</p>
+    <p>{{ _('© 2025 SafeSpace. Todos los derechos reservados.') }}</p>
     <p>
-      <a href="{{ url_for('legales.terms') }}">Términos y Condiciones</a> |
-      <a href="{{ url_for('legales.privacy') }}">Política de Privacidad</a>
+      <a href="{{ url_for('legales.terms') }}">{{ _('Términos y Condiciones') }}</a> |
+      <a href="{{ url_for('legales.privacy') }}">{{ _('Política de Privacidad') }}</a>
     </p>
-    <p>Síguenos en Instagram y TikTok</p>
+    <p>{{ _('Síguenos en Instagram y TikTok') }}</p>
   </footer>
 </body>
 </html>

@@ -1,0 +1,166 @@
+# German translations for PROJECT.
+# Copyright (C) 2025 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# Ezequiel Sarasate <sarasate8@gmail.com>, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2025-07-13 16:32-0300\n"
+"PO-Revision-Date: 2025-07-13 16:18-0300\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+msgid "Tu espacio de contencion y apoyo real"
+msgstr "Dein Raum für echte Unterstützung und Rückhalt"
+
+msgid "Conecta con personas que entienden lo que sentis, sin juicios."
+msgstr "Verbinde dich mit Menschen, die verstehen, wie du dich fühlst, ohne zu urteilen."
+
+msgid "Iniciar Sesion"
+msgstr "Anmelden"
+
+msgid "Crear Cuenta"
+msgstr "Konto erstellen"
+
+msgid "Iniciar sesion con Google"
+msgstr "Mit Google anmelden"
+
+msgid "Terminos y Condiciones"
+msgstr "Allgemeine Geschäftsbedingungen"
+
+msgid "Politica de Privacidad"
+msgstr "Datenschutzrichtlinie"
+
+msgid "Siguenos en Instagram y TikTok"
+msgstr "Folge uns auf Instagram und TikTok"
+
+msgid "© 2025 SafeSpace. Todos los derechos reservados."
+msgstr "© 2025 SafeSpace. Alle Rechte vorbehalten."
+
+msgid "🌐 Idioma"
+msgstr "🌐 Sprache"
+
+msgid "Bienvenido, %(username)s"
+msgstr "Willkommen, %(username)s"
+
+msgid "Perfil"
+msgstr "Profil"
+
+msgid "Chat Global"
+msgstr "Globaler Chat"
+
+msgid "Amigos"
+msgstr "Freunde"
+
+msgid "Botón de Pánico"
+msgstr "Notfallknopf"
+
+msgid "Diario"
+msgstr "Tagebuch"
+
+msgid "Cerrar sesión"
+msgstr "Abmelden"
+
+msgid "Volver al inicio"
+msgstr "Zurück zur Startseite"
+
+msgid "Bienvenido a SafeSpace"
+msgstr "Willkommen bei SafeSpace"
+
+msgid "¡Hola, "
+msgstr "Hallo, "
+
+msgid "Gracias por unirte a SafeSpace, tu espacio de apoyo y contención."
+msgstr "Danke, dass du dich bei SafeSpace angemeldet hast — deinem Raum für Unterstützung und Rückhalt."
+
+msgid "Por favor, acepta nuestros términos para continuar."
+msgstr "Bitte akzeptiere unsere Bedingungen, um fortzufahren."
+
+msgid "Aceptar y Continuar"
+msgstr "Akzeptieren und weiter"
+
+msgid "Escribí tu mensaje..."
+msgstr "Schreibe deine Nachricht..."
+
+msgid "Adjuntar imagen"
+msgstr "Bild anhängen"
+
+msgid "Enviar"
+msgstr "Senden"
+
+msgid "Debes escribir un mensaje o subir una imagen."
+msgstr "Du musst eine Nachricht schreiben oder ein Bild hochladen."
+
+msgid "Usuario"
+msgstr "Benutzername"
+
+msgid "Contraseña"
+msgstr "Passwort"
+
+msgid "Ver contraseña"
+msgstr "Passwort anzeigen"
+
+msgid "Entrar"
+msgstr "Anmelden"
+
+msgid "¿No tenés cuenta?"
+msgstr "Noch kein Konto?"
+
+msgid "Registrate acá"
+msgstr "Hier registrieren"
+
+msgid "¿Ya tenés cuenta?"
+msgstr "Hast du schon ein Konto?"
+
+msgid "Ingresá acá"
+msgstr "Hier anmelden"
+
+msgid "Mi Diario"
+msgstr "Mein Tagebuch"
+
+msgid "Mi Diario Personal"
+msgstr "Mein persönliches Tagebuch"
+
+msgid "Escribí tu entrada..."
+msgstr "Schreibe deinen Eintrag..."
+
+msgid "Guardar Entrada"
+msgstr "Eintrag speichern"
+
+msgid "Entradas Anteriores"
+msgstr "Frühere Einträge"
+
+msgid "No tenés entradas aún."
+msgstr "Du hast noch keine Einträge."
+
+msgid "Botón de Pánico"
+msgstr "Notfallknopf"
+
+msgid "Este botón enviará una alerta inmediata a tus contactos de confianza. Úsalo solo si realmente lo necesitás."
+msgstr "Dieser Knopf sendet sofort einen Alarm an deine Vertrauenskontakte. Nur im echten Notfall benutzen."
+
+msgid "Solicitud enviada"
+msgstr "Anfrage gesendet"
+
+msgid "Solicitud aceptada"
+msgstr "Anfrage akzeptiert"
+
+msgid "Solicitud rechazada"
+msgstr "Anfrage abgelehnt"
+
+msgid "No podés guardar una entrada vacía."
+msgstr "Du kannst keinen leeren Eintrag speichern."
+
+msgid "Entrada guardada con éxito."
+msgstr "Eintrag erfolgreich gespeichert."
+
+msgid "Botón de Pánico activado. Tus contactos recibirán una alerta."
+msgstr "Notfallknopf aktiviert. Deine Kontakte erhalten eine Benachrichtigung."

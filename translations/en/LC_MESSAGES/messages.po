@@ -1,0 +1,166 @@
+# English translations for PROJECT.
+# Copyright (C) 2025 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# Ezequiel Sarasate <sarasate8@gmail.com>, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2025-07-13 16:32-0300\n"
+"PO-Revision-Date: 2025-07-13 16:17-0300\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+msgid "Tu espacio de contencion y apoyo real"
+msgstr "Your space of real support and care"
+
+msgid "Conecta con personas que entienden lo que sentis, sin juicios."
+msgstr "Connect with people who understand how you feel, without judgment."
+
+msgid "Iniciar Sesion"
+msgstr "Login"
+
+msgid "Crear Cuenta"
+msgstr "Create Account"
+
+msgid "Iniciar sesion con Google"
+msgstr "Sign in with Google"
+
+msgid "Terminos y Condiciones"
+msgstr "Terms and Conditions"
+
+msgid "Politica de Privacidad"
+msgstr "Privacy Policy"
+
+msgid "Siguenos en Instagram y TikTok"
+msgstr "Follow us on Instagram and TikTok"
+
+msgid "© 2025 SafeSpace. Todos los derechos reservados."
+msgstr "© 2025 SafeSpace. All rights reserved."
+
+msgid "🌐 Idioma"
+msgstr "🌐 Language"
+
+msgid "Bienvenido, %(username)s"
+msgstr "Welcome, %(username)s"
+
+msgid "Perfil"
+msgstr "Profile"
+
+msgid "Chat Global"
+msgstr "Global Chat"
+
+msgid "Amigos"
+msgstr "Friends"
+
+msgid "Botón de Pánico"
+msgstr "Panic Button"
+
+msgid "Diario"
+msgstr "Diary"
+
+msgid "Cerrar sesión"
+msgstr "Logout"
+
+msgid "Volver al inicio"
+msgstr "Back to Home"
+
+msgid "Bienvenido a SafeSpace"
+msgstr "Welcome to SafeSpace"
+
+msgid "¡Hola, "
+msgstr "Hello, "
+
+msgid "Gracias por unirte a SafeSpace, tu espacio de apoyo y contención."
+msgstr "Thank you for joining SafeSpace — your place for support and care."
+
+msgid "Por favor, acepta nuestros términos para continuar."
+msgstr "Please accept our terms to continue."
+
+msgid "Aceptar y Continuar"
+msgstr "Accept and Continue"
+
+msgid "Escribí tu mensaje..."
+msgstr "Write your message..."
+
+msgid "Adjuntar imagen"
+msgstr "Attach image"
+
+msgid "Enviar"
+msgstr "Send"
+
+msgid "Debes escribir un mensaje o subir una imagen."
+msgstr "You must write a message or upload an image."
+
+msgid "Usuario"
+msgstr "Username"
+
+msgid "Contraseña"
+msgstr "Password"
+
+msgid "Ver contraseña"
+msgstr "Show password"
+
+msgid "Entrar"
+msgstr "Login"
+
+msgid "¿No tenés cuenta?"
+msgstr "Don't have an account?"
+
+msgid "Registrate acá"
+msgstr "Sign up here"
+
+msgid "¿Ya tenés cuenta?"
+msgstr "Already have an account?"
+
+msgid "Ingresá acá"
+msgstr "Sign in here"
+
+msgid "Mi Diario"
+msgstr "My Diary"
+
+msgid "Mi Diario Personal"
+msgstr "My Personal Diary"
+
+msgid "Escribí tu entrada..."
+msgstr "Write your entry..."
+
+msgid "Guardar Entrada"
+msgstr "Save Entry"
+
+msgid "Entradas Anteriores"
+msgstr "Previous Entries"
+
+msgid "No tenés entradas aún."
+msgstr "You don't have any entries yet."
+
+msgid "Botón de Pánico"
+msgstr "Panic Button"
+
+msgid "Este botón enviará una alerta inmediata a tus contactos de confianza. Úsalo solo si realmente lo necesitás."
+msgstr "This button will send an immediate alert to your trusted contacts. Use it only if you really need it."
+
+msgid "Solicitud enviada"
+msgstr "Request sent"
+
+msgid "Solicitud aceptada"
+msgstr "Request accepted"
+
+msgid "Solicitud rechazada"
+msgstr "Request rejected"
+
+msgid "No podés guardar una entrada vacía."
+msgstr "You can't save an empty entry."
+
+msgid "Entrada guardada con éxito."
+msgstr "Entry saved successfully."
+
+msgid "Botón de Pánico activado. Tus contactos recibirán una alerta."
+msgstr "Panic Button activated. Your contacts will receive an alert."

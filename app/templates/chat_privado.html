@@ -2,12 +2,12 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Chat con {{ friend.username }}</title>
+  <title>{{ _('💬 Chat con %(username)s', username=friend.username) }}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
 </head>
 <body>
-  <h2>💬 Chat con {{ friend.username }}</h2>
+  <h2>{{ _('💬 Chat con %(username)s', username=friend.username) }}</h2>
 
   <div class="chat-box mensajes" id="mensajes">
     {% for message in messages %}
@@ -24,12 +24,12 @@
   </div>
 
   <form id="formulario" enctype="multipart/form-data">
-    <input type="text" id="mensaje" placeholder="Escribí tu mensaje...">
+    <input type="text" id="mensaje" placeholder="{{ _('Escribí tu mensaje...') }}">
     <input type="file" id="imagen" accept="image/*">
-    <button type="submit">Enviar</button>
+    <button type="submit">{{ _('Enviar') }}</button>
   </form>
 
-  <p><a href="/amigos">⬅ Volver a amigos</a></p>
+  <p><a href="/amigos">⬅ {{ _('Volver a amigos') }}</a></p>
 
   <script>
     const socket = io();
@@ -48,7 +48,7 @@
       const imagen = inputImagen.files[0];
 
       if (!mensaje && !imagen) {
-        alert("Debes escribir un mensaje o subir una imagen.");
+        alert("{{ _('Debes escribir un mensaje o subir una imagen.') }}");
         return;
       }
 

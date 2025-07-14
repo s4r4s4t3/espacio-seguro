@@ -4,19 +4,19 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Mi Diario</title>
+    <title>{{ _('Mi Diario') }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Mi Diario Personal</h1>
+    <h1>{{ _('Mi Diario Personal') }}</h1>
 
     <!-- Formulario para nueva entrada -->
     <form method="POST">
-        <textarea name="content" rows="4" cols="50" placeholder="Escribí tu entrada..."></textarea><br>
-        <button type="submit">Guardar Entrada</button>
+        <textarea name="content" rows="4" cols="50" placeholder="{{ _('Escribí tu entrada...') }}"></textarea><br>
+        <button type="submit">{{ _('Guardar Entrada') }}</button>
     </form>
 
-    <h2>Entradas Anteriores</h2>
+    <h2>{{ _('Entradas Anteriores') }}</h2>
     {% for entry in entries %}
         <div>
             <p><strong>{{ entry.date_created.strftime('%Y-%m-%d %H:%M') }}</strong></p>
@@ -24,9 +24,9 @@
             <hr>
         </div>
     {% else %}
-        <p>No tenés entradas aún.</p>
+        <p>{{ _('No tenés entradas aún.') }}</p>
     {% endfor %}
 
-    <a href="{{ url_for('home.home') }}">Volver al inicio</a>
+    <a href="{{ url_for('home.home') }}">⬅ {{ _('Volver al inicio') }}</a>
 </body>
 </html>

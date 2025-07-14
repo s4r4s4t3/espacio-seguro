@@ -2,12 +2,12 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>💬 Chat Global</title>
+  <title>{{ _('💬 Chat Global') }}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
 </head>
 <body>
-  <h2>💬 Chat Global</h2>
+  <h2>{{ _('💬 Chat Global') }}</h2>
 
   <div id="mensajes">
     {% if messages %}
@@ -17,28 +17,28 @@
             <p>{{ msg.content }}</p>
           {% endif %}
           {% if msg.image_url %}
-            <img src="{{ msg.image_url }}" alt="Imagen" class="chat-image">
+            <img src="{{ msg.image_url }}" alt="{{ _('Imagen') }}" class="chat-image">
           {% endif %}
           <p class="mensaje-meta">👤 {{ msg.sender_id }} | 🕒 {{ msg.timestamp }}</p>
         </div>
       {% endfor %}
     {% else %}
-      <p class="placeholder-msg">No hay mensajes todavía...</p>
+      <p class="placeholder-msg">{{ _('No hay mensajes todavía...') }}</p>
     {% endif %}
   </div>
 
   <form id="formulario" enctype="multipart/form-data">
-    <input type="text" id="mensaje" placeholder="Escribí tu mensaje..." autocomplete="off">
+    <input type="text" id="mensaje" placeholder="{{ _('Escribí tu mensaje...') }}" autocomplete="off">
 
     <label class="upload-btn">
-      📷 Adjuntar imagen
+      📷 {{ _('Adjuntar imagen') }}
       <input type="file" id="imagen" accept="image/*" class="hidden-file">
     </label>
 
-    <button type="submit">Enviar</button>
+    <button type="submit">{{ _('Enviar') }}</button>
   </form>
 
-  <p><a href="/">⬅ Volver al inicio</a></p>
+  <p><a href="/">⬅ {{ _('Volver al inicio') }}</a></p>
 
   <script>
     const socket = io();
@@ -54,7 +54,7 @@
       const imagen = inputImagen.files[0];
 
       if (!mensaje && !imagen) {
-        alert("Debes escribir un mensaje o subir una imagen.");
+        alert("{{ _('Debes escribir un mensaje o subir una imagen.') }}");
         return;
       }
 
@@ -96,7 +96,7 @@
 
       const meta = document.createElement('p');
       meta.className = 'mensaje-meta';
-      meta.textContent = `👤 ${data.sender_username} | 🕒 ahora`;
+      meta.textContent = `👤 ${data.sender_username} | 🕒 {{ _('ahora') }}`;
       div.appendChild(meta);
 
       mensajes.appendChild(div);
@@ -106,3 +106,4 @@
   </script>
 </body>
 </html>
+

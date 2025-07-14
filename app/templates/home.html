@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Inicio - Espacio Seguro</title>
+    <title>{{ _('Inicio - Espacio Seguro') }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <style>
         .grid {
@@ -35,15 +35,15 @@
     </style>
 </head>
 <body>
-    <h2>Bienvenido, {{ user.username }}</h2>
+    <h2>{{ _('Bienvenido, %(username)s', username=user.username) }}</h2>
     <div class="grid">
-        <div class="card"><a href="/config">👤 Perfil
-        </a></div>
-        <div class="card"><a href="/chat">💬 Chat Global</a></div>
-        <div class="card"><a href="/amigos">👥 Amigos</a></div>
-        <div class="card"><a href="/panico">🚨 Botón de Pánico</a></div>
-        <div class="card"><a href="{{ url_for('diary.diary') }}">📝 Diario</a></div>
-        <div class="card"><a href="/logout">🔒 Cerrar sesión</a></div>
+        <div class="card"><a href="/config">👤 {{ _('Perfil') }}</a></div>
+        <div class="card"><a href="/chat">💬 {{ _('Chat Global') }}</a></div>
+        <div class="card"><a href="/amigos">👥 {{ _('Amigos') }}</a></div>
+        <div class="card"><a href="/panico">🚨 {{ _('Botón de Pánico') }}</a></div>
+        <div class="card"><a href="{{ url_for('diary.diary') }}">📝 {{ _('Diario') }}</a></div>
+        <div class="card"><a href="/logout">🔒 {{ _('Cerrar sesión') }}</a></div>
     </div>
 </body>
 </html>
+

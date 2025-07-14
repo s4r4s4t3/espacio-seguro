@@ -2,41 +2,40 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>🤝Amigos</title>
+    <title>{{ _('🤝 Amigos') }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h2>🤝 Tus Amigos</h2>
+    <h2>{{ _('🤝 Tus Amigos') }}</h2>
+
     {% for amigo in amigos %}
-    <p>
-    ✅ {{ amigo.username }}
-    <a href="{{ url_for('chat.chat', friend_id=amigo.id) }}">💬 Chatear</a>
-    </p>
-
-    {% else %}
-        <p>Aún no agregaste amigos. 💚</p>
-    {% endfor %}
-
-    <h3>📥 Solicitudes Recibidas</h3>
-    {% for solicitud in solicitudes %}
         <p>
-            Usuario ID {{ solicitud.sender_id }} →
-            <a href="/aceptar/{{ solicitud.id }}">Aceptar</a> |
-            <a href="/rechazar/{{ solicitud.id }}">Rechazar</a>
+            ✅ {{ amigo.username }}
+            <a href="{{ url_for('chat.chat', friend_id=amigo.id) }}">💬 {{ _('Chatear') }}</a>
         </p>
     {% else %}
-        <p>No tenés solicitudes nuevas.</p>
+        <p>{{ _('Aún no agregaste amigos. 💚') }}</p>
     {% endfor %}
 
-    <h3>🌍 Otros usuarios</h3>
+    <h3>{{ _('📥 Solicitudes Recibidas') }}</h3>
+    {% for solicitud in solicitudes %}
+        <p>
+            {{ _('Usuario ID') }} {{ solicitud.sender_id }} →
+            <a href="/aceptar/{{ solicitud.id }}">{{ _('Aceptar') }}</a> |
+            <a href="/rechazar/{{ solicitud.id }}">{{ _('Rechazar') }}</a>
+        </p>
+    {% else %}
+        <p>{{ _('No tenés solicitudes nuevas.') }}</p>
+    {% endfor %}
+
+    <h3>{{ _('🌍 Otros usuarios') }}</h3>
     {% for user in usuarios %}
         <p>
             {{ user.username }}
-            <a href="/enviar_solicitud/{{ user.id }}">[Agregar amigo]</a>
+            <a href="/enviar_solicitud/{{ user.id }}">[{{ _('Agregar amigo') }}]</a>
         </p>
     {% endfor %}
 
-    <p><a href="/">Volver al inicio</a></p>
+    <p><a href="/">{{ _('Volver al inicio') }}</a></p>
 </body>
 </html>
-

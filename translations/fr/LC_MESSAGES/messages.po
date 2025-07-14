@@ -1,0 +1,166 @@
+# French translations for PROJECT.
+# Copyright (C) 2025 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# Ezequiel Sarasate <sarasate8@gmail.com>, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2025-07-13 16:32-0300\n"
+"PO-Revision-Date: 2025-07-13 16:18-0300\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: fr\n"
+"Language-Team: fr <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+msgid "Tu espacio de contencion y apoyo real"
+msgstr "Votre espace de soutien et d'accompagnement réel"
+
+msgid "Conecta con personas que entienden lo que sentis, sin juicios."
+msgstr "Connectez-vous avec des personnes qui comprennent ce que vous ressentez, sans jugement."
+
+msgid "Iniciar Sesion"
+msgstr "Se connecter"
+
+msgid "Crear Cuenta"
+msgstr "Créer un compte"
+
+msgid "Iniciar sesion con Google"
+msgstr "Se connecter avec Google"
+
+msgid "Terminos y Condiciones"
+msgstr "Conditions générales"
+
+msgid "Politica de Privacidad"
+msgstr "Politique de confidentialité"
+
+msgid "Siguenos en Instagram y TikTok"
+msgstr "Suivez-nous sur Instagram et TikTok"
+
+msgid "© 2025 SafeSpace. Todos los derechos reservados."
+msgstr "© 2025 SafeSpace. Tous droits réservés."
+
+msgid "🌐 Idioma"
+msgstr "🌐 Langue"
+
+msgid "Bienvenido, %(username)s"
+msgstr "Bienvenue, %(username)s"
+
+msgid "Perfil"
+msgstr "Profil"
+
+msgid "Chat Global"
+msgstr "Chat global"
+
+msgid "Amigos"
+msgstr "Amis"
+
+msgid "Botón de Pánico"
+msgstr "Bouton Panique"
+
+msgid "Diario"
+msgstr "Journal"
+
+msgid "Cerrar sesión"
+msgstr "Se déconnecter"
+
+msgid "Volver al inicio"
+msgstr "Retour à l'accueil"
+
+msgid "Bienvenido a SafeSpace"
+msgstr "Bienvenue sur SafeSpace"
+
+msgid "¡Hola, "
+msgstr "Salut, "
+
+msgid "Gracias por unirte a SafeSpace, tu espacio de apoyo y contención."
+msgstr "Merci de rejoindre SafeSpace, votre espace de soutien et d'accompagnement."
+
+msgid "Por favor, acepta nuestros términos para continuar."
+msgstr "Veuillez accepter nos conditions pour continuer."
+
+msgid "Aceptar y Continuar"
+msgstr "Accepter et continuer"
+
+msgid "Escribí tu mensaje..."
+msgstr "Écrivez votre message..."
+
+msgid "Adjuntar imagen"
+msgstr "Joindre une image"
+
+msgid "Enviar"
+msgstr "Envoyer"
+
+msgid "Debes escribir un mensaje o subir una imagen."
+msgstr "Vous devez écrire un message ou télécharger une image."
+
+msgid "Usuario"
+msgstr "Nom d'utilisateur"
+
+msgid "Contraseña"
+msgstr "Mot de passe"
+
+msgid "Ver contraseña"
+msgstr "Voir le mot de passe"
+
+msgid "Entrar"
+msgstr "Se connecter"
+
+msgid "¿No tenés cuenta?"
+msgstr "Vous n'avez pas de compte ?"
+
+msgid "Registrate acá"
+msgstr "Inscrivez-vous ici"
+
+msgid "¿Ya tenés cuenta?"
+msgstr "Vous avez déjà un compte ?"
+
+msgid "Ingresá acá"
+msgstr "Connectez-vous ici"
+
+msgid "Mi Diario"
+msgstr "Mon Journal"
+
+msgid "Mi Diario Personal"
+msgstr "Mon Journal Personnel"
+
+msgid "Escribí tu entrada..."
+msgstr "Écrivez votre entrée..."
+
+msgid "Guardar Entrada"
+msgstr "Enregistrer l'entrée"
+
+msgid "Entradas Anteriores"
+msgstr "Entrées précédentes"
+
+msgid "No tenés entradas aún."
+msgstr "Vous n'avez pas encore d'entrées."
+
+msgid "Botón de Pánico"
+msgstr "Bouton Panique"
+
+msgid "Este botón enviará una alerta inmediata a tus contactos de confianza. Úsalo solo si realmente lo necesitás."
+msgstr "Ce bouton enverra une alerte immédiate à vos contacts de confiance. Utilisez-le uniquement si nécessaire."
+
+msgid "Solicitud enviada"
+msgstr "Demande envoyée"
+
+msgid "Solicitud aceptada"
+msgstr "Demande acceptée"
+
+msgid "Solicitud rechazada"
+msgstr "Demande refusée"
+
+msgid "No podés guardar una entrada vacía."
+msgstr "Vous ne pouvez pas enregistrer une entrée vide."
+
+msgid "Entrada guardada con éxito."
+msgstr "Entrée enregistrée avec succès."
+
+msgid "Botón de Pánico activado. Tus contactos recibirán una alerta."
+msgstr "Bouton Panique activé. Vos contacts recevront une alerte."

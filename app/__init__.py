@@ -53,7 +53,7 @@ def create_app():
     from app.routes.diary import diary_bp
     app.register_blueprint(diary_bp)
 
-    from app.routes.amigos import amigos_bp
+    from app.routes.friends import amigos_bp
     app.register_blueprint(amigos_bp)
 
     from app.routes.config import config_bp

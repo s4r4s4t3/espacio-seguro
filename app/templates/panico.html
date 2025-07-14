@@ -3,15 +3,21 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Botón de Pánico</title>
+    <title>{{ _('🚨 Botón de Pánico') }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h2>🚨 Botón de Pánico</h2>
+    <h2>{{ _('🚨 Botón de Pánico') }}</h2>
+
+    <div class="info-text">
+        <p>{{ _('Este botón enviará una alerta inmediata a tus contactos de confianza. Úsalo solo si realmente lo necesitás.') }}</p>
+    </div>
+
     <form method="POST" class="panic-form">
         <button type="submit" class="panic-btn">🚨</button>
     </form>
-    <p><a href="{{ url_for('home.home') }}">Volver al inicio</a></p>
+
+    <p><a href="{{ url_for('home.home') }}">⬅ {{ _('Volver al inicio') }}</a></p>
 </body>
 </html>
 
