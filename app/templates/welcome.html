@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ _('Bienvenido a SafeSpace') }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="welcome-container">
+    <h2>{{ _('¡Hola, ') }}{{ user.username }}!</h2>
+    <p>{{ _('Gracias por unirte a SafeSpace, tu espacio de apoyo y contención.') }}</p>
+    <p>{{ _('Por favor, acepta nuestros términos para continuar.') }}</p>
+    <a href="{{ url_for('home.home') }}" class="btn welcome-btn">{{ _('Aceptar y Continuar') }}</a>
+  </main>
+</body>
+</html>
+  <footer>
+    <p>{{ _('© 2023 SafeSpace. Todos los derechos reservados.') }}</p>
+  </footer>

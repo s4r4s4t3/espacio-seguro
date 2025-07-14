@@ -486,3 +486,41 @@ footer a:hover {
   object-fit: cover;
   border: 1px solid #ccc;
 }
+
+/* 🌿 SafeSpace — Estilos para welcome.html */
+
+.welcome-container {
+  max-width: 600px;
+  margin: 100px auto;
+  padding: 40px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.welcome-container h2 {
+  font-size: 2em;
+  margin-bottom: 20px;
+  color: #2e7d32;
+}
+
+.welcome-container p {
+  font-size: 1.1em;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.welcome-btn {
+  display: inline-block;
+  background-color: #2e7d32;
+  color: #fff;
+  padding: 12px 24px;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.welcome-btn:hover {
+  background-color: #1b5e20;
+}

@@ -12,7 +12,7 @@
       <h1>SafeSpace</h1>
     </div>
     <div class="language-selector dropdown">
-      <button class="dropbtn">🌐 Idioma</button>
+      <button class="dropbtn">{{ _('🌐 Idioma') }}</button>
       <div class="dropdown-content">
         <a href="{{ url_for('home.set_language', lang_code='es') }}">
           <img src="{{ url_for('static', filename='flags/es.png') }}" alt="Español"> Español

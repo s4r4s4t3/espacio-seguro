@@ -3,6 +3,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, make_response
 from flask_login import login_required, current_user
 from ..models import db, PanicLog, User, Message
+from flask_babel import _
 
 home_bp = Blueprint('home', __name__)
 
@@ -17,6 +18,12 @@ def set_language(lang_code):
     resp = make_response(redirect(request.referrer or url_for('home.landing')))
     resp.set_cookie('lang', lang_code, max_age=30*24*60*60)
     return resp
+
+# 🚩 Vista intermedia profesional (Bienvenida + Aceptar Términos)
+@home_bp.route('/welcome')
+@login_required
+def welcome():
+    return render_template("welcome.html", user=current_user)
 
 # Ruta /home → dashboard usuario
 @home_bp.route('/home')
@@ -53,7 +60,7 @@ def panico():
         for friend in recent_receivers:
             print(f"Notificación push a {friend.username}: {panic_message}")
 
-        flash('Botón de Pánico activado. Tus contactos recibirán una alerta.')
+        flash(_('Botón de Pánico activado. Tus contactos recibirán una alerta.'), 'info')
         return redirect(url_for('home.home'))
 
     return render_template('panico.html')
@@ -62,6 +69,7 @@ def panico():
 @home_bp.route('/prueba')
 def prueba():
     return "<h1>✅ Ruta de prueba pública funcionando</h1>"
+
 
 
 
