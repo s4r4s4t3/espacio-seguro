@@ -1,3 +1,4 @@
+<!-- templates/welcome.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -10,7 +11,11 @@
     <h2>{{ _('¡Hola, ') }}{{ user.username }}!</h2>
     <p>{{ _('Gracias por unirte a SafeSpace, tu espacio de apoyo y contención.') }}</p>
     <p>{{ _('Por favor, acepta nuestros términos para continuar.') }}</p>
-    <a href="{{ url_for('home.home') }}" class="btn welcome-btn">{{ _('Aceptar y Continuar') }}</a>
+
+    <!-- ✅ Ahora el botón está dentro de un form POST -->
+    <form method="POST">
+      <button type="submit" class="btn welcome-btn">{{ _('Aceptar y Continuar') }}</button>
+    </form>
   </main>
 
   <footer>
@@ -18,3 +23,4 @@
   </footer>
 </body>
 </html>
+

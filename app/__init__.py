@@ -25,6 +25,9 @@ def create_app():
     app.config['SESSION_COOKIE_SECURE'] = True
     app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 
+    # ✅ Idioma por defecto en caso de no encontrar cookie
+    app.config['BABEL_DEFAULT_LOCALE'] = 'es'
+
     db.init_app(app)
     socketio.init_app(app, async_mode='eventlet')
     login_manager.init_app(app)
@@ -62,10 +65,13 @@ def create_app():
     from app.routes.legales import legales_bp
     app.register_blueprint(legales_bp)
 
-    # ✅ Flask-Babel selector correcto para version 2.x
+    # ✅ Selector de idioma: usa cookie o default
     @babel.localeselector
     def get_locale():
-        return request.cookies.get('lang') or app.config['BABEL_DEFAULT_LOCALE']
+        lang = request.cookies.get('lang')
+        if lang:
+            return lang
+        return app.config['BABEL_DEFAULT_LOCALE']
 
     # 🚫 Registrar Blueprint OAuth Google comentado hasta activar
     """

@@ -23,7 +23,13 @@ def login():
         if user and check_password_hash(user.password, password):
             login_user(user)
             flash(_('Bienvenido de nuevo, %(username)s!', username=username), 'success')
-            return redirect(url_for('home.welcome'))  # Redirige a vista intermedia pro
+
+            # ✅ Ahora verifica si aceptó términos
+            if not user.accepted_terms:
+                return redirect(url_for('home.welcome'))
+            else:
+                return redirect(url_for('home.home'))
+
         else:
             flash(_('Credenciales inválidas. Intenta de nuevo.'), 'danger')
             return redirect(url_for('auth.login'))
@@ -46,13 +52,14 @@ def register():
 
         hashed_password = generate_password_hash(password)
 
+        # ✅ Nuevo usuario arranca con accepted_terms=False por default
         new_user = User(username=username, password=hashed_password, profile_picture='default.png')
         db.session.add(new_user)
         db.session.commit()
 
         flash(_('Usuario creado con éxito. Ahora puedes iniciar sesión.'), 'success')
         login_user(new_user)
-        return redirect(url_for('home.welcome'))  # Redirige a vista intermedia pro
+        return redirect(url_for('home.welcome'))  # Solo 1ra vez
 
     return render_template('register.html')
 
@@ -93,5 +100,9 @@ def login_google():
 
     login_user(user)
     flash(_('Bienvenido %(username)s!', username=username), 'success')
-    return redirect(url_for('home.index'))
+
+    if not user.accepted_terms:
+        return redirect(url_for('home.welcome'))
+    else:
+        return redirect(url_for('home.home'))
 """

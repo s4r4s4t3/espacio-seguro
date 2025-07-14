@@ -22,6 +22,9 @@ class User(UserMixin, db.Model):
     # ✅ Foto de perfil - Forzamos default.png si no hay
     profile_picture = db.Column(db.String(300), nullable=False, default="default.png")
 
+    # ✅ Campo nuevo: para saber si ya aceptó términos
+    accepted_terms = db.Column(db.Boolean, default=False)
+
     # ✅ Relaciones
     sent_messages = db.relationship('Message',
                                     foreign_keys='Message.sender_id',
@@ -94,5 +97,3 @@ class PanicLog(db.Model):
 
     # ❌ NO uses user = db.relationship(...) aquí
     # La relación ya está definida en User: panic_logs = db.relationship('PanicLog', backref='author')
-
-    

@@ -20,9 +20,19 @@ def set_language(lang_code):
     return resp
 
 # 🚩 Vista intermedia profesional (Bienvenida + Aceptar Términos)
-@home_bp.route('/welcome')
+@home_bp.route('/welcome', methods=['GET', 'POST'])
 @login_required
 def welcome():
+    # Si ya aceptó términos, lo mandamos directo al home
+    if current_user.accepted_terms:
+        return redirect(url_for('home.home'))
+
+    if request.method == 'POST':
+        current_user.accepted_terms = True
+        db.session.commit()
+        flash(_('¡Gracias por aceptar nuestros términos!'), 'success')
+        return redirect(url_for('home.home'))
+
     return render_template("welcome.html", user=current_user)
 
 # Ruta /home → dashboard usuario
@@ -69,8 +79,3 @@ def panico():
 @home_bp.route('/prueba')
 def prueba():
     return "<h1>✅ Ruta de prueba pública funcionando</h1>"
-
-
-
-
-
