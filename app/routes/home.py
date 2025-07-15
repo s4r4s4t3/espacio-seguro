@@ -12,18 +12,17 @@ home_bp = Blueprint('home', __name__)
 def landing():
     return render_template("landing.html")
 
-# ⚙️ Nueva ruta para cambiar idioma y guardar en cookie
+# ⚙️ Ruta para cambiar idioma y guardar cookie
 @home_bp.route('/set_language/<lang_code>')
 def set_language(lang_code):
     resp = make_response(redirect(request.referrer or url_for('home.landing')))
     resp.set_cookie('lang', lang_code, max_age=30*24*60*60)
     return resp
 
-# 🚩 Vista intermedia profesional (Bienvenida + Aceptar Términos)
+# 🚩 Bienvenida - aceptar términos (1ra vez)
 @home_bp.route('/welcome', methods=['GET', 'POST'])
 @login_required
 def welcome():
-    # Si ya aceptó términos, lo mandamos directo al home
     if current_user.accepted_terms:
         return redirect(url_for('home.home'))
 
@@ -35,13 +34,13 @@ def welcome():
 
     return render_template("welcome.html", user=current_user)
 
-# Ruta /home → dashboard usuario
+# 🏠 Dashboard principal
 @home_bp.route('/home')
 @login_required
 def home():
     return render_template("home.html", user=current_user)
 
-# Chat
+# 💬 Chat global (vista base)
 @home_bp.route('/chat')
 @login_required
 def chat():

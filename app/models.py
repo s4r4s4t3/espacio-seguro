@@ -1,5 +1,3 @@
-# app/models.py
-
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 from datetime import datetime
@@ -22,7 +20,7 @@ class User(UserMixin, db.Model):
     # ✅ Foto de perfil - Forzamos default.png si no hay
     profile_picture = db.Column(db.String(300), nullable=False, default="default.png")
 
-    # ✅ Campo nuevo: para saber si ya aceptó términos
+    # ✅ Campo: saber si ya aceptó términos
     accepted_terms = db.Column(db.Boolean, default=False)
 
     # ✅ Relaciones
@@ -65,9 +63,9 @@ class Message(db.Model):
     sender_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     receiver_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)  # Null = Chat Global
     content = db.Column(db.Text, nullable=True)
-    image_url = db.Column(db.String(500), nullable=True)   # ✅ Soporta imágenes Cloudinary
+    image_url = db.Column(db.String(500), nullable=True)  # ✅ Soporta imágenes Cloudinary
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
-    is_read = db.Column(db.Boolean, default=False)  # ✅ Nuevo campo para marcar como leído
+    is_read = db.Column(db.Boolean, default=False)  # ✅ Nuevo campo para leído
 
 
 # --------------------
@@ -92,8 +90,8 @@ class PanicLog(db.Model):
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     message = db.Column(db.String(256), nullable=False)
-    is_read = db.Column(db.Boolean, default=False)  # ✅ Nuevo campo para leído
+    is_read = db.Column(db.Boolean, default=False)  # ✅ Campo para leído
     location = db.Column(db.String(256), nullable=True)  # ✅ Ubicación opcional
 
-    # ❌ NO uses user = db.relationship(...) aquí
-    # La relación ya está definida en User: panic_logs = db.relationship('PanicLog', backref='author')
+    # Relación ya definida en User
+

@@ -24,11 +24,10 @@ def login():
             login_user(user)
             flash(_('Bienvenido de nuevo, %(username)s!', username=username), 'success')
 
-            # ✅ Ahora verifica si aceptó términos
+            # ✅ Verifica si aceptó términos
             if not user.accepted_terms:
                 return redirect(url_for('home.welcome'))
-            else:
-                return redirect(url_for('home.home'))
+            return redirect(url_for('home.home'))
 
         else:
             flash(_('Credenciales inválidas. Intenta de nuevo.'), 'danger')
@@ -103,6 +102,5 @@ def login_google():
 
     if not user.accepted_terms:
         return redirect(url_for('home.welcome'))
-    else:
-        return redirect(url_for('home.home'))
+    return redirect(url_for('home.home'))
 """

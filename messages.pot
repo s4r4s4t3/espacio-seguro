@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-07-13 16:32-0300\n"
+"POT-Creation-Date: 2025-07-15 17:38-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,4 +16,54 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
+
+#: app/routes/auth.py:25
+#, python-format
+msgid "Bienvenido de nuevo, %(username)s!"
+msgstr ""
+
+#: app/routes/auth.py:34
+msgid "Credenciales inválidas. Intenta de nuevo."
+msgstr ""
+
+#: app/routes/auth.py:50
+#, python-format
+msgid "El usuario \"%(username)s\" ya existe. Elige otro nombre."
+msgstr ""
+
+#: app/routes/auth.py:60
+msgid "Usuario creado con éxito. Ahora puedes iniciar sesión."
+msgstr ""
+
+#: app/routes/auth.py:73
+msgid "Sesión cerrada correctamente."
+msgstr ""
+
+#: app/routes/diary.py:18
+msgid "No podés guardar una entrada vacía."
+msgstr ""
+
+#: app/routes/diary.py:24
+msgid "Entrada guardada con éxito."
+msgstr ""
+
+#: app/routes/friends.py:36
+msgid "Solicitud enviada"
+msgstr ""
+
+#: app/routes/friends.py:46
+msgid "Solicitud aceptada"
+msgstr ""
+
+#: app/routes/friends.py:56
+msgid "Solicitud rechazada"
+msgstr ""
+
+#: app/routes/home.py:33
+msgid "¡Gracias por aceptar nuestros términos!"
+msgstr ""
+
+#: app/routes/home.py:73
+msgid "Botón de Pánico activado. Tus contactos recibirán una alerta."
+msgstr ""
 
