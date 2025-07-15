@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-07-13 16:32-0300\n"
-"PO-Revision-Date: 2025-07-13 16:17-0300\n"
+"POT-Creation-Date: 2025-07-15 20:10-0300\n"
+"PO-Revision-Date: 2025-07-15 20:10-0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
 "Language-Team: en <LL@li.org>\n"
@@ -18,59 +18,62 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
 
-msgid "Tu espacio de contencion y apoyo real"
+msgid "SafeSpace - Tu lugar de apoyo"
+msgstr "SafeSpace - Your place for support"
+
+msgid "🌐 Idioma"
+msgstr "🌐 Language"
+
+msgid "Español"
+msgstr "Spanish"
+
+msgid "English"
+msgstr "English"
+
+msgid "Português"
+msgstr "Portuguese"
+
+msgid "Português (Brasil)"
+msgstr "Portuguese (Brazil)"
+
+msgid "Deutsch"
+msgstr "German"
+
+msgid "Français"
+msgstr "French"
+
+msgid "Italiano"
+msgstr "Italian"
+
+msgid "Tu espacio de contención y apoyo real"
 msgstr "Your space of real support and care"
 
-msgid "Conecta con personas que entienden lo que sentis, sin juicios."
+msgid "Conectá con personas que entienden lo que sentís, sin juicios."
 msgstr "Connect with people who understand how you feel, without judgment."
 
-msgid "Iniciar Sesion"
+msgid "Iniciar Sesión"
 msgstr "Login"
 
 msgid "Crear Cuenta"
 msgstr "Create Account"
 
-msgid "Iniciar sesion con Google"
+msgid "Iniciar sesión con Google"
 msgstr "Sign in with Google"
-
-msgid "Terminos y Condiciones"
-msgstr "Terms and Conditions"
-
-msgid "Politica de Privacidad"
-msgstr "Privacy Policy"
-
-msgid "Siguenos en Instagram y TikTok"
-msgstr "Follow us on Instagram and TikTok"
 
 msgid "© 2025 SafeSpace. Todos los derechos reservados."
 msgstr "© 2025 SafeSpace. All rights reserved."
 
-msgid "🌐 Idioma"
-msgstr "🌐 Language"
+msgid "Términos y Condiciones"
+msgstr "Terms and Conditions"
+
+msgid "Política de Privacidad"
+msgstr "Privacy Policy"
+
+msgid "Síguenos en Instagram y TikTok"
+msgstr "Follow us on Instagram and TikTok"
 
 msgid "Bienvenido, %(username)s"
 msgstr "Welcome, %(username)s"
-
-msgid "Perfil"
-msgstr "Profile"
-
-msgid "Chat Global"
-msgstr "Global Chat"
-
-msgid "Amigos"
-msgstr "Friends"
-
-msgid "Botón de Pánico"
-msgstr "Panic Button"
-
-msgid "Diario"
-msgstr "Diary"
-
-msgid "Cerrar sesión"
-msgstr "Logout"
-
-msgid "Volver al inicio"
-msgstr "Back to Home"
 
 msgid "Bienvenido a SafeSpace"
 msgstr "Welcome to SafeSpace"
@@ -87,6 +90,93 @@ msgstr "Please accept our terms to continue."
 msgid "Aceptar y Continuar"
 msgstr "Accept and Continue"
 
+msgid "Perfil"
+msgstr "Profile"
+
+msgid "Foto de Perfil"
+msgstr "Profile Photo"
+
+msgid "Subir Foto de Perfil"
+msgstr "Upload Profile Photo"
+
+msgid "Eliminar Foto de Perfil"
+msgstr "Delete Profile Photo"
+
+msgid "Bio"
+msgstr "Bio"
+
+msgid "Contanos algo de vos..."
+msgstr "Tell us something about you..."
+
+msgid "Guardar cambios"
+msgstr "Save changes"
+
+msgid "Chat Global"
+msgstr "Global Chat"
+
+msgid "Amigos"
+msgstr "Friends"
+
+msgid "Botón de Pánico"
+msgstr "Panic Button"
+
+msgid "Diario"
+msgstr "Diary"
+
+msgid "Mi Diario"
+msgstr "My Diary"
+
+msgid "Mi Diario Personal"
+msgstr "My Personal Diary"
+
+msgid "Escribí tu entrada..."
+msgstr "Write your entry..."
+
+msgid "Guardar Entrada"
+msgstr "Save Entry"
+
+msgid "Entradas Anteriores"
+msgstr "Previous Entries"
+
+msgid "No tenés entradas aún."
+msgstr "You don't have any entries yet."
+
+msgid "Volver al inicio"
+msgstr "Back to Home"
+
+msgid "Volver a amigos"
+msgstr "Back to Friends"
+
+msgid "Chatear"
+msgstr "Chat"
+
+msgid "Agregar amigo"
+msgstr "Add friend"
+
+msgid "Usuario ID"
+msgstr "User ID"
+
+msgid "Aceptar"
+msgstr "Accept"
+
+msgid "Rechazar"
+msgstr "Reject"
+
+msgid "No tenés solicitudes nuevas."
+msgstr "You don't have new requests."
+
+msgid "Aún no agregaste amigos. 💚"
+msgstr "You haven't added friends yet. 💚"
+
+msgid "📥 Solicitudes Recibidas"
+msgstr "📥 Received Requests"
+
+msgid "🌍 Otros usuarios"
+msgstr "🌍 Other users"
+
+msgid "No hay mensajes todavía..."
+msgstr "No messages yet..."
+
 msgid "Escribí tu mensaje..."
 msgstr "Write your message..."
 
@@ -98,6 +188,9 @@ msgstr "Send"
 
 msgid "Debes escribir un mensaje o subir una imagen."
 msgstr "You must write a message or upload an image."
+
+msgid "ahora"
+msgstr "now"
 
 msgid "Usuario"
 msgstr "Username"
@@ -122,27 +215,6 @@ msgstr "Already have an account?"
 
 msgid "Ingresá acá"
 msgstr "Sign in here"
-
-msgid "Mi Diario"
-msgstr "My Diary"
-
-msgid "Mi Diario Personal"
-msgstr "My Personal Diary"
-
-msgid "Escribí tu entrada..."
-msgstr "Write your entry..."
-
-msgid "Guardar Entrada"
-msgstr "Save Entry"
-
-msgid "Entradas Anteriores"
-msgstr "Previous Entries"
-
-msgid "No tenés entradas aún."
-msgstr "You don't have any entries yet."
-
-msgid "Botón de Pánico"
-msgstr "Panic Button"
 
 msgid "Este botón enviará una alerta inmediata a tus contactos de confianza. Úsalo solo si realmente lo necesitás."
 msgstr "This button will send an immediate alert to your trusted contacts. Use it only if you really need it."

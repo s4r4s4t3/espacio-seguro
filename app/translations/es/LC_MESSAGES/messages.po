@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-07-13 16:32-0300\n"
-"PO-Revision-Date: 2025-07-13 16:17-0300\n"
+"POT-Creation-Date: 2025-07-15 20:20-0300\n"
+"PO-Revision-Date: 2025-07-15 20:20-0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
 "Language-Team: es <LL@li.org>\n"
@@ -18,59 +18,62 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
 
-msgid "Tu espacio de contencion y apoyo real"
+msgid "SafeSpace - Tu lugar de apoyo"
+msgstr "SafeSpace - Tu lugar de apoyo"
+
+msgid "🌐 Idioma"
+msgstr "🌐 Idioma"
+
+msgid "Español"
+msgstr "Español"
+
+msgid "English"
+msgstr "Inglés"
+
+msgid "Português"
+msgstr "Portugués"
+
+msgid "Português (Brasil)"
+msgstr "Portugués (Brasil)"
+
+msgid "Deutsch"
+msgstr "Alemán"
+
+msgid "Français"
+msgstr "Francés"
+
+msgid "Italiano"
+msgstr "Italiano"
+
+msgid "Tu espacio de contención y apoyo real"
 msgstr "Tu espacio de contención y apoyo real"
 
-msgid "Conecta con personas que entienden lo que sentis, sin juicios."
+msgid "Conectá con personas que entienden lo que sentís, sin juicios."
 msgstr "Conectá con personas que entienden lo que sentís, sin juicios."
 
-msgid "Iniciar Sesion"
+msgid "Iniciar Sesión"
 msgstr "Iniciar Sesión"
 
 msgid "Crear Cuenta"
 msgstr "Crear Cuenta"
 
-msgid "Iniciar sesion con Google"
+msgid "Iniciar sesión con Google"
 msgstr "Iniciar sesión con Google"
-
-msgid "Terminos y Condiciones"
-msgstr "Términos y Condiciones"
-
-msgid "Politica de Privacidad"
-msgstr "Política de Privacidad"
-
-msgid "Siguenos en Instagram y TikTok"
-msgstr "Síguenos en Instagram y TikTok"
 
 msgid "© 2025 SafeSpace. Todos los derechos reservados."
 msgstr "© 2025 SafeSpace. Todos los derechos reservados."
 
-msgid "🌐 Idioma"
-msgstr "🌐 Idioma"
+msgid "Términos y Condiciones"
+msgstr "Términos y Condiciones"
+
+msgid "Política de Privacidad"
+msgstr "Política de Privacidad"
+
+msgid "Síguenos en Instagram y TikTok"
+msgstr "Síguenos en Instagram y TikTok"
 
 msgid "Bienvenido, %(username)s"
 msgstr "Bienvenido, %(username)s"
-
-msgid "Perfil"
-msgstr "Perfil"
-
-msgid "Chat Global"
-msgstr "Chat Global"
-
-msgid "Amigos"
-msgstr "Amigos"
-
-msgid "Botón de Pánico"
-msgstr "Botón de Pánico"
-
-msgid "Diario"
-msgstr "Diario"
-
-msgid "Cerrar sesión"
-msgstr "Cerrar sesión"
-
-msgid "Volver al inicio"
-msgstr "Volver al inicio"
 
 msgid "Bienvenido a SafeSpace"
 msgstr "Bienvenido a SafeSpace"
@@ -87,6 +90,93 @@ msgstr "Por favor, acepta nuestros términos para continuar."
 msgid "Aceptar y Continuar"
 msgstr "Aceptar y Continuar"
 
+msgid "Perfil"
+msgstr "Perfil"
+
+msgid "Foto de Perfil"
+msgstr "Foto de Perfil"
+
+msgid "Subir Foto de Perfil"
+msgstr "Subir Foto de Perfil"
+
+msgid "Eliminar Foto de Perfil"
+msgstr "Eliminar Foto de Perfil"
+
+msgid "Bio"
+msgstr "Bio"
+
+msgid "Contanos algo de vos..."
+msgstr "Contanos algo de vos..."
+
+msgid "Guardar cambios"
+msgstr "Guardar cambios"
+
+msgid "Chat Global"
+msgstr "Chat Global"
+
+msgid "Amigos"
+msgstr "Amigos"
+
+msgid "Botón de Pánico"
+msgstr "Botón de Pánico"
+
+msgid "Diario"
+msgstr "Diario"
+
+msgid "Mi Diario"
+msgstr "Mi Diario"
+
+msgid "Mi Diario Personal"
+msgstr "Mi Diario Personal"
+
+msgid "Escribí tu entrada..."
+msgstr "Escribí tu entrada..."
+
+msgid "Guardar Entrada"
+msgstr "Guardar Entrada"
+
+msgid "Entradas Anteriores"
+msgstr "Entradas Anteriores"
+
+msgid "No tenés entradas aún."
+msgstr "No tenés entradas aún."
+
+msgid "Volver al inicio"
+msgstr "Volver al inicio"
+
+msgid "Volver a amigos"
+msgstr "Volver a amigos"
+
+msgid "Chatear"
+msgstr "Chatear"
+
+msgid "Agregar amigo"
+msgstr "Agregar amigo"
+
+msgid "Usuario ID"
+msgstr "Usuario ID"
+
+msgid "Aceptar"
+msgstr "Aceptar"
+
+msgid "Rechazar"
+msgstr "Rechazar"
+
+msgid "No tenés solicitudes nuevas."
+msgstr "No tenés solicitudes nuevas."
+
+msgid "Aún no agregaste amigos. 💚"
+msgstr "Aún no agregaste amigos. 💚"
+
+msgid "📥 Solicitudes Recibidas"
+msgstr "📥 Solicitudes Recibidas"
+
+msgid "🌍 Otros usuarios"
+msgstr "🌍 Otros usuarios"
+
+msgid "No hay mensajes todavía..."
+msgstr "No hay mensajes todavía..."
+
 msgid "Escribí tu mensaje..."
 msgstr "Escribí tu mensaje..."
 
@@ -98,6 +188,9 @@ msgstr "Enviar"
 
 msgid "Debes escribir un mensaje o subir una imagen."
 msgstr "Debes escribir un mensaje o subir una imagen."
+
+msgid "ahora"
+msgstr "ahora"
 
 msgid "Usuario"
 msgstr "Usuario"
@@ -122,27 +215,6 @@ msgstr "¿Ya tenés cuenta?"
 
 msgid "Ingresá acá"
 msgstr "Ingresá acá"
-
-msgid "Mi Diario"
-msgstr "Mi Diario"
-
-msgid "Mi Diario Personal"
-msgstr "Mi Diario Personal"
-
-msgid "Escribí tu entrada..."
-msgstr "Escribí tu entrada..."
-
-msgid "Guardar Entrada"
-msgstr "Guardar Entrada"
-
-msgid "Entradas Anteriores"
-msgstr "Entradas Anteriores"
-
-msgid "No tenés entradas aún."
-msgstr "No tenés entradas aún."
-
-msgid "Botón de Pánico"
-msgstr "Botón de Pánico"
 
 msgid "Este botón enviará una alerta inmediata a tus contactos de confianza. Úsalo solo si realmente lo necesitás."
 msgstr "Este botón enviará una alerta inmediata a tus contactos de confianza. Úsalo solo si realmente lo necesitás."
