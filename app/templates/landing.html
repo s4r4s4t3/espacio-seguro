@@ -5,6 +5,24 @@
   <meta charset="UTF-8">
   <title>{{ _('SafeSpace - Tu lugar de apoyo') }}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  
+  <!-- 🌍 Script de detección automática de idioma -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const langCookieSet = document.cookie.includes('lang=');
+      const alreadyRedirected = sessionStorage.getItem('autoLangSet');
+
+      if (!langCookieSet && !alreadyRedirected) {
+        const browserLang = navigator.language.slice(0, 2).toLowerCase();
+        const supportedLangs = ['es', 'en', 'pt', 'br', 'de', 'fr', 'it'];
+
+        if (supportedLangs.includes(browserLang)) {
+          sessionStorage.setItem('autoLangSet', '1');
+          window.location.href = `/set_language/${browserLang}`;
+        }
+      }
+    });
+  </script>
 </head>
 <body>
   <!-- Header con logo y selector idioma con banderas -->
@@ -67,19 +85,5 @@
     </p>
     <p>{{ _('Síguenos en Instagram y TikTok') }}</p>
   </footer>
-
-  <!-- 🌍 Script de detección automática de idioma -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const langAlreadySet = document.cookie.includes('language=');
-      if (!langAlreadySet) {
-        const browserLang = navigator.language.slice(0, 2).toLowerCase();
-        const supportedLangs = ['es', 'en', 'pt', 'br', 'de', 'fr', 'it'];
-        if (supportedLangs.includes(browserLang)) {
-          window.location.href = `/set_language/${browserLang}`;
-        }
-      }
-    });
-  </script>
 </body>
 </html>
