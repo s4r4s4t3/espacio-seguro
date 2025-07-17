@@ -245,3 +245,45 @@ msgstr "Sair"
 
 msgid "Bio"
 msgstr "Biografia"
+
+msgid "📰 Feed - SafeSpace"
+msgstr "📰 Feed - SafeSpace"
+
+msgid "📰 Publicaciones recientes"
+msgstr "📰 Publicações recentes"
+
+msgid "Foto de perfil"
+msgstr "Foto de perfil"
+
+msgid "Imagen de publicación"
+msgstr "Imagem da publicação"
+
+msgid "📝 Nueva Publicación"
+msgstr "📝 Nova Publicação"
+
+msgid "📝 Crear una nueva publicación"
+msgstr "📝 Criar uma nova publicação"
+
+msgid "¿Qué querés compartir?"
+msgstr "O que você quer compartilhar?"
+
+msgid "Escribí algo..."
+msgstr "Escreva algo..."
+
+msgid "Imagen opcional"
+msgstr "Imagem opcional"
+
+msgid "Publicar"
+msgstr "Publicar"
+
+msgid "⬅ Volver al feed"
+msgstr "⬅ Voltar ao feed"
+
+msgid "El contenido no puede estar vacío."
+msgstr "O conteúdo não pode estar vazio."
+
+msgid "Error al subir la imagen."
+msgstr "Erro ao enviar a imagem."
+
+msgid "✅ Publicación creada con éxito."
+msgstr "✅ Publicação criada com sucesso."

@@ -245,3 +245,45 @@ msgstr "Cerrar sesión"
 
 msgid "Bio"
 msgstr "Bio"
+
+msgid "📰 Feed - SafeSpace"
+msgstr "📰 Feed - SafeSpace"
+
+msgid "📰 Publicaciones recientes"
+msgstr "📰 Publicaciones recientes"
+
+msgid "Foto de perfil"
+msgstr "Foto de perfil"
+
+msgid "Imagen de publicación"
+msgstr "Imagen de publicación"
+
+msgid "📝 Nueva Publicación"
+msgstr "📝 Nueva Publicación"
+
+msgid "📝 Crear una nueva publicación"
+msgstr "📝 Crear una nueva publicación"
+
+msgid "¿Qué querés compartir?"
+msgstr "¿Qué querés compartir?"
+
+msgid "Escribí algo..."
+msgstr "Escribí algo..."
+
+msgid "Imagen opcional"
+msgstr "Imagen opcional"
+
+msgid "Publicar"
+msgstr "Publicar"
+
+msgid "⬅ Volver al feed"
+msgstr "⬅ Volver al feed"
+
+msgid "El contenido no puede estar vacío."
+msgstr "El contenido no puede estar vacío."
+
+msgid "Error al subir la imagen."
+msgstr "Error al subir la imagen."
+
+msgid "✅ Publicación creada con éxito."
+msgstr "✅ Publicación creada con éxito."

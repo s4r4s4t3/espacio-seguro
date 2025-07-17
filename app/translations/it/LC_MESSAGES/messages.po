@@ -245,3 +245,45 @@ msgstr "Disconnettersi"
 
 msgid "Bio"
 msgstr "Biografia"
+
+msgid "📰 Feed - SafeSpace"
+msgstr "📰 Feed - SafeSpace"
+
+msgid "📰 Publicaciones recientes"
+msgstr "📰 Pubblicazioni recenti"
+
+msgid "Foto de perfil"
+msgstr "Foto profilo"
+
+msgid "Imagen de publicación"
+msgstr "Immagine del post"
+
+msgid "📝 Nueva Publicación"
+msgstr "📝 Nuova pubblicazione"
+
+msgid "📝 Crear una nueva publicación"
+msgstr "📝 Crea una nuova pubblicazione"
+
+msgid "¿Qué querés compartir?"
+msgstr "Cosa vuoi condividere?"
+
+msgid "Escribí algo..."
+msgstr "Scrivi qualcosa..."
+
+msgid "Imagen opcional"
+msgstr "Immagine opzionale"
+
+msgid "Publicar"
+msgstr "Pubblica"
+
+msgid "⬅ Volver al feed"
+msgstr "⬅ Torna al feed"
+
+msgid "El contenido no puede estar vacío."
+msgstr "Il contenuto non può essere vuoto."
+
+msgid "Error al subir la imagen."
+msgstr "Errore durante il caricamento dell'immagine."
+
+msgid "✅ Publicación creada con éxito."
+msgstr "✅ Pubblicazione creata con successo."

@@ -2,8 +2,10 @@
 
 from flask import Blueprint, render_template, request, redirect, url_for, flash, make_response
 from flask_login import login_required, current_user
-from ..models import db, PanicLog, User, Message
+from ..models import db, PanicLog, User, Message, Post
 from flask_babel import _
+from sqlalchemy import desc
+import cloudinary.uploader
 
 home_bp = Blueprint('home', __name__)
 
@@ -11,7 +13,6 @@ home_bp = Blueprint('home', __name__)
 def landing():
     return render_template("landing.html")
 
-# ✅ Ruta robusta para cambiar idioma
 @home_bp.route('/set_language/<lang_code>')
 def set_language(lang_code):
     supported = ['es', 'en', 'pt', 'br', 'de', 'fr', 'it']
@@ -72,6 +73,40 @@ def panico():
 
     return render_template('panico.html')
 
-@home_bp.route('/prueba')
-def prueba():
-    return "<h1>✅ Ruta de prueba pública funcionando</h1>"
+@home_bp.route('/feed')
+@login_required
+def feed():
+    publicaciones = Post.query.order_by(desc(Post.timestamp)).all()
+    return render_template("feed.html", publicaciones=publicaciones, user=current_user)
+
+# ✅ Nueva publicación (formulario + subida a Cloudinary)
+@home_bp.route('/nueva_publicacion', methods=['GET', 'POST'])
+@login_required
+def nueva_publicacion():
+    if request.method == 'POST':
+        content = request.form.get('content', '').strip()
+
+        if not content:
+            flash(_('El contenido no puede estar vacío.'), 'warning')
+            return redirect(url_for('home.nueva_publicacion'))
+
+        image = request.files.get('image')
+        image_url = None
+
+        if image and image.filename != '':
+            try:
+                upload_result = cloudinary.uploader.upload(image)
+                image_url = upload_result['secure_url']
+            except Exception as e:
+                print("Error al subir imagen:", e)
+                flash(_('Error al subir la imagen.'), 'danger')
+                return redirect(url_for('home.nueva_publicacion'))
+
+        nuevo_post = Post(content=content, image_url=image_url, user_id=current_user.id)
+        db.session.add(nuevo_post)
+        db.session.commit()
+
+        flash(_('✅ Publicación creada con éxito.'), 'success')
+        return redirect(url_for('home.feed'))
+
+    return render_template("nueva_publicacion.html", user=current_user)

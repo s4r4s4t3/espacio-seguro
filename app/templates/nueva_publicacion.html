@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ _('📝 Nueva Publicación') }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="form-container">
+        <h2>{{ _('📝 Crear una nueva publicación') }}</h2>
+
+        <form method="POST" enctype="multipart/form-data">
+            <label for="content">{{ _('¿Qué querés compartir?') }}</label><br>
+            <textarea id="content" name="content" rows="4" placeholder="{{ _('Escribí algo...') }}"></textarea><br><br>
+
+            <label for="image">{{ _('Imagen opcional') }}</label><br>
+            <input type="file" id="image" name="image" accept="image/*"><br><br>
+
+            <button type="submit">{{ _('Publicar') }}</button>
+        </form>
+
+        <p><a href="{{ url_for('home.feed') }}">{{ _('⬅ Volver al feed') }}</a></p>
+    </div>
+</body>
+</html>

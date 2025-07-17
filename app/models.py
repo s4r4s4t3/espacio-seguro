@@ -1,3 +1,5 @@
+# app/models.py
+
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 from datetime import datetime
@@ -14,16 +16,10 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(256), nullable=False)
 
-    # ✅ Bio del perfil
     bio = db.Column(db.String(300), default="")
-
-    # ✅ Foto de perfil - Forzamos default.png si no hay
     profile_picture = db.Column(db.String(300), nullable=False, default="default.png")
-
-    # ✅ Campo: saber si ya aceptó términos
     accepted_terms = db.Column(db.Boolean, default=False)
 
-    # ✅ Relaciones
     sent_messages = db.relationship('Message',
                                     foreign_keys='Message.sender_id',
                                     backref='sender',
@@ -38,7 +34,10 @@ class User(UserMixin, db.Model):
     panic_logs = db.relationship('PanicLog',
                                  backref='author',
                                  lazy=True)
-
+    # 🔥 Nueva relación
+    posts = db.relationship('Post',
+                            backref='author',
+                            lazy=True)
 
 # --------------------
 # Solicitudes de Amistad
@@ -52,7 +51,6 @@ class FriendRequest(db.Model):
     status = db.Column(db.String(10), default='pending')  # pending, accepted, rejected
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
-
 # --------------------
 # Mensajes (Global y Privado)
 # --------------------
@@ -63,10 +61,9 @@ class Message(db.Model):
     sender_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     receiver_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)  # Null = Chat Global
     content = db.Column(db.Text, nullable=True)
-    image_url = db.Column(db.String(500), nullable=True)  # ✅ Soporta imágenes Cloudinary
+    image_url = db.Column(db.String(500), nullable=True)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
-    is_read = db.Column(db.Boolean, default=False)  # ✅ Nuevo campo para leído
-
+    is_read = db.Column(db.Boolean, default=False)
 
 # --------------------
 # Entradas del Diario Personal
@@ -79,7 +76,6 @@ class DiaryEntry(db.Model):
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
-
 # --------------------
 # Botón de Pánico - Logs
 # --------------------
@@ -90,8 +86,17 @@ class PanicLog(db.Model):
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     message = db.Column(db.String(256), nullable=False)
-    is_read = db.Column(db.Boolean, default=False)  # ✅ Campo para leído
-    location = db.Column(db.String(256), nullable=True)  # ✅ Ubicación opcional
+    is_read = db.Column(db.Boolean, default=False)
+    location = db.Column(db.String(256), nullable=True)
 
-    # Relación ya definida en User
+# --------------------
+# 🧑‍🎨 Nuevo modelo: Publicaciones del Feed
+# --------------------
+class Post(db.Model):
+    __tablename__ = 'post'
 
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.Text, nullable=False)
+    image_url = db.Column(db.String(500), nullable=True)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
