@@ -293,3 +293,6 @@ msgstr "Feed"
 
 msgid "Nueva publicación"
 msgstr "Nuova pubblicazione"
+
+msgid "Subir foto"
+msgstr "Carica foto"
