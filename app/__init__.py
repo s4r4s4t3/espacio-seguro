@@ -8,9 +8,6 @@ from flask_socketio import SocketIO
 from dotenv import load_dotenv
 from flask_babel import Babel
 
-# 🚫 OAuth Google comentado hasta activar
-# from flask_dance.contrib.google import make_google_blueprint
-
 load_dotenv()
 
 db = SQLAlchemy()
@@ -25,8 +22,8 @@ def create_app():
     app.config['SESSION_COOKIE_SECURE'] = True
     app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 
-    # ✅ Idioma por defecto en caso de no encontrar cookie
     app.config['BABEL_DEFAULT_LOCALE'] = 'es'
+    app.config['LANGUAGES'] = ['es', 'en', 'pt', 'br', 'de', 'fr', 'it']
 
     db.init_app(app)
     socketio.init_app(app, async_mode='eventlet')
@@ -65,13 +62,15 @@ def create_app():
     from app.routes.legales import legales_bp
     app.register_blueprint(legales_bp)
 
-    # ✅ Selector de idioma: usa cookie o default
     @babel.localeselector
     def get_locale():
         lang = request.cookies.get('lang')
-        if lang:
+        if lang in app.config['LANGUAGES']:
             return lang
         return app.config['BABEL_DEFAULT_LOCALE']
+
+    return app
+
 
     # 🚫 Registrar Blueprint OAuth Google comentado hasta activar
     """
@@ -85,4 +84,4 @@ def create_app():
     app.register_blueprint(google_bp, url_prefix="/login")
     """
 
-    return app
+    

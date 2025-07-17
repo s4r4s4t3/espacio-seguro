@@ -7,19 +7,20 @@ from flask_babel import _
 
 home_bp = Blueprint('home', __name__)
 
-# 🚩 Landing pública
 @home_bp.route('/')
 def landing():
     return render_template("landing.html")
 
-# ⚙️ Ruta para cambiar idioma y guardar cookie
+# ✅ Ruta robusta para cambiar idioma
 @home_bp.route('/set_language/<lang_code>')
 def set_language(lang_code):
+    supported = ['es', 'en', 'pt', 'br', 'de', 'fr', 'it']
+    if lang_code not in supported:
+        lang_code = 'es'
     resp = make_response(redirect(request.referrer or url_for('home.landing')))
     resp.set_cookie('lang', lang_code, max_age=30*24*60*60)
     return resp
 
-# 🚩 Bienvenida - aceptar términos (1ra vez)
 @home_bp.route('/welcome', methods=['GET', 'POST'])
 @login_required
 def welcome():
@@ -34,19 +35,16 @@ def welcome():
 
     return render_template("welcome.html", user=current_user)
 
-# 🏠 Dashboard principal
 @home_bp.route('/home')
 @login_required
 def home():
     return render_template("home.html", user=current_user)
 
-# 💬 Chat global (vista base)
 @home_bp.route('/chat')
 @login_required
 def chat():
     return render_template("chat.html", user=current_user)
 
-# 🚨 Botón de Pánico
 @home_bp.route('/panico', methods=['GET', 'POST'])
 @login_required
 def panico():
@@ -74,7 +72,6 @@ def panico():
 
     return render_template('panico.html')
 
-# Ruta de prueba
 @home_bp.route('/prueba')
 def prueba():
     return "<h1>✅ Ruta de prueba pública funcionando</h1>"

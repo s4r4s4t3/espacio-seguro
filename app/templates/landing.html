@@ -67,5 +67,19 @@
     </p>
     <p>{{ _('Síguenos en Instagram y TikTok') }}</p>
   </footer>
+
+  <!-- 🌍 Script de detección automática de idioma -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const langAlreadySet = document.cookie.includes('language=');
+      if (!langAlreadySet) {
+        const browserLang = navigator.language.slice(0, 2).toLowerCase();
+        const supportedLangs = ['es', 'en', 'pt', 'br', 'de', 'fr', 'it'];
+        if (supportedLangs.includes(browserLang)) {
+          window.location.href = `/set_language/${browserLang}`;
+        }
+      }
+    });
+  </script>
 </body>
 </html>

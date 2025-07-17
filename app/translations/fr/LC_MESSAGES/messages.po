@@ -236,3 +236,12 @@ msgstr "Entrée enregistrée avec succès."
 
 msgid "Botón de Pánico activado. Tus contactos recibirán una alerta."
 msgstr "Bouton Panique activé. Vos contacts recevront une alerte."
+
+msgid "Perfil"
+msgstr "Profil"
+
+msgid "Cerrar sesión"
+msgstr "Déconnexion"
+
+msgid "Bio"
+msgstr "Bio"
