@@ -290,3 +290,6 @@ msgstr "✅ Publicación creada con éxito."
 
 msgid "Feed"
 msgstr "Feed"
+
+msgid "Nueva publicación"
+msgstr "Nueva publicación"
