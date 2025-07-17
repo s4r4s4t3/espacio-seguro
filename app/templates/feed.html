@@ -3,17 +3,17 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>📰 Feed - SafeSpace</title>
+  <title>{{ _('📰 Feed - SafeSpace') }}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  <div class="feed-container">
-    <h2>📰 Publicaciones recientes</h2>
+  <div class="form-container">
+    <h2>{{ _('📰 Publicaciones recientes') }}</h2>
 
     {% for post in publicaciones %}
     <div class="post-card">
       <div class="post-header">
-        <img class="profile-pic" src="{{ url_for('static', filename='profile_pics/' + post.author.profile_picture) }}" alt="Foto de perfil">
+        <img class="profile-pic" src="{{ url_for('static', filename='profile_pics/' + post.author.profile_picture) }}" alt="{{ _('Foto de perfil') }}">
         <div>
           <div class="post-user">{{ post.author.username }}</div>
           <div class="post-date">{{ post.timestamp.strftime('%d/%m/%Y %H:%M') }}</div>
@@ -23,7 +23,7 @@
         {{ post.content }}
       </div>
       {% if post.image_url %}
-      <img class="post-image" src="{{ post.image_url }}" alt="Imagen de publicación">
+      <img class="post-image" src="{{ post.image_url }}" alt="{{ _('Imagen de publicación') }}">
       {% endif %}
     </div>
     {% endfor %}

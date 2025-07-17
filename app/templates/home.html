@@ -5,35 +5,6 @@
     <meta charset="UTF-8">
     <title>{{ _('Inicio - Espacio Seguro') }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <style>
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-            width: 100%;
-            max-width: 900px;
-        }
-
-        .card {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            transition: transform 0.2s;
-        }
-
-        .card:hover {
-            transform: scale(1.05);
-        }
-
-        .card a {
-            text-decoration: none;
-            color: #2e7d32;
-            font-weight: bold;
-        }
-    </style>
 </head>
 <body>
     <h2>{{ _('Bienvenido, %(username)s', username=user.username) }}</h2>
@@ -43,8 +14,8 @@
         <div class="card"><a href="/amigos">👥 {{ _('Amigos') }}</a></div>
         <div class="card"><a href="/panico">🚨 {{ _('Botón de Pánico') }}</a></div>
         <div class="card"><a href="{{ url_for('diary.diary') }}">📝 {{ _('Diario') }}</a></div>
+        <div class="card"><a href="{{ url_for('home.feed') }}">📰 {{ _('Feed') }}</a></div>
         <div class="card"><a href="/logout">🔒 {{ _('Cerrar sesión') }}</a></div>
     </div>
 </body>
 </html>
-

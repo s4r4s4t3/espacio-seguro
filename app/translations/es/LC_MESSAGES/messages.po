@@ -287,3 +287,6 @@ msgstr "Error al subir la imagen."
 
 msgid "✅ Publicación creada con éxito."
 msgstr "✅ Publicación creada con éxito."
+
+msgid "Feed"
+msgstr "Feed"

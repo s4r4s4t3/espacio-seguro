@@ -287,3 +287,6 @@ msgstr "Erreur lors du téléchargement de l’image."
 
 msgid "✅ Publicación creada con éxito."
 msgstr "✅ Publication créée avec succès."
+
+msgid "Feed"
+msgstr "Feed"
