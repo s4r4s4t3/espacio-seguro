@@ -237,7 +237,7 @@ msgstr "Nota salvata con successo."
 msgid "Botón de Pánico activado. Tus contactos recibirán una alerta."
 msgstr "Pulsante di Emergenza attivato. I tuoi contatti riceveranno un avviso."
 
-msgid "Perfil"
+msgid "Mi Perfil"
 msgstr "Profilo"
 
 msgid "Cerrar sesión"

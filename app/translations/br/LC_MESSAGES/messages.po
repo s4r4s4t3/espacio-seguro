@@ -237,7 +237,7 @@ msgstr "Entrada salva com sucesso."
 msgid "Botón de Pánico activado. Tus contactos recibirán una alerta."
 msgstr "Botão de Pânico ativado. Seus contatos receberão um alerta."
 
-msgid "Perfil"
+msgid "Mi Perfil"
 msgstr "Perfil"
 
 msgid "Cerrar sesión"
