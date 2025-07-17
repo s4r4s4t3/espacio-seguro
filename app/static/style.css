@@ -697,3 +697,56 @@ footer a:hover {
   resize: vertical;
   margin-bottom: 15px;
 }
+
+/* === Ajuste visual final para perfil y nueva publicación === */
+.form-container,
+.profile-form {
+  background-color: #f9fdf9; /* fondo sutil, no blanco ni verde */
+  text-align: center;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  margin: 30px auto;
+}
+
+.profile-form {
+  max-width: 500px;
+}
+
+.form-container form,
+.profile-form form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.file-label,
+.upload-btn,
+button,
+.delete-btn {
+  background-color: #2e7d32 !important;
+  color: white !important;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  text-align: center;
+}
+
+.file-label:hover,
+.upload-btn:hover,
+button:hover,
+.delete-btn:hover {
+  background-color: #1b5e20 !important;
+}
+
+.hidden-input {
+  display: none;
+}
+
+textarea {
+  width: 100%;
+}
