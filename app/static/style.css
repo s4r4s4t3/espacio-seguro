@@ -750,3 +750,22 @@ button:hover,
 textarea {
   width: 100%;
 }
+
+/* 🛠️ Centrado vertical + visual final de contenedores */
+.page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+}
+
+.form-container,
+.profile-form {
+  width: 100%;
+  max-width: 500px;
+  background-color: #f9fdf9;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
