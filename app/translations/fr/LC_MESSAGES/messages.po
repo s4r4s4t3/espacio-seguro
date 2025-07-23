@@ -1,15 +1,14 @@
 # French translations for PROJECT.
 # Copyright (C) 2025 ORGANIZATION
-# This file is distributed under the same license as the PROJECT project.
 # Ezequiel Sarasate <sarasate8@gmail.com>, 2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-07-15 20:25-0300\n"
-"PO-Revision-Date: 2025-07-15 20:25-0300\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2025-07-23 18:00-0300\n"
+"PO-Revision-Date: 2025-07-23 18:00-0300\n"
+"Last-Translator: Ezequiel Sarasate <sarasate8@gmail.com>\n"
 "Language: fr\n"
 "Language-Team: fr <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -19,7 +18,7 @@ msgstr ""
 "Generated-By: Babel 2.17.0\n"
 
 msgid "SafeSpace - Tu lugar de apoyo"
-msgstr "SafeSpace - Votre lieu de soutien"
+msgstr "SafeSpace - Ton espace d'entraide"
 
 msgid "🌐 Idioma"
 msgstr "🌐 Langue"
@@ -46,10 +45,10 @@ msgid "Italiano"
 msgstr "Italien"
 
 msgid "Tu espacio de contención y apoyo real"
-msgstr "Votre espace de soutien et d'accompagnement réel"
+msgstr "Ton espace de soutien réel"
 
 msgid "Conectá con personas que entienden lo que sentís, sin juicios."
-msgstr "Connectez-vous avec des personnes qui comprennent ce que vous ressentez, sans jugement."
+msgstr "Connecte-toi avec des personnes qui te comprennent, sans jugement."
 
 msgid "Iniciar Sesión"
 msgstr "Se connecter"
@@ -64,7 +63,7 @@ msgid "© 2025 SafeSpace. Todos los derechos reservados."
 msgstr "© 2025 SafeSpace. Tous droits réservés."
 
 msgid "Términos y Condiciones"
-msgstr "Conditions générales"
+msgstr "Conditions Générales"
 
 msgid "Política de Privacidad"
 msgstr "Politique de confidentialité"
@@ -79,13 +78,13 @@ msgid "Bienvenido a SafeSpace"
 msgstr "Bienvenue sur SafeSpace"
 
 msgid "¡Hola, "
-msgstr "Salut, "
+msgstr "Bonjour, "
 
 msgid "Gracias por unirte a SafeSpace, tu espacio de apoyo y contención."
-msgstr "Merci de rejoindre SafeSpace, votre espace de soutien et d'accompagnement."
+msgstr "Merci de rejoindre SafeSpace, ton espace de soutien et d'écoute."
 
 msgid "Por favor, acepta nuestros términos para continuar."
-msgstr "Veuillez accepter nos conditions pour continuer."
+msgstr "Merci d'accepter nos conditions pour continuer."
 
 msgid "Aceptar y Continuar"
 msgstr "Accepter et continuer"
@@ -97,7 +96,7 @@ msgid "Foto de Perfil"
 msgstr "Photo de profil"
 
 msgid "Subir Foto de Perfil"
-msgstr "Télécharger la photo de profil"
+msgstr "Télécharger une photo de profil"
 
 msgid "Eliminar Foto de Perfil"
 msgstr "Supprimer la photo de profil"
@@ -106,13 +105,13 @@ msgid "Bio"
 msgstr "Bio"
 
 msgid "Contanos algo de vos..."
-msgstr "Parlez-nous un peu de vous..."
+msgstr "Parle-nous un peu de toi..."
 
 msgid "Guardar cambios"
 msgstr "Enregistrer les modifications"
 
 msgid "Chat Global"
-msgstr "Chat global"
+msgstr "Chat Global"
 
 msgid "Amigos"
 msgstr "Amis"
@@ -130,16 +129,16 @@ msgid "Mi Diario Personal"
 msgstr "Mon Journal Personnel"
 
 msgid "Escribí tu entrada..."
-msgstr "Écrivez votre entrée..."
+msgstr "Écris ton entrée..."
 
 msgid "Guardar Entrada"
 msgstr "Enregistrer l'entrée"
 
 msgid "Entradas Anteriores"
-msgstr "Entrées précédentes"
+msgstr "Entrées Précédentes"
 
 msgid "No tenés entradas aún."
-msgstr "Vous n'avez pas encore d'entrées."
+msgstr "Tu n'as pas encore d'entrées."
 
 msgid "Volver al inicio"
 msgstr "Retour à l'accueil"
@@ -154,7 +153,7 @@ msgid "Agregar amigo"
 msgstr "Ajouter un ami"
 
 msgid "Usuario ID"
-msgstr "ID Utilisateur"
+msgstr "ID utilisateur"
 
 msgid "Aceptar"
 msgstr "Accepter"
@@ -163,10 +162,10 @@ msgid "Rechazar"
 msgstr "Refuser"
 
 msgid "No tenés solicitudes nuevas."
-msgstr "Vous n'avez pas de nouvelles demandes."
+msgstr "Tu n'as pas de nouvelles demandes."
 
 msgid "Aún no agregaste amigos. 💚"
-msgstr "Vous n'avez pas encore ajouté d'amis. 💚"
+msgstr "Tu n'as pas encore ajouté d'amis. 💚"
 
 msgid "📥 Solicitudes Recibidas"
 msgstr "📥 Demandes reçues"
@@ -175,10 +174,10 @@ msgid "🌍 Otros usuarios"
 msgstr "🌍 Autres utilisateurs"
 
 msgid "No hay mensajes todavía..."
-msgstr "Aucun message pour le moment..."
+msgstr "Pas encore de messages..."
 
 msgid "Escribí tu mensaje..."
-msgstr "Écrivez votre message..."
+msgstr "Écris ton message..."
 
 msgid "Adjuntar imagen"
 msgstr "Joindre une image"
@@ -187,64 +186,43 @@ msgid "Enviar"
 msgstr "Envoyer"
 
 msgid "Debes escribir un mensaje o subir una imagen."
-msgstr "Vous devez écrire un message ou télécharger une image."
+msgstr "Tu dois écrire un message ou ajouter une image."
 
 msgid "ahora"
 msgstr "maintenant"
 
 msgid "Usuario"
-msgstr "Nom d'utilisateur"
+msgstr "Utilisateur"
 
 msgid "Contraseña"
 msgstr "Mot de passe"
 
 msgid "Ver contraseña"
-msgstr "Voir le mot de passe"
+msgstr "Afficher le mot de passe"
 
 msgid "Entrar"
-msgstr "Se connecter"
+msgstr "Connexion"
 
 msgid "¿No tenés cuenta?"
-msgstr "Vous n'avez pas de compte ?"
+msgstr "Pas encore de compte ?"
 
 msgid "Registrate acá"
-msgstr "Inscrivez-vous ici"
+msgstr "Inscris-toi ici"
 
 msgid "¿Ya tenés cuenta?"
-msgstr "Vous avez déjà un compte ?"
+msgstr "Tu as déjà un compte ?"
 
 msgid "Ingresá acá"
-msgstr "Connectez-vous ici"
+msgstr "Connecte-toi ici"
 
 msgid "Este botón enviará una alerta inmediata a tus contactos de confianza. Úsalo solo si realmente lo necesitás."
-msgstr "Ce bouton enverra une alerte immédiate à vos contacts de confiance. Utilisez-le uniquement si nécessaire."
-
-msgid "Solicitud enviada"
-msgstr "Demande envoyée"
-
-msgid "Solicitud aceptada"
-msgstr "Demande acceptée"
-
-msgid "Solicitud rechazada"
-msgstr "Demande refusée"
-
-msgid "No podés guardar una entrada vacía."
-msgstr "Vous ne pouvez pas enregistrer une entrée vide."
-
-msgid "Entrada guardada con éxito."
-msgstr "Entrée enregistrée avec succès."
-
-msgid "Botón de Pánico activado. Tus contactos recibirán una alerta."
-msgstr "Bouton Panique activé. Vos contacts recevront une alerte."
+msgstr "Ce bouton enverra une alerte immédiate à tes contacts de confiance. À utiliser seulement en cas de besoin réel."
 
 msgid "Mi Perfil"
-msgstr "Profil"
+msgstr "Mon Profil"
 
 msgid "Cerrar sesión"
 msgstr "Déconnexion"
-
-msgid "Bio"
-msgstr "Bio"
 
 msgid "📰 Feed - SafeSpace"
 msgstr "📰 Fil d'actualité - SafeSpace"
@@ -256,7 +234,28 @@ msgid "Foto de perfil"
 msgstr "Photo de profil"
 
 msgid "Imagen de publicación"
-msgstr "Image de la publication"
+msgstr "Image de publication"
+
+msgid "No hay publicaciones todavía."
+msgstr "Aucune publication pour l'instant."
+
+msgid "Inicio - Espacio Seguro"
+msgstr "Accueil - SafeSpace"
+
+msgid "Feed"
+msgstr "Fil"
+
+msgid "Nueva publicación"
+msgstr "Nouvelle publication"
+
+msgid "Login - Espacio Seguro"
+msgstr "Connexion - SafeSpace"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Registrar"
+msgstr "S'inscrire"
 
 msgid "📝 Nueva Publicación"
 msgstr "📝 Nouvelle publication"
@@ -265,49 +264,40 @@ msgid "📝 Crear una nueva publicación"
 msgstr "📝 Créer une nouvelle publication"
 
 msgid "¿Qué querés compartir?"
-msgstr "Qu'avez-vous envie de partager ?"
+msgstr "Qu'aimerais-tu partager ?"
 
 msgid "Escribí algo..."
-msgstr "Écrivez quelque chose..."
+msgstr "Écris quelque chose..."
 
-msgid "Imagen opcional"
-msgstr "Image optionnelle"
+msgid "Subir foto"
+msgstr "Télécharger une photo"
 
 msgid "Publicar"
 msgstr "Publier"
 
-msgid "⬅ Volver al feed"
-msgstr "⬅ Retour au fil d’actualité"
+msgid "Volver al feed"
+msgstr "Retour au fil"
 
-msgid "El contenido no puede estar vacío."
-msgstr "Le contenu ne peut pas être vide."
+msgid "Política de Privacidad - SafeSpace"
+msgstr "Politique de confidentialité - SafeSpace"
 
-msgid "Error al subir la imagen."
-msgstr "Erreur lors du téléchargement de l’image."
+msgid "Aquí irá tu política de privacidad completa cuando esté lista."
+msgstr "Ta politique de confidentialité complète sera affichée ici une fois prête."
 
-msgid "✅ Publicación creada con éxito."
-msgstr "✅ Publication créée avec succès."
+msgid "Este documento explica cómo SafeSpace recopila, utiliza y protege la información personal de los usuarios."
+msgstr "Ce document explique comment SafeSpace collecte, utilise et protège les données personnelles des utilisateurs."
 
-msgid "Feed"
-msgstr "Feed"
+msgid "Recomendación: redactar con ayuda de un profesional legal para cumplir con leyes de protección de datos (por ejemplo GDPR o similares)."
+msgstr "Conseil : rédigez-le avec l'aide d'un professionnel du droit pour respecter les lois sur la protection des données (par exemple RGPD)."
 
-msgid "Nueva publicación"
-msgstr "Nouvelle publication"
+msgid "Términos y Condiciones - SafeSpace"
+msgstr "Conditions Générales - SafeSpace"
 
-msgid "Subir foto"
-msgstr "Téléverser une photo"
+msgid "Aquí irán tus términos legales completos cuando estén listos."
+msgstr "Tes conditions légales complètes seront affichées ici une fois prêtes."
 
-msgid "Recuerda: aquí nunca estás solo/a. Cada paso, aunque pequeño, cuenta."
-msgstr "Rappelle-toi : ici, tu n'es jamais seul(e). Chaque pas, même petit, compte."
+msgid "Este documento describe los términos de uso de la plataforma, las responsabilidades y derechos de los usuarios y de SafeSpace."
+msgstr "Ce document décrit les conditions d'utilisation de la plateforme, les droits et responsabilités des utilisateurs et de SafeSpace."
 
-msgid "Hoy puede ser un gran día para comenzar de nuevo."
-msgstr "Aujourd'hui peut être un grand jour pour recommencer."
-
-msgid "Lo importante no es la meta, sino seguir caminando."
-msgstr "L'important n'est pas le but, mais de continuer d'avancer."
-
-msgid "Siempre hay alguien dispuesto a escucharte aquí."
-msgstr "Il y a toujours quelqu'un prêt à t'écouter ici."
-
-msgid "Tus emociones importan. Tu historia vale."
-msgstr "Tes émotions comptent. Ton histoire a de la valeur."
+msgid "Recomendación: redactar con ayuda de un profesional legal para adaptarse a la normativa local."
+msgstr "Conseil : rédigez-le avec l'aide d'un professionnel du droit pour l'adapter à la réglementation locale."

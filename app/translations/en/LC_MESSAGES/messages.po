@@ -1,15 +1,14 @@
 # English translations for PROJECT.
 # Copyright (C) 2025 ORGANIZATION
-# This file is distributed under the same license as the PROJECT project.
 # Ezequiel Sarasate <sarasate8@gmail.com>, 2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-07-15 20:10-0300\n"
-"PO-Revision-Date: 2025-07-15 20:10-0300\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2025-07-23 18:00-0300\n"
+"PO-Revision-Date: 2025-07-23 18:00-0300\n"
+"Last-Translator: Ezequiel Sarasate <sarasate8@gmail.com>\n"
 "Language: en\n"
 "Language-Team: en <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -19,7 +18,7 @@ msgstr ""
 "Generated-By: Babel 2.17.0\n"
 
 msgid "SafeSpace - Tu lugar de apoyo"
-msgstr "SafeSpace - Your place for support"
+msgstr "SafeSpace - Your place of support"
 
 msgid "🌐 Idioma"
 msgstr "🌐 Language"
@@ -46,13 +45,13 @@ msgid "Italiano"
 msgstr "Italian"
 
 msgid "Tu espacio de contención y apoyo real"
-msgstr "Your space of real support and care"
+msgstr "Your space for real support and comfort"
 
 msgid "Conectá con personas que entienden lo que sentís, sin juicios."
-msgstr "Connect with people who understand how you feel, without judgment."
+msgstr "Connect with people who understand you, without judgment."
 
 msgid "Iniciar Sesión"
-msgstr "Login"
+msgstr "Log In"
 
 msgid "Crear Cuenta"
 msgstr "Create Account"
@@ -82,7 +81,7 @@ msgid "¡Hola, "
 msgstr "Hello, "
 
 msgid "Gracias por unirte a SafeSpace, tu espacio de apoyo y contención."
-msgstr "Thank you for joining SafeSpace — your place for support and care."
+msgstr "Thank you for joining SafeSpace, your place for support and comfort."
 
 msgid "Por favor, acepta nuestros términos para continuar."
 msgstr "Please accept our terms to continue."
@@ -94,19 +93,19 @@ msgid "Perfil"
 msgstr "Profile"
 
 msgid "Foto de Perfil"
-msgstr "Profile Photo"
+msgstr "Profile Picture"
 
 msgid "Subir Foto de Perfil"
-msgstr "Upload Profile Photo"
+msgstr "Upload Profile Picture"
 
 msgid "Eliminar Foto de Perfil"
-msgstr "Delete Profile Photo"
+msgstr "Delete Profile Picture"
 
 msgid "Bio"
 msgstr "Bio"
 
 msgid "Contanos algo de vos..."
-msgstr "Tell us something about you..."
+msgstr "Tell us something about yourself..."
 
 msgid "Guardar cambios"
 msgstr "Save changes"
@@ -139,13 +138,13 @@ msgid "Entradas Anteriores"
 msgstr "Previous Entries"
 
 msgid "No tenés entradas aún."
-msgstr "You don't have any entries yet."
+msgstr "You have no entries yet."
 
 msgid "Volver al inicio"
-msgstr "Back to Home"
+msgstr "Back to home"
 
 msgid "Volver a amigos"
-msgstr "Back to Friends"
+msgstr "Back to friends"
 
 msgid "Chatear"
 msgstr "Chat"
@@ -163,7 +162,7 @@ msgid "Rechazar"
 msgstr "Reject"
 
 msgid "No tenés solicitudes nuevas."
-msgstr "You don't have new requests."
+msgstr "You have no new requests."
 
 msgid "Aún no agregaste amigos. 💚"
 msgstr "You haven't added friends yet. 💚"
@@ -178,7 +177,7 @@ msgid "No hay mensajes todavía..."
 msgstr "No messages yet..."
 
 msgid "Escribí tu mensaje..."
-msgstr "Write your message..."
+msgstr "Type your message..."
 
 msgid "Adjuntar imagen"
 msgstr "Attach image"
@@ -202,7 +201,7 @@ msgid "Ver contraseña"
 msgstr "Show password"
 
 msgid "Entrar"
-msgstr "Login"
+msgstr "Log In"
 
 msgid "¿No tenés cuenta?"
 msgstr "Don't have an account?"
@@ -214,37 +213,16 @@ msgid "¿Ya tenés cuenta?"
 msgstr "Already have an account?"
 
 msgid "Ingresá acá"
-msgstr "Sign in here"
+msgstr "Log in here"
 
 msgid "Este botón enviará una alerta inmediata a tus contactos de confianza. Úsalo solo si realmente lo necesitás."
-msgstr "This button will send an immediate alert to your trusted contacts. Use it only if you really need it."
-
-msgid "Solicitud enviada"
-msgstr "Request sent"
-
-msgid "Solicitud aceptada"
-msgstr "Request accepted"
-
-msgid "Solicitud rechazada"
-msgstr "Request rejected"
-
-msgid "No podés guardar una entrada vacía."
-msgstr "You can't save an empty entry."
-
-msgid "Entrada guardada con éxito."
-msgstr "Entry saved successfully."
-
-msgid "Botón de Pánico activado. Tus contactos recibirán una alerta."
-msgstr "Panic Button activated. Your contacts will receive an alert."
+msgstr "This button will immediately alert your trusted contacts. Use it only if you really need it."
 
 msgid "Mi Perfil"
-msgstr "Profile"
+msgstr "My Profile"
 
 msgid "Cerrar sesión"
 msgstr "Log out"
-
-msgid "Bio"
-msgstr "Bio"
 
 msgid "📰 Feed - SafeSpace"
 msgstr "📰 Feed - SafeSpace"
@@ -258,35 +236,11 @@ msgstr "Profile picture"
 msgid "Imagen de publicación"
 msgstr "Post image"
 
-msgid "📝 Nueva Publicación"
-msgstr "📝 New Post"
+msgid "No hay publicaciones todavía."
+msgstr "No posts yet."
 
-msgid "📝 Crear una nueva publicación"
-msgstr "📝 Create a new post"
-
-msgid "¿Qué querés compartir?"
-msgstr "What do you want to share?"
-
-msgid "Escribí algo..."
-msgstr "Write something..."
-
-msgid "Imagen opcional"
-msgstr "Optional image"
-
-msgid "Publicar"
-msgstr "Post"
-
-msgid "⬅ Volver al feed"
-msgstr "⬅ Back to feed"
-
-msgid "El contenido no puede estar vacío."
-msgstr "Content cannot be empty."
-
-msgid "Error al subir la imagen."
-msgstr "Error uploading image."
-
-msgid "✅ Publicación creada con éxito."
-msgstr "✅ Post created successfully."
+msgid "Inicio - Espacio Seguro"
+msgstr "Home - SafeSpace"
 
 msgid "Feed"
 msgstr "Feed"
@@ -294,20 +248,56 @@ msgstr "Feed"
 msgid "Nueva publicación"
 msgstr "New post"
 
+msgid "Login - Espacio Seguro"
+msgstr "Login - SafeSpace"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Registrar"
+msgstr "Sign up"
+
+msgid "📝 Nueva Publicación"
+msgstr "📝 New Post"
+
+msgid "📝 Crear una nueva publicación"
+msgstr "📝 Create a new post"
+
+msgid "¿Qué querés compartir?"
+msgstr "What would you like to share?"
+
+msgid "Escribí algo..."
+msgstr "Write something..."
+
 msgid "Subir foto"
 msgstr "Upload photo"
 
-msgid "Recuerda: aquí nunca estás solo/a. Cada paso, aunque pequeño, cuenta."
-msgstr "Remember: here you are never alone. Every step, even a small one, matters."
+msgid "Publicar"
+msgstr "Publish"
 
-msgid "Hoy puede ser un gran día para comenzar de nuevo."
-msgstr "Today can be a great day to start again."
+msgid "Volver al feed"
+msgstr "Back to feed"
 
-msgid "Lo importante no es la meta, sino seguir caminando."
-msgstr "The important thing is not the goal, but to keep moving forward."
+msgid "Política de Privacidad - SafeSpace"
+msgstr "Privacy Policy - SafeSpace"
 
-msgid "Siempre hay alguien dispuesto a escucharte aquí."
-msgstr "There is always someone willing to listen to you here."
+msgid "Aquí irá tu política de privacidad completa cuando esté lista."
+msgstr "Your full privacy policy will go here when it's ready."
 
-msgid "Tus emociones importan. Tu historia vale."
-msgstr "Your emotions matter. Your story is important."
+msgid "Este documento explica cómo SafeSpace recopila, utiliza y protege la información personal de los usuarios."
+msgstr "This document explains how SafeSpace collects, uses, and protects users' personal information."
+
+msgid "Recomendación: redactar con ayuda de un profesional legal para cumplir con leyes de protección de datos (por ejemplo GDPR o similares)."
+msgstr "Recommendation: draft with the help of a legal professional to comply with data protection laws (e.g. GDPR or similar)."
+
+msgid "Términos y Condiciones - SafeSpace"
+msgstr "Terms and Conditions - SafeSpace"
+
+msgid "Aquí irán tus términos legales completos cuando estén listos."
+msgstr "Your full legal terms will go here when they're ready."
+
+msgid "Este documento describe los términos de uso de la plataforma, las responsabilidades y derechos de los usuarios y de SafeSpace."
+msgstr "This document describes the platform's terms of use, and the rights and responsibilities of users and SafeSpace."
+
+msgid "Recomendación: redactar con ayuda de un profesional legal para adaptarse a la normativa local."
+msgstr "Recommendation: draft with the help of a legal professional to adapt to local regulations."

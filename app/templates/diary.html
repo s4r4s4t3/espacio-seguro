@@ -1,32 +1,35 @@
 <!-- templates/diary.html -->
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>{{ _('Mi Diario') }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-    <h1>{{ _('Mi Diario Personal') }}</h1>
+  <div class="diary-wrapper">
+    <h1 class="diary-title">{{ _('Mi Diario Personal') }}</h1>
 
     <!-- Formulario para nueva entrada -->
-    <form method="POST">
-        <textarea name="content" rows="4" cols="50" placeholder="{{ _('Escribí tu entrada...') }}"></textarea><br>
-        <button type="submit">{{ _('Guardar Entrada') }}</button>
+    <form method="POST" class="diary-form">
+        <textarea name="content" rows="4" placeholder="{{ _('Escribí tu entrada...') }}" class="diary-textarea"></textarea>
+        <button type="submit" class="btn btn-diary-save">{{ _('Guardar Entrada') }}</button>
     </form>
 
-    <h2>{{ _('Entradas Anteriores') }}</h2>
+    <h2 class="diary-entries-title">{{ _('Entradas Anteriores') }}</h2>
+    <div class="diary-entries-list">
     {% for entry in entries %}
-        <div>
-            <p><strong>{{ entry.date_created.strftime('%Y-%m-%d %H:%M') }}</strong></p>
-            <p>{{ entry.content }}</p>
-            <hr>
-        </div>
+      <div class="diary-entry">
+        <div class="diary-entry-date">{{ entry.date_created.strftime('%Y-%m-%d %H:%M') }}</div>
+        <div class="diary-entry-content">{{ entry.content }}</div>
+      </div>
     {% else %}
-        <p>{{ _('No tenés entradas aún.') }}</p>
+      <div class="diary-empty">{{ _('No tenés entradas aún.') }}</div>
     {% endfor %}
+    </div>
 
-    <a href="{{ url_for('home.home') }}">⬅ {{ _('Volver al inicio') }}</a>
+    <a href="{{ url_for('home.home') }}" class="diary-back-link">⬅ {{ _('Volver al inicio') }}</a>
+  </div>
 </body>
 </html>

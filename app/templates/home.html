@@ -5,18 +5,37 @@
     <meta charset="UTF-8">
     <title>{{ _('Inicio - Espacio Seguro') }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-    <h2>{{ _('Bienvenido, %(username)s', username=user.username) }}</h2>
-    <div class="grid">
-        <div class="card"><a href="/config">👤 {{ _('Perfil') }}</a></div>
-        <div class="card"><a href="/chat">💬 {{ _('Chat Global') }}</a></div>
-        <div class="card"><a href="/amigos">👥 {{ _('Amigos') }}</a></div>
-        <div class="card"><a href="/panico">🚨 {{ _('Botón de Pánico') }}</a></div>
-        <div class="card"><a href="{{ url_for('diary.diary') }}">📝 {{ _('Diario') }}</a></div>
-        <div class="card"><a href="{{ url_for('home.feed') }}">📰 {{ _('Feed') }}</a></div>
-        <div class="card"><a href="{{ url_for('home.nueva_publicacion') }}">➕ {{ _('Nueva publicación') }}</a></div>
-        <div class="card"><a href="/logout">🔒 {{ _('Cerrar sesión') }}</a></div>
+  <div class="home-wrapper">
+    <h2 class="home-title">{{ _('Bienvenido, %(username)s', username=user.username) }}</h2>
+    <div class="home-grid">
+      <a href="/config" class="card-link">
+        <div class="card"><span>👤</span> {{ _('Perfil') }}</div>
+      </a>
+      <a href="/chat" class="card-link">
+        <div class="card"><span>💬</span> {{ _('Chat Global') }}</div>
+      </a>
+      <a href="/amigos" class="card-link">
+        <div class="card"><span>👥</span> {{ _('Amigos') }}</div>
+      </a>
+      <a href="/panico" class="card-link">
+        <div class="card"><span>🚨</span> {{ _('Botón de Pánico') }}</div>
+      </a>
+      <a href="{{ url_for('diary.diary') }}" class="card-link">
+        <div class="card"><span>📝</span> {{ _('Diario') }}</div>
+      </a>
+      <a href="{{ url_for('home.feed') }}" class="card-link">
+        <div class="card"><span>📰</span> {{ _('Feed') }}</div>
+      </a>
+      <a href="{{ url_for('home.nueva_publicacion') }}" class="card-link">
+        <div class="card"><span>➕</span> {{ _('Nueva publicación') }}</div>
+      </a>
+      <a href="/logout" class="card-link">
+        <div class="card"><span>🔒</span> {{ _('Cerrar sesión') }}</div>
+      </a>
     </div>
+  </div>
 </body>
 </html>

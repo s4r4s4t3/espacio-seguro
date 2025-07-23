@@ -1,32 +1,43 @@
-<!-- app/templates/feed.html -->
+<!-- templates/feed.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <title>{{ _('📰 Feed - SafeSpace') }}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-  <div class="form-container">
-    <h2>{{ _('📰 Publicaciones recientes') }}</h2>
+  <div class="feed-wrapper">
+    <h2 class="feed-title">{{ _('📰 Publicaciones recientes') }}</h2>
 
+    <div class="feed-list">
     {% for post in publicaciones %}
-    <div class="post-card">
-      <div class="post-header">
-        <img class="profile-pic" src="{{ url_for('static', filename='profile_pics/' + post.author.profile_picture) }}" alt="{{ _('Foto de perfil') }}">
-        <div>
-          <div class="post-user">{{ post.author.username }}</div>
-          <div class="post-date">{{ post.timestamp.strftime('%d/%m/%Y %H:%M') }}</div>
+      <div class="post-card">
+        <div class="post-header">
+          <img class="profile-pic" src="{% if post.author.profile_picture and 'http' in post.author.profile_picture %}
+                                          {{ post.author.profile_picture }}
+                                        {% else %}
+                                          {{ url_for('static', filename='profile_pics/' + (post.author.profile_picture or 'default.png')) }}
+                                        {% endif %}"
+                alt="{{ _('Foto de perfil') }}">
+          <div>
+            <div class="post-user">{{ post.author.username }}</div>
+            <div class="post-date">{{ post.timestamp.strftime('%d/%m/%Y %H:%M') }}</div>
+          </div>
         </div>
+        <div class="post-content">
+          {{ post.content }}
+        </div>
+        {% if post.image_url %}
+        <img class="post-image" src="{{ post.image_url }}" alt="{{ _('Imagen de publicación') }}">
+        {% endif %}
       </div>
-      <div class="post-content">
-        {{ post.content }}
-      </div>
-      {% if post.image_url %}
-      <img class="post-image" src="{{ post.image_url }}" alt="{{ _('Imagen de publicación') }}">
-      {% endif %}
-    </div>
+    {% else %}
+      <div class="feed-empty">{{ _('No hay publicaciones todavía.') }}</div>
     {% endfor %}
+    </div>
   </div>
 </body>
 </html>
+

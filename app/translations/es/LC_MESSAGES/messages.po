@@ -1,15 +1,14 @@
 # Spanish translations for PROJECT.
 # Copyright (C) 2025 ORGANIZATION
-# This file is distributed under the same license as the PROJECT project.
 # Ezequiel Sarasate <sarasate8@gmail.com>, 2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-07-15 20:20-0300\n"
-"PO-Revision-Date: 2025-07-15 20:20-0300\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2025-07-23 18:00-0300\n"
+"PO-Revision-Date: 2025-07-23 18:00-0300\n"
+"Last-Translator: Ezequiel Sarasate <sarasate8@gmail.com>\n"
 "Language: es\n"
 "Language-Team: es <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -219,32 +218,11 @@ msgstr "Ingresá acá"
 msgid "Este botón enviará una alerta inmediata a tus contactos de confianza. Úsalo solo si realmente lo necesitás."
 msgstr "Este botón enviará una alerta inmediata a tus contactos de confianza. Úsalo solo si realmente lo necesitás."
 
-msgid "Solicitud enviada"
-msgstr "Solicitud enviada"
-
-msgid "Solicitud aceptada"
-msgstr "Solicitud aceptada"
-
-msgid "Solicitud rechazada"
-msgstr "Solicitud rechazada"
-
-msgid "No podés guardar una entrada vacía."
-msgstr "No podés guardar una entrada vacía."
-
-msgid "Entrada guardada con éxito."
-msgstr "Entrada guardada con éxito."
-
-msgid "Botón de Pánico activado. Tus contactos recibirán una alerta."
-msgstr "Botón de Pánico activado. Tus contactos recibirán una alerta."
-
 msgid "Mi Perfil"
-msgstr "Perfil"
+msgstr "Mi Perfil"
 
 msgid "Cerrar sesión"
 msgstr "Cerrar sesión"
-
-msgid "Bio"
-msgstr "Bio"
 
 msgid "📰 Feed - SafeSpace"
 msgstr "📰 Feed - SafeSpace"
@@ -258,6 +236,27 @@ msgstr "Foto de perfil"
 msgid "Imagen de publicación"
 msgstr "Imagen de publicación"
 
+msgid "No hay publicaciones todavía."
+msgstr "No hay publicaciones todavía."
+
+msgid "Inicio - Espacio Seguro"
+msgstr "Inicio - Espacio Seguro"
+
+msgid "Feed"
+msgstr "Feed"
+
+msgid "Nueva publicación"
+msgstr "Nueva publicación"
+
+msgid "Login - Espacio Seguro"
+msgstr "Login - Espacio Seguro"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Registrar"
+msgstr "Registrar"
+
 msgid "📝 Nueva Publicación"
 msgstr "📝 Nueva Publicación"
 
@@ -270,14 +269,14 @@ msgstr "¿Qué querés compartir?"
 msgid "Escribí algo..."
 msgstr "Escribí algo..."
 
-msgid "Imagen opcional"
-msgstr "Imagen opcional"
+msgid "Subir foto"
+msgstr "Subir foto"
 
 msgid "Publicar"
 msgstr "Publicar"
 
-msgid "⬅ Volver al feed"
-msgstr "⬅ Volver al feed"
+msgid "Volver al feed"
+msgstr "Volver al feed"
 
 msgid "El contenido no puede estar vacío."
 msgstr "El contenido no puede estar vacío."
@@ -287,15 +286,6 @@ msgstr "Error al subir la imagen."
 
 msgid "✅ Publicación creada con éxito."
 msgstr "✅ Publicación creada con éxito."
-
-msgid "Feed"
-msgstr "Feed"
-
-msgid "Nueva publicación"
-msgstr "Nueva publicación"
-
-msgid "Subir foto"
-msgstr "Subir foto"
 
 msgid "Recuerda: aquí nunca estás solo/a. Cada paso, aunque pequeño, cuenta."
 msgstr "Recuerda: aquí nunca estás solo/a. Cada paso, aunque pequeño, cuenta."
@@ -311,3 +301,12 @@ msgstr "Siempre hay alguien dispuesto a escucharte aquí."
 
 msgid "Tus emociones importan. Tu historia vale."
 msgstr "Tus emociones importan. Tu historia vale."
+
+msgid "💬 Chat con %(username)s"
+msgstr "💬 Chat con %(username)s"
+
+msgid "Tú"
+msgstr "Tú"
+
+msgid "Imagen"
+msgstr "Imagen"

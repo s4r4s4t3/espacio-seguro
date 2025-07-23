@@ -5,32 +5,43 @@
   <meta charset="UTF-8">
   <title>{{ _('💬 Chat con %(username)s', username=friend.username) }}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
 </head>
 <body>
-  <h2>{{ _('💬 Chat con %(username)s', username=friend.username) }}</h2>
+  <div class="chat-private-wrapper">
+    <h2 class="chat-private-title">
+      {{ _('💬 Chat con %(username)s', username=friend.username) }}
+    </h2>
 
-  <div class="chat-box mensajes" id="mensajes">
-    {% for message in messages %}
-      <div class="mensaje {% if message.sender.id == current_user.id %}yo{% else %}otro{% endif %}">
-        <strong>{{ message.sender.username }}:</strong><br>
-        {% if message.content %}
-          <p>{{ message.content }}</p>
-        {% endif %}
-        {% if message.image_url %}
-          <img src="{{ message.image_url }}" class="chat-image">
-        {% endif %}
-      </div>
-    {% endfor %}
+    <div class="chat-private-box" id="mensajes">
+      {% for message in messages %}
+        <div class="mensaje {% if message.sender.id == current_user.id %}yo{% else %}otro{% endif %}">
+          <span class="chat-username">
+            {% if message.sender.id == current_user.id %}
+              {{ _('Tú') }}
+            {% else %}
+              {{ message.sender.username }}
+            {% endif %}
+          </span>
+          {% if message.content %}
+            <div class="chat-text">{{ message.content }}</div>
+          {% endif %}
+          {% if message.image_url %}
+            <img src="{{ message.image_url }}" class="chat-image">
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+
+    <form id="formulario" class="chat-private-form" enctype="multipart/form-data" autocomplete="off">
+      <input type="text" id="mensaje" placeholder="{{ _('Escribí tu mensaje...') }}" class="chat-input">
+      <input type="file" id="imagen" accept="image/*" class="chat-file">
+      <button type="submit" class="btn btn-chat-send">{{ _('Enviar') }}</button>
+    </form>
+
+    <a href="/amigos" class="chat-back-link">⬅ {{ _('Volver a amigos') }}</a>
   </div>
-
-  <form id="formulario" enctype="multipart/form-data">
-    <input type="text" id="mensaje" placeholder="{{ _('Escribí tu mensaje...') }}">
-    <input type="file" id="imagen" accept="image/*">
-    <button type="submit">{{ _('Enviar') }}</button>
-  </form>
-
-  <p><a href="/amigos">⬅ {{ _('Volver a amigos') }}</a></p>
 
   <script>
     const socket = io();
@@ -81,10 +92,16 @@
         const div = document.createElement('div');
         div.className = 'mensaje ' + (data.sender_id == sender_id ? 'yo' : 'otro');
 
+        const usernameSpan = document.createElement('span');
+        usernameSpan.className = 'chat-username';
+        usernameSpan.textContent = (data.sender_id == sender_id) ? "{{ _('Tú') }}" : data.sender_username;
+        div.appendChild(usernameSpan);
+
         if (data.content) {
-          const p = document.createElement('p');
-          p.textContent = data.content;
-          div.appendChild(p);
+          const textDiv = document.createElement('div');
+          textDiv.className = 'chat-text';
+          textDiv.textContent = data.content;
+          div.appendChild(textDiv);
         }
 
         if (data.image_url) {
@@ -101,3 +118,4 @@
   </script>
 </body>
 </html>
+

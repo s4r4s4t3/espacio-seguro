@@ -5,26 +5,32 @@
     <meta charset="UTF-8">
     <title>{{ _('Login - Espacio Seguro') }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-    <h2>{{ _('Iniciar Sesión') }}</h2>
-    <form method="POST">
-        <input type="text" name="username" placeholder="{{ _('Usuario') }}" required>
-
-        <input type="password" name="password" id="loginPassword" placeholder="{{ _('Contraseña') }}" required>
-        <label><input type="checkbox" id="toggleLoginPassword"> {{ _('Ver contraseña') }}</label>
-
-        <button type="submit">{{ _('Entrar') }}</button>
+  <div class="login-wrapper">
+    <h2 class="login-title">{{ _('Iniciar Sesión') }}</h2>
+    <form method="POST" class="login-form">
+        <input type="text" name="username" class="login-input" placeholder="{{ _('Usuario') }}" required>
+        <input type="password" name="password" id="loginPassword" class="login-input" placeholder="{{ _('Contraseña') }}" required>
+        <label class="login-checkbox">
+          <input type="checkbox" id="toggleLoginPassword">
+          <span>{{ _('Ver contraseña') }}</span>
+        </label>
+        <button type="submit" class="btn btn-login">{{ _('Entrar') }}</button>
     </form>
-    <p>{{ _('¿No tenés cuenta?') }} <a href="/register">{{ _('Registrate acá') }}</a></p>
+    <div class="login-link">
+      {{ _('¿No tenés cuenta?') }}
+      <a href="/register">{{ _('Registrate acá') }}</a>
+    </div>
+  </div>
 
-    <script>
-      const toggleLoginPassword = document.getElementById('toggleLoginPassword');
-      const loginPassword = document.getElementById('loginPassword');
-
-      toggleLoginPassword.addEventListener('change', function () {
-        loginPassword.type = this.checked ? 'text' : 'password';
-      });
-    </script>
+  <script>
+    const toggleLoginPassword = document.getElementById('toggleLoginPassword');
+    const loginPassword = document.getElementById('loginPassword');
+    toggleLoginPassword.addEventListener('change', function () {
+      loginPassword.type = this.checked ? 'text' : 'password';
+    });
+  </script>
 </body>
 </html>

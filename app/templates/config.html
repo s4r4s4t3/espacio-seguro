@@ -5,59 +5,57 @@
   <meta charset="UTF-8">
   <title>{{ _('Mi Perfil') }}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-  <h2>{{ _('Mi Perfil') }}</h2>
+  <div class="profile-wrapper">
+    <h2 class="profile-title">{{ _('Mi Perfil') }}</h2>
 
-  <!-- ✅ Flashes -->
-  {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-      {% for category, message in messages %}
-        <div class="flash {{ category }}">{{ message }}</div>
-      {% endfor %}
-    {% endif %}
-  {% endwith %}
-
-  <form method="POST" enctype="multipart/form-data">
-    {% if user.profile_picture %}
-      {% if 'http' in user.profile_picture %}
-        <div class="profile-container">
-          <img src="{{ user.profile_picture }}" alt="" class="profile" id="profileImage">
-        </div>
-      {% else %}
-        <div class="profile-container">
-          <img src="{{ url_for('static', filename='profile_pics/' ~ (user.profile_picture or 'default.png')) }}" alt="" class="profile" id="profileImage">
-        </div>
+    <!-- ✅ Flashes -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
       {% endif %}
-    {% else %}
-      <!-- ✅ Imagen por defecto -->
-      <div class="profile-container">
-        <img src="{{ url_for('static', filename='profile_pics/default.png') }}" alt="" class="profile" id="profileImage">
+    {% endwith %}
+
+    <form method="POST" enctype="multipart/form-data" class="profile-form">
+      <div class="profile-img-container">
+        <img src="{% if user.profile_picture and 'http' in user.profile_picture %}
+                    {{ user.profile_picture }}
+                  {% elif user.profile_picture %}
+                    {{ url_for('static', filename='profile_pics/' ~ (user.profile_picture or 'default.png')) }}
+                  {% else %}
+                    {{ url_for('static', filename='profile_pics/default.png') }}
+                  {% endif %}"
+            alt=""
+            class="profile-img"
+            id="profileImage">
       </div>
-    {% endif %}
 
-    <label class="label-pretty" for="profile_picture">{{ _('Foto de Perfil') }}</label>
-    <label for="profile_picture" class="upload-btn">{{ _('Subir Foto de Perfil') }}</label>
-    <input type="file" id="profile_picture" name="profile_picture" accept="image/*" class="hidden-file">
+      <label class="label-pretty" for="profile_picture">{{ _('Foto de Perfil') }}</label>
+      <label for="profile_picture" class="upload-btn">{{ _('Subir Foto de Perfil') }}</label>
+      <input type="file" id="profile_picture" name="profile_picture" accept="image/*" class="hidden-file">
 
-    <!-- ✅ Botón para eliminar foto de perfil -->
-    {% if user.profile_picture %}
-      <button type="submit" name="delete_photo" value="1" class="upload-btn">{{ _('Eliminar Foto de Perfil') }}</button>
-    {% endif %}
+      {% if user.profile_picture %}
+        <button type="submit" name="delete_photo" value="1" class="upload-btn delete-photo-btn">{{ _('Eliminar Foto de Perfil') }}</button>
+      {% endif %}
 
-    <label class="label-pretty" for="bio">{{ _('Bio') }}</label>
-    <textarea id="bio" name="bio" rows="4" placeholder="{{ _('Contanos algo de vos...') }}">{{ user.bio }}</textarea>
+      <label class="label-pretty" for="bio">{{ _('Bio') }}</label>
+      <textarea id="bio" name="bio" rows="4" placeholder="{{ _('Contanos algo de vos...') }}">{{ user.bio }}</textarea>
 
-    <button type="submit" class="save-btn">{{ _('Guardar cambios') }}</button>
-  </form>
+      <button type="submit" class="save-btn">{{ _('Guardar cambios') }}</button>
+    </form>
 
-  <!-- ✅ Modal Lightbox -->
-  <div id="modal" class="modal">
-    <span class="close">&times;</span>
-    <img class="modal-content" id="modalImage">
+    <!-- Modal Lightbox -->
+    <div id="modal" class="modal">
+      <span class="close">&times;</span>
+      <img class="modal-content" id="modalImage">
+    </div>
+
+    <a href="{{ url_for('home.home') }}" class="profile-back-link">⬅ {{ _('Volver al inicio') }}</a>
   </div>
-
-  <p><a href="{{ url_for('home.home') }}">⬅ {{ _('Volver al inicio') }}</a></p>
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {

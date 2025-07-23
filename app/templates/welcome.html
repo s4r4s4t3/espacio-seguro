@@ -5,14 +5,14 @@
   <meta charset="UTF-8">
   <title>{{ _('Bienvenido a SafeSpace') }}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
   <main class="welcome-container">
-    <h2>{{ _('¡Hola, ') }}{{ user.username }}!</h2>
-    <p>{{ _('Gracias por unirte a SafeSpace, tu espacio de apoyo y contención.') }}</p>
-    <p>{{ _('Por favor, acepta nuestros términos para continuar.') }}</p>
+    <h2 class="welcome-title">{{ _('¡Hola, ') }}{{ user.username }}!</h2>
+    <p class="welcome-text">{{ _('Gracias por unirte a SafeSpace, tu espacio de apoyo y contención.') }}</p>
+    <p class="welcome-text">{{ _('Por favor, acepta nuestros términos para continuar.') }}</p>
 
-    <!-- ✅ Ahora el botón está dentro de un form POST -->
     <form method="POST">
       <button type="submit" class="btn welcome-btn">{{ _('Aceptar y Continuar') }}</button>
     </form>
@@ -23,4 +23,3 @@
   </footer>
 </body>
 </html>
-

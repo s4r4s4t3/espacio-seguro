@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <title>{{ _('Términos y Condiciones - SafeSpace') }}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
   <header>
@@ -14,8 +15,8 @@
   </header>
 
   <main>
-    <section class="legal">
-      <h2>{{ _('Términos y Condiciones') }}</h2>
+    <section class="legal legal-wrapper">
+      <h2 class="legal-title">{{ _('Términos y Condiciones') }}</h2>
       <p>{{ _('Aquí irán tus términos legales completos cuando estén listos.') }}</p>
       <p>{{ _('Este documento describe los términos de uso de la plataforma, las responsabilidades y derechos de los usuarios y de SafeSpace.') }}</p>
       <p>{{ _('Recomendación: redactar con ayuda de un profesional legal para adaptarse a la normativa local.') }}</p>
@@ -32,5 +33,3 @@
   </footer>
 </body>
 </html>
-
-

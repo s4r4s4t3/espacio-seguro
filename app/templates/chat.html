@@ -5,41 +5,44 @@
   <meta charset="UTF-8">
   <title>{{ _('💬 Chat Global') }}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
 </head>
 <body>
-  <h2>{{ _('💬 Chat Global') }}</h2>
+  <div class="chat-global-wrapper">
+    <h2 class="chat-global-title">{{ _('💬 Chat Global') }}</h2>
 
-  <div id="mensajes">
-    {% if messages %}
-      {% for msg in messages %}
-        <div class="mensaje-global">
-          {% if msg.content %}
-            <p>{{ msg.content }}</p>
-          {% endif %}
-          {% if msg.image_url %}
-            <img src="{{ msg.image_url }}" alt="{{ _('Imagen') }}" class="chat-image">
-          {% endif %}
-          <p class="mensaje-meta">👤 {{ msg.sender_id }} | 🕒 {{ msg.timestamp }}</p>
-        </div>
-      {% endfor %}
-    {% else %}
-      <p class="placeholder-msg">{{ _('No hay mensajes todavía...') }}</p>
-    {% endif %}
+    <div id="mensajes" class="chat-global-box">
+      {% if messages %}
+        {% for msg in messages %}
+          <div class="mensaje-global">
+            {% if msg.content %}
+              <div class="chat-global-text">{{ msg.content }}</div>
+            {% endif %}
+            {% if msg.image_url %}
+              <img src="{{ msg.image_url }}" alt="{{ _('Imagen') }}" class="chat-image">
+            {% endif %}
+            <div class="mensaje-meta">
+              👤 {{ msg.sender_username if msg.sender_username else msg.sender_id }} | 🕒 {{ msg.timestamp }}
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="placeholder-msg">{{ _('No hay mensajes todavía...') }}</div>
+      {% endif %}
+    </div>
+
+    <form id="formulario" class="chat-global-form" enctype="multipart/form-data" autocomplete="off">
+      <input type="text" id="mensaje" class="chat-input" placeholder="{{ _('Escribí tu mensaje...') }}">
+      <label class="upload-btn">
+        📷 {{ _('Adjuntar imagen') }}
+        <input type="file" id="imagen" accept="image/*" class="hidden-file">
+      </label>
+      <button type="submit" class="btn btn-chat-send">{{ _('Enviar') }}</button>
+    </form>
+
+    <a href="/" class="chat-back-link">⬅ {{ _('Volver al inicio') }}</a>
   </div>
-
-  <form id="formulario" enctype="multipart/form-data">
-    <input type="text" id="mensaje" placeholder="{{ _('Escribí tu mensaje...') }}" autocomplete="off">
-
-    <label class="upload-btn">
-      📷 {{ _('Adjuntar imagen') }}
-      <input type="file" id="imagen" accept="image/*" class="hidden-file">
-    </label>
-
-    <button type="submit">{{ _('Enviar') }}</button>
-  </form>
-
-  <p><a href="/">⬅ {{ _('Volver al inicio') }}</a></p>
 
   <script>
     const socket = io();
@@ -83,7 +86,8 @@
       div.className = 'mensaje-global';
 
       if (data.content) {
-        const texto = document.createElement('p');
+        const texto = document.createElement('div');
+        texto.className = 'chat-global-text';
         texto.textContent = data.content;
         div.appendChild(texto);
       }
@@ -95,9 +99,9 @@
         div.appendChild(img);
       }
 
-      const meta = document.createElement('p');
+      const meta = document.createElement('div');
       meta.className = 'mensaje-meta';
-      meta.textContent = `👤 ${data.sender_username} | 🕒 {{ _('ahora') }}`;
+      meta.textContent = `👤 ${data.sender_username || data.sender_id} | 🕒 {{ _('ahora') }}`;
       div.appendChild(meta);
 
       mensajes.appendChild(div);
@@ -107,4 +111,5 @@
   </script>
 </body>
 </html>
+
 

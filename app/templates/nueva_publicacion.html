@@ -5,24 +5,25 @@
   <meta charset="UTF-8">
   <title>{{ _('📝 Nueva Publicación') }}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-  <div class="form-container">
-    <h2>{{ _('📝 Crear una nueva publicación') }}</h2>
+  <div class="nueva-publicacion-wrapper">
+    <h2 class="nueva-publicacion-title">{{ _('📝 Crear una nueva publicación') }}</h2>
 
-    <form method="POST" enctype="multipart/form-data">
-      <label for="content">{{ _('¿Qué querés compartir?') }}</label>
-      <textarea id="content" name="content" rows="4" placeholder="{{ _('Escribí algo...') }}"></textarea>
+    <form method="POST" enctype="multipart/form-data" class="nueva-publicacion-form">
+      <label for="content" class="nueva-publicacion-label">{{ _('¿Qué querés compartir?') }}</label>
+      <textarea id="content" name="content" rows="4" class="nueva-publicacion-textarea" placeholder="{{ _('Escribí algo...') }}"></textarea>
 
       <label for="image" class="file-label">
         📎 {{ _('Subir foto') }}
         <input type="file" id="image" name="image" accept="image/*" class="hidden-input">
       </label>
 
-      <button type="submit">{{ _('Publicar') }}</button>
+      <button type="submit" class="btn btn-nueva-publicacion">{{ _('Publicar') }}</button>
     </form>
 
-    <p><a href="{{ url_for('home.feed') }}">⬅ {{ _('Volver al feed') }}</a></p>
+    <a href="{{ url_for('home.feed') }}" class="nueva-publicacion-back-link">⬅ {{ _('Volver al feed') }}</a>
   </div>
 </body>
 </html>

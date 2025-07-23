@@ -5,28 +5,34 @@
     <meta charset="UTF-8">
     <title>{{ _('Registro - Espacio Seguro') }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-    <h2>{{ _('Crear Cuenta') }}</h2>
-    <form method="POST">
-        <input type="text" name="username" placeholder="{{ _('Usuario') }}" required>
-        <input type="email" name="email" placeholder="{{ _('Email') }}" required>
+  <div class="register-wrapper">
+    <h2 class="register-title">{{ _('Crear Cuenta') }}</h2>
+    <form method="POST" class="register-form">
+        <input type="text" name="username" class="register-input" placeholder="{{ _('Usuario') }}" required>
+        <input type="email" name="email" class="register-input" placeholder="{{ _('Email') }}" required>
 
-        <input type="password" name="password" id="registerPassword" placeholder="{{ _('Contraseña') }}" required>
-        <label><input type="checkbox" id="toggleRegisterPassword"> {{ _('Ver contraseña') }}</label>
-
-        <button type="submit">{{ _('Registrar') }}</button>
+        <input type="password" name="password" id="registerPassword" class="register-input" placeholder="{{ _('Contraseña') }}" required>
+        <label class="register-checkbox">
+          <input type="checkbox" id="toggleRegisterPassword">
+          <span>{{ _('Ver contraseña') }}</span>
+        </label>
+        <button type="submit" class="btn btn-register">{{ _('Registrar') }}</button>
     </form>
-    <p>{{ _('¿Ya tenés cuenta?') }} <a href="/login">{{ _('Ingresá acá') }}</a></p>
+    <div class="register-link">
+      {{ _('¿Ya tenés cuenta?') }}
+      <a href="/login">{{ _('Ingresá acá') }}</a>
+    </div>
+  </div>
 
-    <script>
-      const toggleRegisterPassword = document.getElementById('toggleRegisterPassword');
-      const registerPassword = document.getElementById('registerPassword');
-
-      toggleRegisterPassword.addEventListener('change', function () {
-        registerPassword.type = this.checked ? 'text' : 'password';
-      });
-    </script>
+  <script>
+    const toggleRegisterPassword = document.getElementById('toggleRegisterPassword');
+    const registerPassword = document.getElementById('registerPassword');
+    toggleRegisterPassword.addEventListener('change', function () {
+      registerPassword.type = this.checked ? 'text' : 'password';
+    });
+  </script>
 </body>
 </html>
-
