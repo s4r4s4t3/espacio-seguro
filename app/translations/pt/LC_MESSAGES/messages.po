@@ -296,3 +296,18 @@ msgstr "Nova publicação"
 
 msgid "Subir foto"
 msgstr "Carregar foto"
+
+msgid "Recuerda: aquí nunca estás solo/a. Cada paso, aunque pequeño, cuenta."
+msgstr "Lembra-te: aqui nunca estás sozinho(a). Cada passo, mesmo pequeno, conta."
+
+msgid "Hoy puede ser un gran día para comenzar de nuevo."
+msgstr "Hoje pode ser um ótimo dia para recomeçar."
+
+msgid "Lo importante no es la meta, sino seguir caminando."
+msgstr "O importante não é o destino, mas continuar a caminhar."
+
+msgid "Siempre hay alguien dispuesto a escucharte aquí."
+msgstr "Há sempre alguém disposto a ouvir-te aqui."
+
+msgid "Tus emociones importan. Tu historia vale."
+msgstr "As tuas emoções importam. A tua história tem valor."

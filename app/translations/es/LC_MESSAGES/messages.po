@@ -296,3 +296,18 @@ msgstr "Nueva publicación"
 
 msgid "Subir foto"
 msgstr "Subir foto"
+
+msgid "Recuerda: aquí nunca estás solo/a. Cada paso, aunque pequeño, cuenta."
+msgstr "Recuerda: aquí nunca estás solo/a. Cada paso, aunque pequeño, cuenta."
+
+msgid "Hoy puede ser un gran día para comenzar de nuevo."
+msgstr "Hoy puede ser un gran día para comenzar de nuevo."
+
+msgid "Lo importante no es la meta, sino seguir caminando."
+msgstr "Lo importante no es la meta, sino seguir caminando."
+
+msgid "Siempre hay alguien dispuesto a escucharte aquí."
+msgstr "Siempre hay alguien dispuesto a escucharte aquí."
+
+msgid "Tus emociones importan. Tu historia vale."
+msgstr "Tus emociones importan. Tu historia vale."

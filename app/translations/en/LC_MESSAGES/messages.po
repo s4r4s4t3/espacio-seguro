@@ -296,3 +296,18 @@ msgstr "New post"
 
 msgid "Subir foto"
 msgstr "Upload photo"
+
+msgid "Recuerda: aquí nunca estás solo/a. Cada paso, aunque pequeño, cuenta."
+msgstr "Remember: here you are never alone. Every step, even a small one, matters."
+
+msgid "Hoy puede ser un gran día para comenzar de nuevo."
+msgstr "Today can be a great day to start again."
+
+msgid "Lo importante no es la meta, sino seguir caminando."
+msgstr "The important thing is not the goal, but to keep moving forward."
+
+msgid "Siempre hay alguien dispuesto a escucharte aquí."
+msgstr "There is always someone willing to listen to you here."
+
+msgid "Tus emociones importan. Tu historia vale."
+msgstr "Your emotions matter. Your story is important."
