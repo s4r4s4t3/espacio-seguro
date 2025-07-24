@@ -9,23 +9,23 @@
   <script src="{{ url_for('static', filename='main.js') }}"></script>
 </head>
 <body>
-  <div class="main-card center-container">
+  <div class="main-card center-container" style="max-width:410px;margin:auto;">
     <!-- Mascota/logo -->
     <div style="display:flex;justify-content:center;margin-bottom:14px;">
       <img src="{{ url_for('static', filename='frog.svg') }}" alt="{{ _('Mascota SafeSpace') }}" width="56" height="56" style="border-radius:13px;box-shadow:0 2px 10px rgba(60,170,90,0.10);background:#f6faf6;">
     </div>
-    <h2 class="nueva-publicacion-title">{{ _('📝 Crear una nueva publicación') }}</h2>
-    <form method="POST" enctype="multipart/form-data" class="nueva-publicacion-form">
+    <h2 class="nueva-publicacion-title" style="text-align:center;">{{ _('📝 Crear una nueva publicación') }}</h2>
+    <form method="POST" enctype="multipart/form-data" class="nueva-publicacion-form" style="display:flex;flex-direction:column;gap:14px;">
       <label for="content" class="nueva-publicacion-label">{{ _('¿Qué querés compartir?') }}</label>
-      <textarea id="content" name="content" rows="4" class="nueva-publicacion-textarea" placeholder="{{ _('Escribí algo...') }}"></textarea>
-      <label for="image" class="file-label">
+      <textarea id="content" name="content" rows="4" class="nueva-publicacion-textarea" placeholder="{{ _('Escribí algo...') }}" required style="resize:vertical;"></textarea>
+      <label for="image" class="file-label" style="margin-bottom:7px;">
         📎 {{ _('Subir foto') }}
         <input type="file" id="image" name="image" accept="image/*" class="hidden-input">
         <img class="preview-img" style="display:none;margin-top:12px;max-width:120px;max-height:120px;border-radius:10px;" id="img-preview-np" />
       </label>
-      <button type="submit" class="btn btn-nueva-publicacion">{{ _('Publicar') }}</button>
+      <button type="submit" class="btn btn-nueva-publicacion" style="margin-top:10px;">{{ _('Publicar') }}</button>
     </form>
-    <a href="{{ url_for('home.feed') }}" class="nueva-publicacion-back-link">⬅ {{ _('Volver al feed') }}</a>
+    <a href="{{ url_for('home.feed') }}" class="nueva-publicacion-back-link" style="margin-top:17px;display:block;text-align:center;">⬅ {{ _('Volver al feed') }}</a>
   </div>
   <script>
     // Vista previa imagen

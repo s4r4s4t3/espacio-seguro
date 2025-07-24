@@ -1,35 +1,48 @@
+<!-- templates/landing.html -->
 <!DOCTYPE html>
-<html lang="es">
+<html lang="{{ g.get('lang', 'es') }}">
 <head>
-    <meta charset="UTF-8">
-    <title>{{ _('SafeSpace - Tu lugar de apoyo') }}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>{{ _('SafeSpace - Tu lugar de apoyo') }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
   <div class="center-container">
-    <div class="main-card" style="max-width:400px;">
+    <div class="main-card" style="max-width:430px; margin:auto; padding:30px 16px 18px 16px;">
       <!-- Logo/Mascota (Sapito) -->
       <div style="text-align:center;">
-        <img src="{{ url_for('static', filename='frog.svg') }}" alt="Mascota SafeSpace" style="max-width:110px; margin-bottom:18px;" />
+        <img src="{{ url_for('static', filename='frog.svg') }}" alt="{{ _('Mascota SafeSpace') }}" style="max-width:108px; margin-bottom:13px;">
       </div>
-      <h2 style="color:#27d284">{{ _('SafeSpace - Tu lugar de apoyo') }}</h2>
-      <div class="subtitle" style="font-size:1.17em;">
+      <!-- Menú de idiomas responsive -->
+      <div style="text-align:right; margin-bottom:5px;">
+        <form method="GET" action="{{ url_for('set_language') }}">
+          <select name="lang" onchange="this.form.submit()" style="font-size:1.05em; border-radius:8px; border:1px solid #cceee6; padding:2px 9px;">
+            <option value="es" {% if g.get('lang', 'es') == 'es' %}selected{% endif %}>🇪🇸 Español</option>
+            <option value="en" {% if g.get('lang', 'es') == 'en' %}selected{% endif %}>🇺🇸 English</option>
+            <option value="pt" {% if g.get('lang', 'es') == 'pt' %}selected{% endif %}>🇧🇷 Português</option>
+            <!-- Agrega más idiomas si los tenés -->
+          </select>
+        </form>
+      </div>
+      <h2 style="color:#27d284; text-align:center; margin-bottom:5px;">{{ _('SafeSpace - Tu lugar de apoyo') }}</h2>
+      <div class="subtitle" style="font-size:1.14em; text-align:center;">
         {{ _('Tu espacio de contención y apoyo real') }}
       </div>
-      <form method="POST" style="margin-bottom: 17px;">
-        <button type="submit" class="btn">{{ _('Iniciar Sesión') }}</button>
-        <a href="/register" class="btn" style="display:block;">{{ _('Crear Cuenta') }}</a>
-        <a href="/login/google" class="btn btn-google" style="background:#fff;color:#219150;border:1px solid #6ac694;margin-top:6px;">
-          <img src="{{ url_for('static', filename='icons/google.svg') }}" style="width:23px;vertical-align:middle;margin-right:10px;">{{ _('Iniciar sesión con Google') }}
+      <form method="GET" action="/login" style="margin-bottom: 16px; margin-top:16px;">
+        <button type="submit" class="btn" style="width:100%;margin-bottom:7px;">{{ _('Iniciar Sesión') }}</button>
+        <a href="/register" class="btn" style="display:block; width:100%; margin-bottom:7px;">{{ _('Crear Cuenta') }}</a>
+        <a href="/login/google" class="btn btn-google" style="background:#fff; color:#219150; border:1px solid #6ac694; width:100%; display:block;">
+          <img src="{{ url_for('static', filename='icons/google.svg') }}" style="width:23px;vertical-align:middle;margin-right:10px;">
+          {{ _('Iniciar sesión con Google') }}
         </a>
       </form>
-      <div class="subtitle" style="font-size:0.98em;opacity:0.78;">
+      <div class="subtitle" style="font-size:0.97em; opacity:0.78; text-align:center;">
         <span style="font-style:italic;">{{ _('Recuerda: aquí nunca estás solo/a. Cada paso, aunque pequeño, cuenta.') }}</span>
       </div>
-      <footer>
-        © 2025 SafeSpace. Todos los derechos reservados.
-        <div style="margin-top:6px;">
+      <footer style="margin-top:16px;text-align:center;">
+        <small>© 2025 SafeSpace.</small>
+        <div style="margin-top:7px; font-size:0.98em;">
           <a href="/privacy">{{ _('Política de Privacidad') }}</a> | <a href="/terms">{{ _('Términos y Condiciones') }}</a>
         </div>
       </footer>
@@ -38,4 +51,3 @@
   <script src="{{ url_for('static', filename='main.js') }}"></script>
 </body>
 </html>
-

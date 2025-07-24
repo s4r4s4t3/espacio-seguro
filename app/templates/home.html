@@ -1,16 +1,31 @@
+<!-- templates/home.html -->
 <!DOCTYPE html>
-<html lang="es">
+<html lang="{{ g.get('lang', 'es') }}">
 <head>
-    <meta charset="UTF-8">
-    <title>{{ _('Inicio - SafeSpace') }}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>{{ _('Inicio - SafeSpace') }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
   <div class="center-container">
-    <div class="main-card">
-      <h2>{{ _('Bienvenido, %(username)s', username=user.username) }}</h2>
-      <div class="home-nav">
+    <div class="main-card" style="max-width:410px;margin:auto;padding:29px 12px 18px 12px;">
+      <!-- Logo/Mascota -->
+      <div style="text-align:center;">
+        <img src="{{ url_for('static', filename='frog.svg') }}" alt="{{ _('Mascota SafeSpace') }}" style="max-width:70px; margin-bottom:11px;">
+      </div>
+      <!-- Menú de idiomas -->
+      <div style="text-align:right; margin-bottom:5px;">
+        <form method="GET" action="{{ url_for('set_language') }}">
+          <select name="lang" onchange="this.form.submit()" style="font-size:1.05em; border-radius:8px; border:1px solid #cceee6; padding:2px 9px;">
+            <option value="es" {% if g.get('lang', 'es') == 'es' %}selected{% endif %}>🇪🇸 Español</option>
+            <option value="en" {% if g.get('lang', 'es') == 'en' %}selected{% endif %}>🇺🇸 English</option>
+            <option value="pt" {% if g.get('lang', 'es') == 'pt' %}selected{% endif %}>🇧🇷 Português</option>
+          </select>
+        </form>
+      </div>
+      <h2 style="text-align:center;">{{ _('Bienvenido, %(username)s', username=user.username) }}</h2>
+      <div class="home-nav" style="display:flex;flex-direction:column;gap:11px;margin:22px 0 14px 0;">
         <a href="/config" class="btn">{{ _('Perfil') }}</a>
         <a href="/chat" class="btn">{{ _('Chat Global') }}</a>
         <a href="/amigos" class="btn">{{ _('Amigos') }}</a>

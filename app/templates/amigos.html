@@ -1,58 +1,59 @@
+<!-- templates/amigos.html -->
 <!DOCTYPE html>
-<html lang="es">
+<html lang="{{ g.get('lang', 'es') }}">
 <head>
-    <meta charset="UTF-8">
-    <title>{{ _('🤝 Amigos') }}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>{{ _('🤝 Amigos') }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
   <div class="center-container">
-    <div class="main-card">
+    <div class="main-card" style="max-width:430px;margin:auto;padding:25px 12px 15px 12px;">
       <!-- Mascota SafeSpace SVG -->
-      <div class="frog-logo" style="text-align:center;">
-        <img src="{{ url_for('static', filename='frog.svg') }}" alt="Mascota SafeSpace" style="width:54px; height:auto; margin-bottom:4px;">
+      <div style="text-align:center;">
+        <img src="{{ url_for('static', filename='frog.svg') }}" alt="{{ _('Mascota SafeSpace') }}" style="width:54px; margin-bottom:5px;">
       </div>
-      <h2>{{ _('Tus Amigos') }}</h2>
-      <div class="subtitle">
+      <h2 style="text-align:center;">{{ _('Tus Amigos') }}</h2>
+      <div class="subtitle" style="text-align:center;margin-bottom:8px;">
         {{ _('Aún no agregaste amigos.') }} 💚
       </div>
 
       <!-- Solicitudes recibidas -->
-      <div class="section-title">📥 {{ _('Solicitudes Recibidas') }}</div>
+      <div class="section-title" style="margin-bottom:6px;">📥 {{ _('Solicitudes Recibidas') }}</div>
       <div class="requests-list">
-      {% for solicitud in solicitudes %}
-        <div class="request-card">
-          <div class="friend-avatar">👤</div>
-          <div class="friend-username">
-            {{ solicitud.sender_username }}
+        {% for solicitud in solicitudes %}
+          <div class="request-card" style="display:flex;align-items:center;gap:12px;padding:8px 0;">
+            <div class="friend-avatar" style="font-size:1.4em;">👤</div>
+            <div class="friend-username" style="flex:1;">
+              {{ solicitud.sender_username }}
+            </div>
+            <div class="card-actions" style="display:flex;gap:7px;">
+              <a href="/aceptar/{{ solicitud.id }}" class="btn-accept">{{ _('Aceptar') }}</a>
+              <a href="/rechazar/{{ solicitud.id }}" class="btn-reject">{{ _('Rechazar') }}</a>
+            </div>
           </div>
-          <div class="card-actions">
-            <a href="/aceptar/{{ solicitud.id }}" class="btn-accept">{{ _('Aceptar') }}</a>
-            <a href="/rechazar/{{ solicitud.id }}" class="btn-reject">{{ _('Rechazar') }}</a>
-          </div>
-        </div>
-      {% else %}
-        <div class="empty-msg">{{ _('No tenés solicitudes nuevas.') }}</div>
-      {% endfor %}
+        {% else %}
+          <div class="empty-msg" style="padding:8px 0;">{{ _('No tenés solicitudes nuevas.') }}</div>
+        {% endfor %}
       </div>
 
       <!-- Otros usuarios -->
-      <div class="section-title">🌍 {{ _('Otros usuarios') }}</div>
+      <div class="section-title" style="margin:14px 0 5px 0;">🌍 {{ _('Otros usuarios') }}</div>
       <div class="users-list">
-      {% for user in usuarios %}
-        <div class="user-card">
-          <div class="user-avatar">👤</div>
-          <div class="user-username">{{ user.username }}</div>
-          <div class="card-actions">
-            <a href="/enviar_solicitud/{{ user.id }}" class="btn-add">{{ _('Agregar amigo') }}</a>
+        {% for user in usuarios %}
+          <div class="user-card" style="display:flex;align-items:center;gap:12px;padding:8px 0;">
+            <div class="user-avatar" style="font-size:1.3em;">👤</div>
+            <div class="user-username" style="flex:1;">{{ user.username }}</div>
+            <div class="card-actions">
+              <a href="/enviar_solicitud/{{ user.id }}" class="btn-add">{{ _('Agregar amigo') }}</a>
+            </div>
           </div>
-        </div>
-      {% endfor %}
+        {% endfor %}
       </div>
 
-      <a href="/" class="back-link">{{ _('← Volver al inicio') }}</a>
-      <button id="darkModeToggle" title="Modo claro/oscuro">🌙</button>
+      <a href="/" class="back-link" style="display:block;text-align:center;margin-top:18px;">{{ _('← Volver al inicio') }}</a>
+      <button id="darkModeToggle" title="Modo claro/oscuro" style="position:fixed;top:16px;right:16px;z-index:22;font-size:1.7em;">🌙</button>
     </div>
   </div>
   <script src="{{ url_for('static', filename='main.js') }}"></script>

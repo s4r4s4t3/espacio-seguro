@@ -1,5 +1,6 @@
+<!-- templates/chat_privado.html -->
 <!DOCTYPE html>
-<html lang="es">
+<html lang="{{ g.get('lang', 'es') }}">
 <head>
   <meta charset="UTF-8">
   <title>{{ _('💬 Chat Privado') }}</title>
@@ -8,9 +9,13 @@
   <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
 </head>
 <body>
-  <div class="chat-private-wrapper">
-    <h2 class="chat-private-title">{{ _('💬 Chat con %(username)s', username=friend.username) }}</h2>
-    <div class="chat-private-box">
+  <div class="chat-private-wrapper main-card center-container" style="max-width:470px;margin:auto;">
+    <!-- Mascota/logo opcional -->
+    <div style="display:flex;justify-content:center;margin-bottom:10px;">
+      <img src="{{ url_for('static', filename='frog.svg') }}" alt="{{ _('Mascota SafeSpace') }}" width="48" height="48" style="border-radius:12px;box-shadow:0 2px 9px rgba(60,170,90,0.08);background:#f6faf6;">
+    </div>
+    <h2 class="chat-private-title" style="text-align:center;">{{ _('💬 Chat con %(username)s', username=friend.username) }}</h2>
+    <div class="chat-private-box" style="min-height:180px;max-height:41vh;overflow-y:auto;">
       {% for msg in mensajes %}
         <div class="mensaje {% if msg.sender_id == user.id %}yo{% else %}otro{% endif %} bubble">
           {% if msg.content %}
@@ -24,34 +29,33 @@
         <div class="placeholder-msg">{{ _('No hay mensajes todavía...') }}</div>
       {% endfor %}
     </div>
-    <form id="formularioPrivado" class="chat-private-form" enctype="multipart/form-data" autocomplete="off">
-      <input type="text" id="mensajePrivado" class="chat-input" placeholder="{{ _('Escribí tu mensaje...') }}">
-      <label class="upload-btn">
-        📷 {{ _('Adjuntar imagen') }}
+    <form id="formularioPrivado" class="chat-private-form" enctype="multipart/form-data" autocomplete="off" style="display:flex;gap:7px;margin-top:13px;align-items:center;">
+      <input type="text" id="mensajePrivado" class="chat-input" placeholder="{{ _('Escribí tu mensaje...') }}" style="flex:1;">
+      <label class="upload-btn" style="margin:0;">
+        📷
         <input type="file" id="imagenPrivada" accept="image/*" class="hidden-file">
       </label>
-      <img class="preview-img" style="display:none;margin-left:10px;max-height:70px;border-radius:10px;" id="img-preview-priv">
+      <img class="preview-img" style="display:none;margin-left:8px;max-height:58px;border-radius:10px;" id="img-preview-priv">
       <button type="submit" class="btn btn-chat-send">{{ _('Enviar') }}</button>
     </form>
-    <a href="{{ url_for('amigos') }}" class="chat-back-link">⬅ {{ _('Volver a amigos') }}</a>
+    <a href="{{ url_for('amigos.amigos') }}" class="chat-back-link" style="margin-top:18px;display:block;text-align:center;">⬅ {{ _('Volver a amigos') }}</a>
   </div>
   <script src="{{ url_for('static', filename='main.js') }}"></script>
   <script>
-    // Pasa las variables de Flask/Jinja a JS de forma segura
+    // Variables globales (Flask → JS)
     const USER_ID = {{ user.id|tojson }};
     const FRIEND_ID = {{ friend.id|tojson }};
-
 
     // Vista previa imagen
     const inputImagen = document.getElementById('imagenPrivada');
     const preview = document.getElementById('img-preview-priv');
-    inputImagen.addEventListener('change', function(e) {
+    inputImagen?.addEventListener('change', function(e) {
       const file = this.files[0];
       preview.style.display = file ? 'inline-block' : 'none';
       if (file) preview.src = URL.createObjectURL(file);
     });
 
-    // SOCKET.IO
+    // SOCKET.IO (ajusta endpoint si hace falta)
     const socket = io();
     const mensajes = document.querySelector('.chat-private-box');
     const formulario = document.getElementById('formularioPrivado');

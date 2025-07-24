@@ -1,29 +1,36 @@
+<!-- templates/login.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>{{ _('Login - Espacio Seguro') }}</title>
+    <title>{{ _('Login - SafeSpace') }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
 </head>
 <body>
-  <div class="login-wrapper">
-    <h2 class="login-title">{{ _('Iniciar Sesión') }}</h2>
-    <form method="POST" class="login-form" autocomplete="off">
-        <input type="text" name="username" class="login-input" placeholder="{{ _('Usuario') }}" required>
+  <div class="center-container" style="min-height: 100vh; display: flex; align-items: center; justify-content: center;">
+    <div class="main-card" style="width:100%;max-width:380px;padding:32px 24px 22px 24px;">
+      <!-- Mascota/logo arriba -->
+      <div style="display:flex;justify-content:center;margin-bottom:13px;">
+        <img src="{{ url_for('static', filename='frog.svg') }}" alt="{{ _('Mascota SafeSpace') }}" width="52" height="52" style="border-radius:14px;box-shadow:0 2px 11px rgba(60,170,90,0.08);background:#f6faf6;">
+      </div>
+      <h2 class="login-title" style="text-align:center;margin-bottom:23px;">{{ _('Iniciar Sesión') }}</h2>
+      <form method="POST" class="login-form" autocomplete="off" style="display:flex;flex-direction:column;gap:15px;">
+        <input type="text" name="username" class="login-input" placeholder="{{ _('Usuario') }}" required autofocus>
         <input type="password" name="password" id="loginPassword" class="login-input" placeholder="{{ _('Contraseña') }}" required>
-        <label class="login-checkbox">
+        <label class="login-checkbox" style="margin-bottom:10px;display:flex;align-items:center;gap:7px;">
           <input type="checkbox" id="toggleLoginPassword">
-          <span>{{ _('Ver contraseña') }}</span>
+          <span style="font-size:0.97em;">{{ _('Ver contraseña') }}</span>
         </label>
         <button type="submit" class="btn btn-login">{{ _('Entrar') }}</button>
-    </form>
-    <div class="login-link">
-      {{ _('¿No tenés cuenta?') }}
-      <a href="/register">{{ _('Registrate acá') }}</a>
+      </form>
+      <div class="login-link" style="margin-top:16px;text-align:center;font-size:1em;">
+        {{ _('¿No tenés cuenta?') }}
+        <a href="/register" style="color:#23a06b;font-weight:600;">{{ _('Registrate acá') }}</a>
+      </div>
     </div>
   </div>
-  <script src="{{ url_for('static', filename='main.js') }}"></script>
   <script>
     const toggleLoginPassword = document.getElementById('toggleLoginPassword');
     const loginPassword = document.getElementById('loginPassword');

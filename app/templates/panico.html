@@ -1,3 +1,4 @@
+<!-- templates/panico.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -5,16 +6,43 @@
   <title>{{ _('Botón de Pánico') }}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="{{ url_for('static', filename='main.js') }}"></script>
 </head>
 <body>
-  <div class="panico-wrapper">
-    <h2 class="panico-title">{{ _('Botón de Pánico') }}</h2>
-    <div class="info-text">{{ _('Este botón enviará una alerta inmediata a tus contactos de confianza. Úsalo solo si realmente lo necesitás.') }}</div>
-    <form method="POST" class="panic-form">
-      <button type="submit" class="panic-btn">🚨</button>
+  <div class="panico-wrapper main-card center-container">
+    <!-- Mascota/logo -->
+    <div style="display:flex;justify-content:center;margin-bottom:13px;">
+      <img src="{{ url_for('static', filename='frog.svg') }}" alt="{{ _('Mascota SafeSpace') }}" width="53" height="53" style="border-radius:14px;box-shadow:0 2px 9px rgba(60,170,90,0.09);background:#f6faf6;">
+    </div>
+    <h2 class="panico-title" style="color:#e74747;text-align:center;">{{ _('Botón de Pánico') }}</h2>
+    <div class="info-text" style="color:#b02121;margin-bottom:14px;text-align:center;font-size:1.11em;">
+      {{ _('Este botón enviará una alerta inmediata a tus contactos de confianza. Úsalo solo si realmente lo necesitás.') }}
+    </div>
+    <form method="POST" class="panic-form" id="panicForm" autocomplete="off" style="display:flex;flex-direction:column;align-items:center;">
+      <button type="submit" class="panic-btn" style="font-size:2.8em;padding:18px 36px;border-radius:100px;background:#d52938;color:#fff;box-shadow:0 4px 20px rgba(220,30,30,0.14);border:none;cursor:pointer;transition:background 0.14s;">
+        🚨
+      </button>
+      <span class="panic-label" style="margin-top:13px;color:#ad2828;font-size:1em;font-weight:500;">{{ _('¡Solo para emergencias reales!') }}</span>
     </form>
-    <a href="{{ url_for('home.home') }}" class="panico-back-link">⬅ {{ _('Volver al inicio') }}</a>
+    <a href="{{ url_for('home.home') }}" class="panico-back-link" style="margin-top:23px;display:block;text-align:center;">⬅ {{ _('Volver al inicio') }}</a>
   </div>
-  <script src="{{ url_for('static', filename='main.js') }}"></script>
+  <script>
+    // --- Notificación visual + opcional sonido push (comentado) ---
+    document.getElementById('panicForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      showLoader();
+      setTimeout(function() {
+        hideLoader();
+        window.showToast?.("🚨 {{ _('¡Alerta enviada a tus contactos de confianza!') }}");
+        // --- Sonido de alerta push (descomentar si tienes el mp3 en static/sounds) ---
+        /*
+        const audio = new Audio("{{ url_for('static', filename='sounds/alert.mp3') }}");
+        audio.play();
+        */
+      }, 1200);
+      // Acá podrías agregar la lógica para enviar notificaciones reales por backend
+    });
+  </script>
 </body>
 </html>
+

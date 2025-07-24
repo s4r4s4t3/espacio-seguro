@@ -9,19 +9,21 @@ import cloudinary.uploader
 
 home_bp = Blueprint('home', __name__)
 
+# Landing pública
 @home_bp.route('/')
 def landing():
     return render_template("landing.html")
 
+# Selección de idioma (cookie)
 @home_bp.route('/set_language/<lang_code>')
 def set_language(lang_code):
     supported = ['es', 'en', 'pt', 'br', 'de', 'fr', 'it']
-    if lang_code not in supported:
-        lang_code = 'es'
+    lang = lang_code if lang_code in supported else 'es'
     resp = make_response(redirect(request.referrer or url_for('home.landing')))
-    resp.set_cookie('lang', lang_code, max_age=30*24*60*60)
+    resp.set_cookie('lang', lang, max_age=30*24*60*60)
     return resp
 
+# Bienvenida (primera vez, aceptación de términos)
 @home_bp.route('/welcome', methods=['GET', 'POST'])
 @login_required
 def welcome():
@@ -36,16 +38,19 @@ def welcome():
 
     return render_template("welcome.html", user=current_user)
 
+# Dashboard
 @home_bp.route('/home')
 @login_required
 def home():
     return render_template("home.html", user=current_user)
 
+# Chat global (compatibilidad con old routing)
 @home_bp.route('/chat')
 @login_required
 def chat():
     return render_template("chat.html", user=current_user)
 
+# Botón de Pánico
 @home_bp.route('/panico', methods=['GET', 'POST'])
 @login_required
 def panico():
@@ -55,6 +60,7 @@ def panico():
         db.session.add(log)
         db.session.commit()
 
+        # Notifica a los últimos contactos de chat global o privado
         recent_receivers = (
             db.session.query(User)
             .join(Message, Message.receiver_id == User.id)
@@ -64,7 +70,7 @@ def panico():
             .limit(5)
             .all()
         )
-
+        # Acá se podría integrar notificaciones push reales
         for friend in recent_receivers:
             print(f"Notificación push a {friend.username}: {panic_message}")
 
@@ -73,27 +79,26 @@ def panico():
 
     return render_template('panico.html')
 
+# Feed público/privado (según login)
 @home_bp.route('/feed')
 @login_required
 def feed():
     publicaciones = Post.query.order_by(desc(Post.timestamp)).all()
     return render_template("feed.html", publicaciones=publicaciones, user=current_user)
 
-# ✅ Nueva publicación (formulario + subida a Cloudinary)
+# Nueva publicación (formulario + subida a Cloudinary)
 @home_bp.route('/nueva_publicacion', methods=['GET', 'POST'])
 @login_required
 def nueva_publicacion():
     if request.method == 'POST':
         content = request.form.get('content', '').strip()
-
         if not content:
             flash(_('El contenido no puede estar vacío.'), 'warning')
             return redirect(url_for('home.nueva_publicacion'))
 
         image = request.files.get('image')
         image_url = None
-
-        if image and image.filename != '':
+        if image and image.filename:
             try:
                 upload_result = cloudinary.uploader.upload(image)
                 image_url = upload_result['secure_url']
@@ -105,7 +110,6 @@ def nueva_publicacion():
         nuevo_post = Post(content=content, image_url=image_url, user_id=current_user.id)
         db.session.add(nuevo_post)
         db.session.commit()
-
         flash(_('✅ Publicación creada con éxito.'), 'success')
         return redirect(url_for('home.feed'))
 

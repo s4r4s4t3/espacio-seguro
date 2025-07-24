@@ -1,3 +1,5 @@
+# app/routes/chat.py
+
 import os
 from flask import Blueprint, render_template, request, redirect, url_for, jsonify
 from flask_login import login_required, current_user
@@ -6,7 +8,7 @@ import cloudinary
 import cloudinary.uploader
 from datetime import datetime
 
-# ✅ Configura Cloudinary
+# === Configura Cloudinary ===
 cloudinary.config(
     cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"),
     api_key=os.getenv("CLOUDINARY_API_KEY"),
@@ -15,20 +17,18 @@ cloudinary.config(
 
 chat_bp = Blueprint('chat', __name__)
 
-# ✅ Ruta: Chat Global (render con mensajes persistentes)
+# === Ruta: Chat Global (renderiza mensajes globales persistentes) ===
 @chat_bp.route('/chat')
 @login_required
 def chat_global():
     messages = Message.query.filter_by(receiver_id=None).order_by(Message.timestamp.asc()).all()
-    # 🚩 Pasamos current_user explícitamente como 'user' para evitar errores en el template
     return render_template('chat.html', messages=messages, user=current_user)
 
-# ✅ Ruta: Chat Privado (sin cambios, pero agrego user para coherencia y facilidad)
+# === Ruta: Chat Privado ===
 @chat_bp.route('/chat/<int:friend_id>', methods=['GET'])
 @login_required
 def chat_privado(friend_id):
     friend = User.query.get_or_404(friend_id)
-
     if friend not in current_user.friends:
         return redirect(url_for('home.home'))
 
@@ -36,11 +36,9 @@ def chat_privado(friend_id):
         ((Message.sender_id == current_user.id) & (Message.receiver_id == friend_id)) |
         ((Message.sender_id == friend_id) & (Message.receiver_id == current_user.id))
     ).order_by(Message.timestamp).all()
-
-    # 🚩 Pasamos 'user' explícitamente para el template
     return render_template('chat_privado.html', friend=friend, messages=messages, user=current_user)
 
-# ✅ Ruta: Envía mensaje GLOBAL (guarda en base y responde)
+# === Ruta: Envía mensaje GLOBAL (guarda y responde por AJAX) ===
 @chat_bp.route('/send_message_global', methods=['POST'])
 @login_required
 def send_message_global():
@@ -76,15 +74,17 @@ def send_message_global():
     return jsonify({
         'content': new_message.content,
         'image_url': new_message.image_url,
-        'sender_username': current_user.username
+        'sender_username': current_user.username,
+        'sender_id': current_user.id,  # Útil para frontend
+        'timestamp': new_message.timestamp.strftime('%Y-%m-%d %H:%M')
     })
 
-# ✅ Ruta: Envía mensaje PRIVADO (sin cambios, pero agrego user por coherencia)
+# === Ruta: Envía mensaje PRIVADO (guarda y responde por AJAX) ===
 @chat_bp.route('/send_message_privado', methods=['POST'])
 @login_required
 def send_message_privado():
     content = request.form.get('content', '').strip()
-    receiver_id = request.form.get('receiver_id')
+    receiver_id = int(request.form.get('receiver_id'))
     image_file = request.files.get('image')
     image_url = None
 
@@ -118,29 +118,27 @@ def send_message_privado():
         'image_url': new_message.image_url,
         'sender_id': current_user.id,
         'receiver_id': receiver_id,
-        'sender_username': current_user.username
+        'sender_username': current_user.username,
+        'timestamp': new_message.timestamp.strftime('%Y-%m-%d %H:%M')
     })
 
-# ✅ Ruta: Elimina mensaje (sin cambios)
+# === Ruta: Elimina mensaje (solo el dueño puede) ===
 @chat_bp.route('/delete_message/<int:message_id>', methods=['POST'])
 @login_required
 def delete_message(message_id):
     message = Message.query.get_or_404(message_id)
-
     if message.sender_id != current_user.id:
         return jsonify({'error': 'No tienes permiso para eliminar este mensaje'}), 403
 
     db.session.delete(message)
     db.session.commit()
-
     return jsonify({'success': True, 'message': 'Mensaje eliminado correctamente'})
 
-# ✅ Ruta: Edita mensaje (sin cambios)
+# === Ruta: Edita mensaje (solo el dueño puede) ===
 @chat_bp.route('/edit_message/<int:message_id>', methods=['POST'])
 @login_required
 def edit_message(message_id):
     message = Message.query.get_or_404(message_id)
-
     if message.sender_id != current_user.id:
         return jsonify({'error': 'No tienes permiso para editar este mensaje'}), 403
 
@@ -150,19 +148,17 @@ def edit_message(message_id):
 
     message.content = new_content
     db.session.commit()
-
     return jsonify({
         'success': True,
         'message': 'Mensaje editado correctamente',
         'new_content': message.content
     })
 
-# ✅ Ruta: Marca mensajes como leídos (sin cambios)
+# === Ruta: Marca mensajes como leídos ===
 @chat_bp.route('/mark_as_read/<int:friend_id>', methods=['POST'])
 @login_required
 def mark_as_read(friend_id):
     friend = User.query.get_or_404(friend_id)
-
     if friend not in current_user.friends:
         return jsonify({'error': 'No tienes permiso para marcar mensajes como leídos'}), 403
 
@@ -176,15 +172,13 @@ def mark_as_read(friend_id):
         message.is_read = True
 
     db.session.commit()
-
     return jsonify({'success': True, 'message': 'Mensajes marcados como leídos'})
 
-# ✅ Ruta: Obtiene mensajes no leídos (sin cambios)
+# === Ruta: Obtiene mensajes no leídos de un amigo ===
 @chat_bp.route('/unread_messages/<int:friend_id>', methods=['GET'])
 @login_required
 def unread_messages(friend_id):
     friend = User.query.get_or_404(friend_id)
-
     if friend not in current_user.friends:
         return jsonify({'error': 'No tienes permiso para ver mensajes no leídos'}), 403
 
@@ -196,15 +190,17 @@ def unread_messages(friend_id):
 
     return jsonify({
         'unread_count': len(unread_messages),
-        'messages': [{'id': msg.id, 'content': msg.content, 'timestamp': msg.timestamp} for msg in unread_messages]
+        'messages': [
+            {'id': msg.id, 'content': msg.content, 'timestamp': msg.timestamp.strftime('%Y-%m-%d %H:%M')}
+            for msg in unread_messages
+        ]
     })
 
-# ✅ Ruta: Obtiene mensajes de un usuario específico (sin cambios)
+# === Ruta: Obtiene historial de mensajes de un usuario ===
 @chat_bp.route('/messages/<int:user_id>', methods=['GET'])
 @login_required
 def get_messages(user_id):
     user = User.query.get_or_404(user_id)
-
     if user not in current_user.friends:
         return jsonify({'error': 'No tienes permiso para ver los mensajes de este usuario'}), 403
 
@@ -214,5 +210,13 @@ def get_messages(user_id):
     ).order_by(Message.timestamp).all()
 
     return jsonify({
-        'messages': [{'id': msg.id, 'content': msg.content, 'image_url': msg.image_url, 'timestamp': msg.timestamp} for msg in messages]
+        'messages': [
+            {
+                'id': msg.id,
+                'content': msg.content,
+                'image_url': msg.image_url,
+                'timestamp': msg.timestamp.strftime('%Y-%m-%d %H:%M')
+            }
+            for msg in messages
+        ]
     })

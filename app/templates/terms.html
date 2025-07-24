@@ -1,19 +1,20 @@
+<!-- templates/terms.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <title>{{ _('Términos y Condiciones - SafeSpace') }}</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="{{ url_for('static', filename='main.js') }}"></script>
 </head>
 <body>
-  <div class="legal-wrapper">
+  <div class="legal-wrapper main-card center-container">
     <h2 class="legal-title">{{ _('Términos y Condiciones - SafeSpace') }}</h2>
     <p>{{ _('Aquí irán tus términos legales completos cuando estén listos.') }}</p>
     <p>{{ _('Este documento describe los términos de uso de la plataforma, las responsabilidades y derechos de los usuarios y de SafeSpace.') }}</p>
     <p>{{ _('Recomendación: redactar con ayuda de un profesional legal para adaptarse a la normativa local.') }}</p>
     <a href="{{ url_for('home.home') }}" class="legal-back-link">⬅ {{ _('Volver al inicio') }}</a>
   </div>
-  <script src="{{ url_for('static', filename='main.js') }}"></script>
 </body>
 </html>

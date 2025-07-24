@@ -42,6 +42,7 @@ def login():
 def register():
     if request.method == 'POST':
         username = request.form.get('username')
+        email = request.form.get('email')  # Lo sumo por tu formulario
         password = request.form.get('password')
 
         existing_user = User.query.filter_by(username=username).first()
@@ -52,7 +53,7 @@ def register():
         hashed_password = generate_password_hash(password)
 
         # ✅ Nuevo usuario arranca con accepted_terms=False por default
-        new_user = User(username=username, password=hashed_password, profile_picture='default.png')
+        new_user = User(username=username, email=email, password=hashed_password, profile_picture='default.png')
         db.session.add(new_user)
         db.session.commit()
 

@@ -1926,5 +1926,147 @@ textarea, input[type="text"], input[type="email"], input[type="password"] {
   border: 1.2px solid #23482d !important;
 }
 
+/* === SafeSpace: Ajustes Legales (privacy, terms) === */
+.legal-wrapper {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 6px 32px rgba(40,60,40,0.09);
+  padding: 48px 22px 34px 22px;
+  margin: 40px auto 26px auto;
+  text-align: center;
+  max-width: 700px;
+}
+.legal-title {
+  color: #219150;
+  font-size: 2em;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+.legal-wrapper p {
+  color: #3c3c3c;
+  font-size: 1.13em;
+  margin-bottom: 7px;
+}
+.legal-back-link {
+  margin-top: 21px;
+  color: #219150;
+  text-decoration: underline dotted;
+  font-size: 1.06em;
+  font-weight: 600;
+  display: inline-block;
+  transition: color 0.16s;
+}
+.legal-back-link:hover { color: #388e3c; }
+
+/* === SafeSpace: Módulo Welcome === */
+.welcome-container {
+  max-width: 500px;
+  margin: 75px auto 50px auto;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 6px 28px rgba(34,139,94,0.09);
+  padding: 55px 30px 38px 30px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+.welcome-title {
+  color: #219150;
+  font-size: 2em;
+  font-weight: 700;
+  margin-bottom: 13px;
+}
+.welcome-text {
+  color: #222;
+  font-size: 1.14em;
+  margin-bottom: 5px;
+}
+.btn.welcome-btn {
+  background-color: #219150;
+  color: #fff;
+  font-weight: 700;
+  border-radius: 8px;
+  border: none;
+  padding: 13px 30px;
+  font-size: 1.13em;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(80,170,120,0.09);
+  margin-top: 22px;
+  transition: background 0.16s, transform 0.14s;
+}
+.btn.welcome-btn:hover {
+  background: #12592c;
+  transform: scale(1.04);
+}
+
+/* === SafeSpace: Botón de Pánico Ajuste Responsive === */
+.panico-wrapper {
+  max-width: 440px;
+  margin: 62px auto 34px auto;
+  background: #fff;
+  padding: 40px 19px 33px 19px;
+  border-radius: 18px;
+  box-shadow: 0 6px 28px rgba(180,0,0,0.12);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 19px;
+}
+.panic-btn {
+  background-color: #e53935;
+  color: white;
+  border: none;
+  width: 130px;
+  height: 130px;
+  font-size: 63px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(180,0,0,0.17);
+  transition: transform 0.18s, background-color 0.18s;
+}
+.panic-btn:hover {
+  background-color: #b71c1c;
+  transform: scale(1.1);
+}
+.info-text {
+  background: #fff3e0;
+  border-left: 5px solid #ff7043;
+  border-radius: 8px;
+  color: #d84315;
+  font-size: 1.07em;
+  padding: 13px 14px;
+  margin-bottom: 13px;
+  width: 100%;
+  text-align: center;
+  font-weight: 500;
+}
+.panico-back-link {
+  margin-top: 17px;
+  color: #e53935;
+  text-decoration: underline dotted;
+  font-size: 1.07em;
+  font-weight: 600;
+  display: inline-block;
+  transition: color 0.16s;
+}
+.panico-back-link:hover { color: #b71c1c; }
+
+/* Responsive legal/welcome/panico */
+@media (max-width: 600px) {
+  .legal-wrapper,
+  .welcome-container,
+  .panico-wrapper {
+    padding: 10px 2vw;
+    margin: 13px auto;
+    border-radius: 10px;
+  }
+  .legal-title, .welcome-title, .panico-title { font-size: 1.1em; }
+  .panic-btn { width: 84px; height: 84px; font-size: 2em; }
+}
 
 /* --- FIN MEJORAS SAFEPLACE 2025 v2 --- */

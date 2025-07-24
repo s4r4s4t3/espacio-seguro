@@ -2,15 +2,17 @@
 
 from flask import Blueprint, render_template
 
-# ✅ Creamos el Blueprint 'legales'
+# ✅ Blueprint para legales (términos y privacidad)
 legales_bp = Blueprint('legales', __name__)
 
-# ✅ Ruta para Términos y Condiciones
+# Términos y Condiciones
 @legales_bp.route('/terms')
 def terms():
+    # Renderiza la plantilla de términos y condiciones
     return render_template('terms.html')
 
-# ✅ Ruta para Política de Privacidad
+# Política de Privacidad
 @legales_bp.route('/privacy')
 def privacy():
+    # Renderiza la plantilla de privacidad
     return render_template('privacy.html')

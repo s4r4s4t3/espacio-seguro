@@ -1,3 +1,4 @@
+<!-- templates/feed.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -5,14 +6,19 @@
   <title>{{ _('📰 Feed - SafeSpace') }}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="{{ url_for('static', filename='main.js') }}"></script>
 </head>
 <body>
   <div class="center-container">
-    <div class="main-card">
-      <h2 class="feed-title">{{ _('📰 Publicaciones recientes') }}</h2>
-      <div class="feed-list">
+    <div class="main-card" style="max-width:520px;margin:auto;">
+      <!-- Mascota/logo arriba -->
+      <div style="display:flex;justify-content:center;margin-bottom:13px;">
+        <img src="{{ url_for('static', filename='frog.svg') }}" alt="{{ _('Mascota SafeSpace') }}" width="54" height="54" style="border-radius:16px;box-shadow:0 2px 13px rgba(60,170,90,0.09);background:#f6faf6;">
+      </div>
+      <h2 class="feed-title" style="text-align:center;">{{ _('📰 Publicaciones recientes') }}</h2>
+      <div class="feed-list" style="margin-top:24px;">
       {% for post in publicaciones %}
-        <div class="post-card" style="background:var(--blur-bg);border-radius:16px;padding:19px 16px;margin-bottom:18px;box-shadow:0 4px 18px rgba(32,55,39,0.09);">
+        <div class="post-card" style="background:rgba(33,145,80,0.11);backdrop-filter:blur(8px);border-radius:16px;padding:19px 16px;margin-bottom:18px;box-shadow:0 4px 18px rgba(32,55,39,0.09);">
           <div class="post-header" style="display:flex;align-items:center;margin-bottom:12px;">
             <img class="profile-pic" src="{% if post.author.profile_picture and 'http' in post.author.profile_picture %}
                                             {{ post.author.profile_picture }}
@@ -22,28 +28,26 @@
                   alt="{{ _('Foto de perfil') }}"
                   style="width:42px;height:42px;border-radius:50%;object-fit:cover;margin-right:12px;">
             <div>
-              <div class="post-user" style="font-weight:700;color:#a3f1c7;font-size:1.05em;">
+              <div class="post-user" style="font-weight:700;color:#219150;font-size:1.08em;">
                 {{ post.author.username }}
               </div>
               <div class="post-date" style="color:#92bfae;font-size:0.91em;">{{ post.timestamp.strftime('%d/%m/%Y %H:%M') }}</div>
             </div>
           </div>
-          <div class="post-content" style="color:#eefcfa;margin-bottom:8px;font-size:1.08em;">
+          <div class="post-content" style="color:#333;margin-bottom:8px;font-size:1.11em;white-space:pre-line;">
             {{ post.content }}
           </div>
           {% if post.image_url %}
             <img class="post-image" src="{{ post.image_url }}" alt="{{ _('Imagen de publicación') }}"
-                 style="width:100%;max-width:340px;max-height:250px;border-radius:11px;margin-top:8px;box-shadow:0 2px 9px rgba(70,220,170,0.12);object-fit:cover;">
+                 style="width:100%;max-width:360px;max-height:240px;border-radius:13px;margin-top:8px;box-shadow:0 2px 9px rgba(70,220,170,0.14);object-fit:cover;">
           {% endif %}
         </div>
       {% else %}
-        <div class="feed-empty">{{ _('No hay publicaciones todavía.') }}</div>
+        <div class="feed-empty" style="text-align:center;color:#7ca799;font-size:1.08em;margin-top:30px;">{{ _('No hay publicaciones todavía.') }}</div>
       {% endfor %}
       </div>
-      <a href="{{ url_for('home.home') }}" class="back-link" style="display:block;text-align:center;margin-top:14px;">⬅ {{ _('Volver al inicio') }}</a>
+      <a href="{{ url_for('home.home') }}" class="back-link" style="display:block;text-align:center;margin-top:16px;">⬅ {{ _('Volver al inicio') }}</a>
     </div>
   </div>
-  <script src="{{ url_for('static', filename='main.js') }}"></script>
 </body>
 </html>
-
