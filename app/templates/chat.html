@@ -2,75 +2,105 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>{{ _('💬 Chat Global') }}</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
   <script src="{{ url_for('static', filename='main.js') }}"></script>
 </head>
 <body>
   <div class="chat-global-wrapper main-card center-container" style="max-width:470px;margin:auto;">
-    <!-- Mascota/logo -->
     <div style="display:flex;justify-content:center;margin-bottom:10px;">
-      <img src="{{ url_for('static', filename='frog.svg') }}" alt="{{ _('Mascota SafeSpace') }}" width="50" height="50" style="border-radius:14px;box-shadow:0 2px 9px rgba(60,170,90,0.08);background:#f6faf6;">
+      <img
+        src="{{ url_for('static', filename='frog.svg') }}"
+        alt="{{ _('Mascota SafeSpace') }}"
+        width="50"
+        height="50"
+        style="border-radius:14px;box-shadow:0 2px 9px rgba(60,170,90,0.08);background:#f6faf6;"
+      />
     </div>
     <h2 class="chat-global-title" style="text-align:center;">{{ _('💬 Chat Global') }}</h2>
-    <div id="mensajes" class="chat-global-box" style="min-height:220px;max-height:44vh;overflow-y:auto;scroll-behavior:smooth;">
+    <div
+      id="mensajes"
+      class="chat-global-box"
+      style="min-height:220px;max-height:44vh;overflow-y:auto;scroll-behavior:smooth;"
+    >
       {% if messages %}
-        {% for msg in messages %}
-          <div class="mensaje-global bubble {% if msg.sender_id == user.id %}yo{% else %}otro{% endif %}">
-            {% if msg.content %}
-              <div class="chat-global-text">{{ msg.content }}</div>
-            {% endif %}
-            {% if msg.image_url %}
-              <img src="{{ msg.image_url }}" alt="{{ _('Imagen') }}" class="chat-image">
-            {% endif %}
-            <div class="mensaje-meta" style="font-size:0.93em;">
-              👤 {{ msg.sender_username if msg.sender_username else msg.sender_id }} | 🕒 {{ msg.timestamp }}
-            </div>
-          </div>
-        {% endfor %}
+      {% for msg in messages %}
+      <div class="mensaje-global bubble {% if msg.sender_id == user.id %}yo{% else %}otro{% endif %}">
+        {% if msg.content %}
+        <div class="chat-global-text">{{ msg.content }}</div>
+        {% endif %}
+        {% if msg.image_url %}
+        <img src="{{ msg.image_url }}" alt="{{ _('Imagen') }}" class="chat-image" />
+        {% endif %}
+        <div class="mensaje-meta" style="font-size:0.93em;">
+          👤 {{ msg.sender_username if msg.sender_username else msg.sender_id }} | 🕒 {{ msg.timestamp }}
+        </div>
+      </div>
+      {% endfor %}
       {% else %}
-        <div class="placeholder-msg">{{ _('No hay mensajes todavía...') }}</div>
+      <div class="placeholder-msg">{{ _('No hay mensajes todavía...') }}</div>
       {% endif %}
     </div>
-
-    <form id="formulario" class="chat-global-form" enctype="multipart/form-data" autocomplete="off" style="display:flex;gap:7px;margin-top:13px;align-items:center;">
-      <input type="text" id="mensaje" class="chat-input" placeholder="{{ _('Escribí tu mensaje...') }}" style="flex:1;">
+    <form
+      id="formulario"
+      class="chat-global-form"
+      enctype="multipart/form-data"
+      autocomplete="off"
+      style="display:flex;gap:7px;margin-top:13px;align-items:center;"
+    >
+      <input
+        type="text"
+        id="mensaje"
+        class="chat-input"
+        placeholder="{{ _('Escribí tu mensaje...') }}"
+        style="flex:1;"
+      />
       <label class="upload-btn" style="margin:0;">
         📷
-        <input type="file" id="imagen" accept="image/*" class="hidden-file">
+        <input type="file" id="imagen" accept="image/*" class="hidden-file" />
       </label>
-      <img class="preview-img" style="display:none;margin-left:8px;max-height:58px;border-radius:10px;" id="img-preview">
+      <img
+        class="preview-img"
+        style="display:none;margin-left:8px;max-height:58px;border-radius:10px;"
+        id="img-preview"
+      />
       <button type="submit" class="btn btn-chat-send">{{ _('Enviar') }}</button>
     </form>
-
-    <a href="/" class="chat-back-link" style="margin-top:18px;display:block;text-align:center;">⬅ {{ _('Volver al inicio') }}</a>
+    <a href="/" class="chat-back-link" style="margin-top:18px;display:block;text-align:center;"
+      >⬅ {{ _('Volver al inicio') }}</a
+    >
   </div>
   <script>
-    // --- USER_ID seguro desde Jinja ---
-    const USER_ID = {{ user.id|tojson }};
+    window.USER_ID = "{{ user.id }}";
 
-    // Vista previa de imagen en el chat
-    const inputImagen = document.getElementById('imagen');
-    const preview = document.getElementById('img-preview');
-    inputImagen?.addEventListener('change', function(e) {
-      const file = this.files[0];
-      if (file) {
-        preview.src = URL.createObjectURL(file);
-        preview.style.display = 'inline-block';
-      } else {
-        preview.style.display = 'none';
-      }
-    });
+    const inputImagen = document.getElementById("imagen");
+    const preview = document.getElementById("img-preview");
 
-    // --- SOCKET IO chat global ---
+    if (inputImagen) {
+      inputImagen.addEventListener("change", function (e) {
+        const file = this.files[0];
+        if (file) {
+          preview.src = URL.createObjectURL(file);
+          preview.style.display = "inline-block";
+        } else {
+          preview.style.display = "none";
+          preview.src = "";
+        }
+      });
+    }
+
     const socket = io();
-    const mensajes = document.getElementById('mensajes');
-    const formulario = document.getElementById('formulario');
-    const inputMensaje = document.getElementById('mensaje');
-    formulario.addEventListener('submit', async (e) => {
+    const mensajes = document.getElementById("mensajes");
+    const formulario = document.getElementById("formulario");
+    const inputMensaje = document.getElementById("mensaje");
+
+    function showLoader() {}
+    function hideLoader() {}
+
+    formulario.addEventListener("submit", async (e) => {
       e.preventDefault();
       const mensaje = inputMensaje.value.trim();
       const imagen = inputImagen.files[0];
@@ -80,44 +110,47 @@
       }
       showLoader();
       const formData = new FormData();
-      formData.append('content', mensaje);
+      formData.append("content", mensaje);
       if (imagen) {
-        formData.append('image', imagen);
+        formData.append("image", imagen);
       }
-      const response = await fetch('/send_message_global', {
-        method: 'POST',
-        body: formData
+      const response = await fetch("/send_message_global", {
+        method: "POST",
+        body: formData,
       });
       const result = await response.json();
-      socket.emit('mensaje', result);
-      inputMensaje.value = '';
-      inputImagen.value = '';
-      preview.style.display = 'none';
+      socket.emit("mensaje", result);
+      inputMensaje.value = "";
+      inputImagen.value = "";
+      preview.style.display = "none";
       hideLoader();
     });
 
-    socket.on('mensaje', (data) => {
-      const div = document.createElement('div');
-      div.className = 'mensaje-global bubble ' + (data.sender_id == USER_ID ? 'yo' : 'otro');
+    socket.on("mensaje", (data) => {
+      const div = document.createElement("div");
+      div.className = "mensaje-global bubble " + (data.sender_id == window.USER_ID ? "yo" : "otro");
       if (data.content) {
-        const texto = document.createElement('div');
-        texto.className = 'chat-global-text';
+        const texto = document.createElement("div");
+        texto.className = "chat-global-text";
         texto.textContent = data.content;
         div.appendChild(texto);
       }
       if (data.image_url) {
-        const img = document.createElement('img');
+        const img = document.createElement("img");
         img.src = data.image_url;
-        img.className = 'chat-image';
+        img.className = "chat-image";
         div.appendChild(img);
       }
-      const meta = document.createElement('div');
-      meta.className = 'mensaje-meta';
+      const meta = document.createElement("div");
+      meta.className = "mensaje-meta";
       meta.textContent = `👤 ${data.sender_username || data.sender_id} | 🕒 {{ _('ahora') }}`;
       div.appendChild(meta);
       mensajes.appendChild(div);
       mensajes.scrollTop = mensajes.scrollHeight;
-      document.querySelector('.placeholder-msg')?.remove();
+      const placeholder = document.querySelector(".placeholder-msg");
+      if (placeholder) {
+        placeholder.remove();
+      }
     });
   </script>
 </body>
