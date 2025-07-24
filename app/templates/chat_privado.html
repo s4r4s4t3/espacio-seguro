@@ -1,121 +1,110 @@
-<!-- templates/chat_privado.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>{{ _('💬 Chat con %(username)s', username=friend.username) }}</title>
+  <title>{{ _('💬 Chat Privado') }}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
 </head>
 <body>
   <div class="chat-private-wrapper">
-    <h2 class="chat-private-title">
-      {{ _('💬 Chat con %(username)s', username=friend.username) }}
-    </h2>
-
-    <div class="chat-private-box" id="mensajes">
-      {% for message in messages %}
-        <div class="mensaje {% if message.sender.id == current_user.id %}yo{% else %}otro{% endif %}">
-          <span class="chat-username">
-            {% if message.sender.id == current_user.id %}
-              {{ _('Tú') }}
-            {% else %}
-              {{ message.sender.username }}
-            {% endif %}
-          </span>
-          {% if message.content %}
-            <div class="chat-text">{{ message.content }}</div>
+    <h2 class="chat-private-title">{{ _('💬 Chat con %(username)s', username=friend.username) }}</h2>
+    <div class="chat-private-box">
+      {% for msg in mensajes %}
+        <div class="mensaje {% if msg.sender_id == user.id %}yo{% else %}otro{% endif %} bubble">
+          {% if msg.content %}
+            <div class="chat-text">{{ msg.content }}</div>
           {% endif %}
-          {% if message.image_url %}
-            <img src="{{ message.image_url }}" class="chat-image">
+          {% if msg.image_url %}
+            <img src="{{ msg.image_url }}" alt="{{ _('Imagen') }}" class="chat-image">
           {% endif %}
         </div>
+      {% else %}
+        <div class="placeholder-msg">{{ _('No hay mensajes todavía...') }}</div>
       {% endfor %}
     </div>
-
-    <form id="formulario" class="chat-private-form" enctype="multipart/form-data" autocomplete="off">
-      <input type="text" id="mensaje" placeholder="{{ _('Escribí tu mensaje...') }}" class="chat-input">
-      <input type="file" id="imagen" accept="image/*" class="chat-file">
+    <form id="formularioPrivado" class="chat-private-form" enctype="multipart/form-data" autocomplete="off">
+      <input type="text" id="mensajePrivado" class="chat-input" placeholder="{{ _('Escribí tu mensaje...') }}">
+      <label class="upload-btn">
+        📷 {{ _('Adjuntar imagen') }}
+        <input type="file" id="imagenPrivada" accept="image/*" class="hidden-file">
+      </label>
+      <img class="preview-img" style="display:none;margin-left:10px;max-height:70px;border-radius:10px;" id="img-preview-priv">
       <button type="submit" class="btn btn-chat-send">{{ _('Enviar') }}</button>
     </form>
-
-    <a href="/amigos" class="chat-back-link">⬅ {{ _('Volver a amigos') }}</a>
+    <a href="{{ url_for('amigos') }}" class="chat-back-link">⬅ {{ _('Volver a amigos') }}</a>
   </div>
-
+  <script src="{{ url_for('static', filename='main.js') }}"></script>
   <script>
+    // Pasa las variables de Flask/Jinja a JS de forma segura
+    const USER_ID = {{ user.id|tojson }};
+    const FRIEND_ID = {{ friend.id|tojson }};
+
+
+    // Vista previa imagen
+    const inputImagen = document.getElementById('imagenPrivada');
+    const preview = document.getElementById('img-preview-priv');
+    inputImagen.addEventListener('change', function(e) {
+      const file = this.files[0];
+      preview.style.display = file ? 'inline-block' : 'none';
+      if (file) preview.src = URL.createObjectURL(file);
+    });
+
+    // SOCKET.IO
     const socket = io();
-    const mensajes = document.getElementById('mensajes');
-    const formulario = document.getElementById('formulario');
-    const inputMensaje = document.getElementById('mensaje');
-    const inputImagen = document.getElementById('imagen');
+    const mensajes = document.querySelector('.chat-private-box');
+    const formulario = document.getElementById('formularioPrivado');
+    const inputMensaje = document.getElementById('mensajePrivado');
 
-    const sender_id = "{{ current_user.id }}";
-    const receiver_id = "{{ friend.id }}";
-
-    formulario.addEventListener('submit', async (e) => {
+    formulario.addEventListener('submit', async function(e) {
       e.preventDefault();
-
       const mensaje = inputMensaje.value.trim();
       const imagen = inputImagen.files[0];
-
       if (!mensaje && !imagen) {
         alert("{{ _('Debes escribir un mensaje o subir una imagen.') }}");
         return;
       }
-
+      showLoader();
       const formData = new FormData();
       formData.append('content', mensaje);
-      formData.append('receiver_id', receiver_id);
-      if (imagen) {
-        formData.append('image', imagen);
-      }
-
-      const response = await fetch('/send_message_privado', {
+      if (imagen) formData.append('image', imagen);
+      formData.append('receiver_id', FRIEND_ID);
+      const response = await fetch('/send_message_private', {
         method: 'POST',
         body: formData
       });
-
       const result = await response.json();
-
       socket.emit('mensaje_privado', result);
-
       inputMensaje.value = '';
       inputImagen.value = '';
+      preview.style.display = 'none';
+      preview.src = '';
+      hideLoader();
     });
 
-    socket.on('mensaje_privado', (data) => {
-      if (
-        (data.sender_id == sender_id && data.receiver_id == receiver_id) ||
-        (data.sender_id == receiver_id && data.receiver_id == sender_id)
-      ) {
+    socket.on('mensaje_privado', function(data) {
+      if (data.receiver_id == USER_ID || data.sender_id == USER_ID) {
         const div = document.createElement('div');
-        div.className = 'mensaje ' + (data.sender_id == sender_id ? 'yo' : 'otro');
-
-        const usernameSpan = document.createElement('span');
-        usernameSpan.className = 'chat-username';
-        usernameSpan.textContent = (data.sender_id == sender_id) ? "{{ _('Tú') }}" : data.sender_username;
-        div.appendChild(usernameSpan);
-
+        div.className = 'mensaje ' + (data.sender_id == USER_ID ? 'yo' : 'otro') + ' bubble';
         if (data.content) {
-          const textDiv = document.createElement('div');
-          textDiv.className = 'chat-text';
-          textDiv.textContent = data.content;
-          div.appendChild(textDiv);
+          const texto = document.createElement('div');
+          texto.className = 'chat-text';
+          texto.textContent = data.content;
+          div.appendChild(texto);
         }
-
         if (data.image_url) {
           const img = document.createElement('img');
           img.src = data.image_url;
           img.className = 'chat-image';
           div.appendChild(img);
         }
-
         mensajes.appendChild(div);
         mensajes.scrollTop = mensajes.scrollHeight;
+        var placeholder = document.querySelector('.placeholder-msg');
+        if (placeholder) { placeholder.remove(); }
       }
     });
   </script>
 </body>
 </html>
-

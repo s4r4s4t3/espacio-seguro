@@ -1,4 +1,3 @@
-<!-- templates/nueva_publicacion.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -10,20 +9,33 @@
 <body>
   <div class="nueva-publicacion-wrapper">
     <h2 class="nueva-publicacion-title">{{ _('📝 Crear una nueva publicación') }}</h2>
-
     <form method="POST" enctype="multipart/form-data" class="nueva-publicacion-form">
       <label for="content" class="nueva-publicacion-label">{{ _('¿Qué querés compartir?') }}</label>
       <textarea id="content" name="content" rows="4" class="nueva-publicacion-textarea" placeholder="{{ _('Escribí algo...') }}"></textarea>
-
       <label for="image" class="file-label">
         📎 {{ _('Subir foto') }}
         <input type="file" id="image" name="image" accept="image/*" class="hidden-input">
       </label>
-
+      <!-- Vista previa -->
+      <img class="preview-img" style="display:none;margin-left:10px;max-height:70px;border-radius:10px;" id="img-preview">
       <button type="submit" class="btn btn-nueva-publicacion">{{ _('Publicar') }}</button>
     </form>
-
     <a href="{{ url_for('home.feed') }}" class="nueva-publicacion-back-link">⬅ {{ _('Volver al feed') }}</a>
   </div>
+  <script src="{{ url_for('static', filename='main.js') }}"></script>
+  <script>
+    // Vista previa de imagen en publicación
+    const inputImagen = document.getElementById('image');
+    const preview = document.getElementById('img-preview');
+    inputImagen.addEventListener('change', function(e) {
+      const file = this.files[0];
+      if (file) {
+        preview.src = URL.createObjectURL(file);
+        preview.style.display = 'inline-block';
+      } else {
+        preview.style.display = 'none';
+      }
+    });
+  </script>
 </body>
 </html>

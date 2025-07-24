@@ -1,4 +1,3 @@
-<!-- templates/login.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -10,7 +9,7 @@
 <body>
   <div class="login-wrapper">
     <h2 class="login-title">{{ _('Iniciar Sesión') }}</h2>
-    <form method="POST" class="login-form">
+    <form method="POST" class="login-form" autocomplete="off">
         <input type="text" name="username" class="login-input" placeholder="{{ _('Usuario') }}" required>
         <input type="password" name="password" id="loginPassword" class="login-input" placeholder="{{ _('Contraseña') }}" required>
         <label class="login-checkbox">
@@ -24,7 +23,7 @@
       <a href="/register">{{ _('Registrate acá') }}</a>
     </div>
   </div>
-
+  <script src="{{ url_for('static', filename='main.js') }}"></script>
   <script>
     const toggleLoginPassword = document.getElementById('toggleLoginPassword');
     const loginPassword = document.getElementById('loginPassword');

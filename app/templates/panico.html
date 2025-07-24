@@ -1,25 +1,20 @@
-<!-- templates/panico.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>{{ _('🚨 Botón de Pánico') }}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>{{ _('Botón de Pánico') }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
   <div class="panico-wrapper">
-    <h2 class="panico-title">{{ _('🚨 Botón de Pánico') }}</h2>
-
-    <div class="info-text">
-      <p>{{ _('Este botón enviará una alerta inmediata a tus contactos de confianza. Úsalo solo si realmente lo necesitás.') }}</p>
-    </div>
-
+    <h2 class="panico-title">{{ _('Botón de Pánico') }}</h2>
+    <div class="info-text">{{ _('Este botón enviará una alerta inmediata a tus contactos de confianza. Úsalo solo si realmente lo necesitás.') }}</div>
     <form method="POST" class="panic-form">
       <button type="submit" class="panic-btn">🚨</button>
     </form>
-
     <a href="{{ url_for('home.home') }}" class="panico-back-link">⬅ {{ _('Volver al inicio') }}</a>
   </div>
+  <script src="{{ url_for('static', filename='main.js') }}"></script>
 </body>
 </html>

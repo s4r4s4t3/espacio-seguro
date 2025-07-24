@@ -1,4 +1,3 @@
-<!-- templates/feed.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -10,10 +9,9 @@
 <body>
   <div class="feed-wrapper">
     <h2 class="feed-title">{{ _('📰 Publicaciones recientes') }}</h2>
-
     <div class="feed-list">
     {% for post in publicaciones %}
-      <div class="post-card">
+      <div class="post-card bubble">
         <div class="post-header">
           <img class="profile-pic" src="{% if post.author.profile_picture and 'http' in post.author.profile_picture %}
                                           {{ post.author.profile_picture }}
@@ -38,6 +36,6 @@
     {% endfor %}
     </div>
   </div>
+  <script src="{{ url_for('static', filename='main.js') }}"></script>
 </body>
 </html>
-

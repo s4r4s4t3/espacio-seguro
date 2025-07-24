@@ -1,4 +1,3 @@
-<!-- templates/register.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -10,10 +9,9 @@
 <body>
   <div class="register-wrapper">
     <h2 class="register-title">{{ _('Crear Cuenta') }}</h2>
-    <form method="POST" class="register-form">
+    <form method="POST" class="register-form" autocomplete="off">
         <input type="text" name="username" class="register-input" placeholder="{{ _('Usuario') }}" required>
         <input type="email" name="email" class="register-input" placeholder="{{ _('Email') }}" required>
-
         <input type="password" name="password" id="registerPassword" class="register-input" placeholder="{{ _('Contraseña') }}" required>
         <label class="register-checkbox">
           <input type="checkbox" id="toggleRegisterPassword">
@@ -26,7 +24,7 @@
       <a href="/login">{{ _('Ingresá acá') }}</a>
     </div>
   </div>
-
+  <script src="{{ url_for('static', filename='main.js') }}"></script>
   <script>
     const toggleRegisterPassword = document.getElementById('toggleRegisterPassword');
     const registerPassword = document.getElementById('registerPassword');

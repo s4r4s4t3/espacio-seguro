@@ -1,127 +1,48 @@
-<!-- templates/landing.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>{{ _('SafeSpace - Tu lugar de apoyo') }}</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <title>SafeSpace - Tu lugar de apoyo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- 🌍 Detección automática de idioma -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const langCookieSet = document.cookie.includes('lang=');
-      const alreadyRedirected = sessionStorage.getItem('autoLangSet');
-      if (!langCookieSet && !alreadyRedirected) {
-        const browserLang = navigator.language.slice(0, 2).toLowerCase();
-        const supportedLangs = ['es', 'en', 'pt', 'br', 'de', 'fr', 'it'];
-        if (supportedLangs.includes(browserLang)) {
-          sessionStorage.setItem('autoLangSet', '1');
-          window.location.href = `/set_language/${browserLang}`;
-        }
-      }
-    });
-  </script>
-  <style>
-    body { position: relative; }
-    .hero-bg-wavy { pointer-events: none; }
-  </style>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  <!-- Fondo SVG tipo wavy arriba -->
-  <svg class="hero-bg-wavy" viewBox="0 0 1440 320" width="100%" height="180" fill="none" xmlns="http://www.w3.org/2000/svg" style="position:absolute;top:0;left:0;">
-    <path fill="#66bb6a" fill-opacity="1" d="M0,160L80,176C160,192,320,224,480,208C640,192,800,128,960,101.3C1120,75,1280,85,1360,90.7L1440,96L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"></path>
-  </svg>
-
-  <!-- Header con logo y selector idioma con banderas -->
   <header>
     <div class="logo">
       <h1>SafeSpace</h1>
     </div>
-    <div class="language-selector dropdown">
-      <button class="dropbtn">{{ _('🌐 Idioma') }}</button>
-      <div class="dropdown-content">
-        <a href="{{ url_for('home.set_language', lang_code='es') }}">
-          <img src="{{ url_for('static', filename='flags/es.png') }}" alt="{{ _('Español') }}"> {{ _('Español') }}
-        </a>
-        <a href="{{ url_for('home.set_language', lang_code='en') }}">
-          <img src="{{ url_for('static', filename='flags/en.png') }}" alt="{{ _('English') }}"> {{ _('English') }}
-        </a>
-        <a href="{{ url_for('home.set_language', lang_code='pt') }}">
-          <img src="{{ url_for('static', filename='flags/pt.png') }}" alt="{{ _('Português') }}"> {{ _('Português') }}
-        </a>
-        <a href="{{ url_for('home.set_language', lang_code='br') }}">
-          <img src="{{ url_for('static', filename='flags/br.png') }}" alt="{{ _('Português (Brasil)') }}"> {{ _('Português (Brasil)') }}
-        </a>
-        <a href="{{ url_for('home.set_language', lang_code='de') }}">
-          <img src="{{ url_for('static', filename='flags/de.png') }}" alt="{{ _('Deutsch') }}"> {{ _('Deutsch') }}
-        </a>
-        <a href="{{ url_for('home.set_language', lang_code='fr') }}">
-          <img src="{{ url_for('static', filename='flags/fr.png') }}" alt="{{ _('Français') }}"> {{ _('Français') }}
-        </a>
-        <a href="{{ url_for('home.set_language', lang_code='it') }}">
-          <img src="{{ url_for('static', filename='flags/it.png') }}" alt="{{ _('Italiano') }}"> {{ _('Italiano') }}
-        </a>
+    <div class="language-selector">
+      <!-- selector de idioma con banderitas si tenés -->
+      {{ _('🌐 Idioma') }}:
+      <div class="dropdown">
+        <button class="dropbtn">{{ _('Español') }}</button>
+        <div class="dropdown-content">
+          <a href="/lang/es">{{ _('Español') }}</a>
+          <a href="/lang/en">{{ _('English') }}</a>
+          <a href="/lang/pt">{{ _('Português') }}</a>
+          <a href="/lang/de">{{ _('Deutsch') }}</a>
+          <a href="/lang/fr">{{ _('Français') }}</a>
+          <a href="/lang/it">{{ _('Italiano') }}</a>
+        </div>
       </div>
     </div>
   </header>
-
-  <!-- Hero principal con SVG e ilustración personas -->
-  <main>
-    <section class="hero">
-      <!-- Ilustración SVG minimalista: personas abrazándose -->
-      <div class="hero-illustration">
-        <svg viewBox="0 0 400 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="90" cy="80" r="40" fill="#66bb6a" opacity="0.20"/>
-          <circle cx="310" cy="80" r="40" fill="#219150" opacity="0.18"/>
-          <ellipse cx="200" cy="100" rx="70" ry="30" fill="#b2dfdb" opacity="0.32"/>
-          <path d="M140 110 C160 80, 240 80, 260 110 Q250 140 200 140 Q150 140 140 110Z" fill="#66bb6a"/>
-          <circle cx="160" cy="90" r="24" fill="#f6f6f6" stroke="#388e3c" stroke-width="4"/>
-          <circle cx="240" cy="90" r="24" fill="#f6f6f6" stroke="#219150" stroke-width="4"/>
-          <ellipse cx="160" cy="98" rx="13" ry="8" fill="#ffe082" />
-          <ellipse cx="240" cy="98" rx="13" ry="8" fill="#ffe082" />
-          <path d="M160 95 Q160 110 175 110" stroke="#388e3c" stroke-width="4" fill="none"/>
-          <path d="M240 95 Q240 110 225 110" stroke="#219150" stroke-width="4" fill="none"/>
-          <circle cx="160" cy="90" r="7" fill="#388e3c"/>
-          <circle cx="240" cy="90" r="7" fill="#219150"/>
-        </svg>
-      </div>
-      <h2>{{ _('Tu espacio de contención y apoyo real') }}</h2>
-      <p>{{ _('Conectá con personas que entienden lo que sentís, sin juicios.') }}</p>
-      <div class="cta-buttons">
-        <a href="{{ url_for('auth.login') }}" class="btn">{{ _('Iniciar Sesión') }}</a>
-        <a href="{{ url_for('auth.register') }}" class="btn secondary">{{ _('Crear Cuenta') }}</a>
-      </div>
-      <div class="google-btn">
-        <a href="/login/google" class="btn google">
-          <img src="{{ url_for('static', filename='icons/google.svg') }}" alt="Google Icon">
-          {{ _('Iniciar sesión con Google') }}
-        </a>
-      </div>
-    </section>
+  <main class="hero">
+    <img src="{{ url_for('static', filename='img/hero-landing.svg') }}" class="hero-illustration" alt="Apoyo">
+    <h2>{{ _('SafeSpace - Tu lugar de apoyo') }}</h2>
+    <p>{{ _('Tu espacio de contención y apoyo real') }}</p>
+    <div class="cta-buttons">
+      <a href="/login" class="btn">{{ _('Iniciar Sesión') }}</a>
+      <a href="/register" class="btn secondary">{{ _('Crear Cuenta') }}</a>
+    </div>
+    <div class="motivational-footer">{{ _('Recuerda: aquí nunca estás solo/a. Cada paso, aunque pequeño, cuenta.') }}</div>
   </main>
-
-  <!-- Footer con frase motivacional random -->
   <footer>
-    <p>
-      <a href="{{ url_for('legales.terms') }}">{{ _('Términos y Condiciones') }}</a> |
-      <a href="{{ url_for('legales.privacy') }}">{{ _('Política de Privacidad') }}</a>
-    </p>
+    <p>{{ _('© 2025 SafeSpace. Todos los derechos reservados.') }}</p>
+    <p><a href="/privacy">{{ _('Política de Privacidad') }}</a> | <a href="/terms">{{ _('Términos y Condiciones') }}</a></p>
     <p>{{ _('Síguenos en Instagram y TikTok') }}</p>
-    <!-- Frase motivacional random, traducible -->
-    <p id="motivational-footer" class="motivational-footer"></p>
-    <p style="margin-top:18px;font-size:.97em;color:#95b4a0;">© 2025 SafeSpace</p>
-    <script>
-      // Frases traducibles para motivar al usuario
-      const frases = [
-        "{{ _('Recuerda: aquí nunca estás solo/a. Cada paso, aunque pequeño, cuenta.') }}",
-        "{{ _('Hoy puede ser un gran día para comenzar de nuevo.') }}",
-        "{{ _('Lo importante no es la meta, sino seguir caminando.') }}",
-        "{{ _('Siempre hay alguien dispuesto a escucharte aquí.') }}",
-        "{{ _('Tus emociones importan. Tu historia vale.') }}"
-      ];
-      document.getElementById('motivational-footer').innerText = frases[Math.floor(Math.random() * frases.length)];
-    </script>
   </footer>
+  <script src="{{ url_for('static', filename='main.js') }}"></script>
 </body>
 </html>
+

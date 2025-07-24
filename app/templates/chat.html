@@ -1,4 +1,3 @@
-<!-- templates/chat.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -11,11 +10,10 @@
 <body>
   <div class="chat-global-wrapper">
     <h2 class="chat-global-title">{{ _('💬 Chat Global') }}</h2>
-
     <div id="mensajes" class="chat-global-box">
       {% if messages %}
         {% for msg in messages %}
-          <div class="mensaje-global">
+          <div class="mensaje-global bubble">
             {% if msg.content %}
               <div class="chat-global-text">{{ msg.content }}</div>
             {% endif %}
@@ -38,19 +36,33 @@
         📷 {{ _('Adjuntar imagen') }}
         <input type="file" id="imagen" accept="image/*" class="hidden-file">
       </label>
+      <!-- Vista previa -->
+      <img class="preview-img" style="display:none;margin-left:10px;max-height:70px;border-radius:10px;" id="img-preview">
       <button type="submit" class="btn btn-chat-send">{{ _('Enviar') }}</button>
     </form>
 
     <a href="/" class="chat-back-link">⬅ {{ _('Volver al inicio') }}</a>
   </div>
-
+  <script src="{{ url_for('static', filename='main.js') }}"></script>
   <script>
+    // Vista previa de imagen en el chat
+    const inputImagen = document.getElementById('imagen');
+    const preview = document.getElementById('img-preview');
+    inputImagen.addEventListener('change', function(e) {
+      const file = this.files[0];
+      if (file) {
+        preview.src = URL.createObjectURL(file);
+        preview.style.display = 'inline-block';
+      } else {
+        preview.style.display = 'none';
+      }
+    });
+
+    // --- SOCKET IO chat global ---
     const socket = io();
     const mensajes = document.getElementById('mensajes');
     const formulario = document.getElementById('formulario');
     const inputMensaje = document.getElementById('mensaje');
-    const inputImagen = document.getElementById('imagen');
-
     formulario.addEventListener('submit', async (e) => {
       e.preventDefault();
 
@@ -62,28 +74,27 @@
         return;
       }
 
+      showLoader();
       const formData = new FormData();
       formData.append('content', mensaje);
       if (imagen) {
         formData.append('image', imagen);
       }
-
       const response = await fetch('/send_message_global', {
         method: 'POST',
         body: formData
       });
-
       const result = await response.json();
-
       socket.emit('mensaje', result);
-
       inputMensaje.value = '';
       inputImagen.value = '';
+      preview.style.display = 'none';
+      hideLoader();
     });
 
     socket.on('mensaje', (data) => {
       const div = document.createElement('div');
-      div.className = 'mensaje-global';
+      div.className = 'mensaje-global bubble';
 
       if (data.content) {
         const texto = document.createElement('div');
@@ -91,14 +102,12 @@
         texto.textContent = data.content;
         div.appendChild(texto);
       }
-
       if (data.image_url) {
         const img = document.createElement('img');
         img.src = data.image_url;
         img.className = 'chat-image';
         div.appendChild(img);
       }
-
       const meta = document.createElement('div');
       meta.className = 'mensaje-meta';
       meta.textContent = `👤 ${data.sender_username || data.sender_id} | 🕒 {{ _('ahora') }}`;
@@ -111,5 +120,4 @@
   </script>
 </body>
 </html>
-
 

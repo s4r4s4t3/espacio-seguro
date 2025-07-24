@@ -1,4 +1,3 @@
-<!-- templates/amigos.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -14,7 +13,7 @@
     <!-- Lista de amigos -->
     <div class="friends-list">
     {% for amigo in amigos %}
-      <div class="friend-card">
+      <div class="friend-card bubble">
         <div class="friend-avatar">👤</div>
         <div class="friend-username">{{ amigo.username }}</div>
         <div class="card-actions">
@@ -30,7 +29,7 @@
     <div class="section-title">{{ _('📥 Solicitudes Recibidas') }}</div>
     <div class="requests-list">
     {% for solicitud in solicitudes %}
-      <div class="request-card">
+      <div class="request-card bubble">
         <div class="user-avatar">👤</div>
         <div class="user-username">{{ _('Usuario ID') }} {{ solicitud.sender_id }}</div>
         <div class="card-actions">
@@ -47,7 +46,7 @@
     <div class="section-title">{{ _('🌍 Otros usuarios') }}</div>
     <div class="users-list">
     {% for user in usuarios %}
-      <div class="user-card">
+      <div class="user-card bubble">
         <div class="user-avatar">👤</div>
         <div class="user-username">{{ user.username }}</div>
         <div class="card-actions">
@@ -59,5 +58,6 @@
 
     <a href="/" class="back-link">{{ _('← Volver al inicio') }}</a>
   </div>
+  <script src="{{ url_for('static', filename='main.js') }}"></script>
 </body>
 </html>
