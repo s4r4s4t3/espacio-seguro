@@ -18,8 +18,21 @@ def amigos():
      .filter(User.id != current_user.id) \
      .all()
 
-    # Solicitudes recibidas
-    solicitudes = FriendRequest.query.filter_by(receiver_id=current_user.id, status='pending').all()
+    # Solicitudes recibidas: con JOIN para username real
+    solicitudes_query = (
+        db.session.query(FriendRequest, User.username)
+        .join(User, FriendRequest.sender_id == User.id)
+        .filter(FriendRequest.receiver_id == current_user.id, FriendRequest.status == 'pending')
+        .all()
+    )
+    solicitudes = [
+        {
+            "id": solicitud.id,
+            "sender_id": solicitud.sender_id,
+            "sender_username": username
+        }
+        for solicitud, username in solicitudes_query
+    ]
 
     # Todos los demás usuarios
     usuarios = User.query.filter(User.id != current_user.id).all()
@@ -55,4 +68,3 @@ def rechazar(solicitud_id):
         db.session.commit()
         flash(_("Solicitud rechazada"), "danger")
     return redirect(url_for('amigos.amigos'))
-

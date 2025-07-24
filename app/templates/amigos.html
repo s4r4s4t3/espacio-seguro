@@ -7,56 +7,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-  <div class="friends-wrapper">
-    <h2 class="friends-title">{{ _('Tus Amigos') }}</h2>
-
-    <!-- Lista de amigos -->
-    <div class="friends-list">
-    {% for amigo in amigos %}
-      <div class="friend-card bubble">
-        <div class="friend-avatar">👤</div>
-        <div class="friend-username">{{ amigo.username }}</div>
-        <div class="card-actions">
-          <a href="{{ url_for('chat.chat', friend_id=amigo.id) }}" class="btn-chat">{{ _('Chatear') }}</a>
-        </div>
+  <div class="center-container">
+    <div class="main-card">
+      <!-- Mascota SafeSpace SVG -->
+      <div class="frog-logo" style="text-align:center;">
+        <img src="{{ url_for('static', filename='frog.svg') }}" alt="Mascota SafeSpace" style="width:54px; height:auto; margin-bottom:4px;">
       </div>
-    {% else %}
-      <div class="empty-msg">{{ _('Aún no agregaste amigos. 💚') }}</div>
-    {% endfor %}
-    </div>
-
-    <!-- Solicitudes recibidas -->
-    <div class="section-title">{{ _('📥 Solicitudes Recibidas') }}</div>
-    <div class="requests-list">
-    {% for solicitud in solicitudes %}
-      <div class="request-card bubble">
-        <div class="user-avatar">👤</div>
-        <div class="user-username">{{ _('Usuario ID') }} {{ solicitud.sender_id }}</div>
-        <div class="card-actions">
-          <a href="/aceptar/{{ solicitud.id }}" class="btn-accept">{{ _('Aceptar') }}</a>
-          <a href="/rechazar/{{ solicitud.id }}" class="btn-reject">{{ _('Rechazar') }}</a>
-        </div>
+      <h2>{{ _('Tus Amigos') }}</h2>
+      <div class="subtitle">
+        {{ _('Aún no agregaste amigos.') }} 💚
       </div>
-    {% else %}
-      <div class="empty-msg">{{ _('No tenés solicitudes nuevas.') }}</div>
-    {% endfor %}
-    </div>
 
-    <!-- Otros usuarios -->
-    <div class="section-title">{{ _('🌍 Otros usuarios') }}</div>
-    <div class="users-list">
-    {% for user in usuarios %}
-      <div class="user-card bubble">
-        <div class="user-avatar">👤</div>
-        <div class="user-username">{{ user.username }}</div>
-        <div class="card-actions">
-          <a href="/enviar_solicitud/{{ user.id }}" class="btn-add">{{ _('Agregar amigo') }}</a>
+      <!-- Solicitudes recibidas -->
+      <div class="section-title">📥 {{ _('Solicitudes Recibidas') }}</div>
+      <div class="requests-list">
+      {% for solicitud in solicitudes %}
+        <div class="request-card">
+          <div class="friend-avatar">👤</div>
+          <div class="friend-username">
+            {{ solicitud.sender_username }}
+          </div>
+          <div class="card-actions">
+            <a href="/aceptar/{{ solicitud.id }}" class="btn-accept">{{ _('Aceptar') }}</a>
+            <a href="/rechazar/{{ solicitud.id }}" class="btn-reject">{{ _('Rechazar') }}</a>
+          </div>
         </div>
+      {% else %}
+        <div class="empty-msg">{{ _('No tenés solicitudes nuevas.') }}</div>
+      {% endfor %}
       </div>
-    {% endfor %}
-    </div>
 
-    <a href="/" class="back-link">{{ _('← Volver al inicio') }}</a>
+      <!-- Otros usuarios -->
+      <div class="section-title">🌍 {{ _('Otros usuarios') }}</div>
+      <div class="users-list">
+      {% for user in usuarios %}
+        <div class="user-card">
+          <div class="user-avatar">👤</div>
+          <div class="user-username">{{ user.username }}</div>
+          <div class="card-actions">
+            <a href="/enviar_solicitud/{{ user.id }}" class="btn-add">{{ _('Agregar amigo') }}</a>
+          </div>
+        </div>
+      {% endfor %}
+      </div>
+
+      <a href="/" class="back-link">{{ _('← Volver al inicio') }}</a>
+      <button id="darkModeToggle" title="Modo claro/oscuro">🌙</button>
+    </div>
   </div>
   <script src="{{ url_for('static', filename='main.js') }}"></script>
 </body>

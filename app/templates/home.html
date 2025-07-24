@@ -2,38 +2,24 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>{{ _('Inicio - Espacio Seguro') }}</title>
+    <title>{{ _('Inicio - SafeSpace') }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-  <div class="home-wrapper">
-    <h2 class="home-title">{{ _('Bienvenido, %(username)s', username=user.username) }}</h2>
-    <div class="home-grid">
-      <a href="/config" class="card-link">
-        <div class="card"><span>👤</span> {{ _('Perfil') }}</div>
-      </a>
-      <a href="/chat" class="card-link">
-        <div class="card"><span>💬</span> {{ _('Chat Global') }}</div>
-      </a>
-      <a href="/amigos" class="card-link">
-        <div class="card"><span>👥</span> {{ _('Amigos') }}</div>
-      </a>
-      <a href="/panico" class="card-link">
-        <div class="card"><span>🚨</span> {{ _('Botón de Pánico') }}</div>
-      </a>
-      <a href="{{ url_for('diary.diary') }}" class="card-link">
-        <div class="card"><span>📝</span> {{ _('Diario') }}</div>
-      </a>
-      <a href="{{ url_for('home.feed') }}" class="card-link">
-        <div class="card"><span>📰</span> {{ _('Feed') }}</div>
-      </a>
-      <a href="{{ url_for('home.nueva_publicacion') }}" class="card-link">
-        <div class="card"><span>➕</span> {{ _('Nueva publicación') }}</div>
-      </a>
-      <a href="/logout" class="card-link">
-        <div class="card"><span>🔒</span> {{ _('Cerrar sesión') }}</div>
-      </a>
+  <div class="center-container">
+    <div class="main-card">
+      <h2>{{ _('Bienvenido, %(username)s', username=user.username) }}</h2>
+      <div class="home-nav">
+        <a href="/config" class="btn">{{ _('Perfil') }}</a>
+        <a href="/chat" class="btn">{{ _('Chat Global') }}</a>
+        <a href="/amigos" class="btn">{{ _('Amigos') }}</a>
+        <a href="/panico" class="btn btn-reject">{{ _('Botón de Pánico') }}</a>
+        <a href="{{ url_for('diary.diary') }}" class="btn">{{ _('Diario') }}</a>
+        <a href="{{ url_for('home.feed') }}" class="btn">{{ _('Feed') }}</a>
+        <a href="{{ url_for('home.nueva_publicacion') }}" class="btn btn-add">{{ _('Nueva publicación') }}</a>
+        <a href="/logout" class="btn">{{ _('Cerrar sesión') }}</a>
+      </div>
     </div>
   </div>
   <script src="{{ url_for('static', filename='main.js') }}"></script>

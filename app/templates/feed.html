@@ -7,35 +7,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-  <div class="feed-wrapper">
-    <h2 class="feed-title">{{ _('📰 Publicaciones recientes') }}</h2>
-    <div class="feed-list">
-    {% for post in publicaciones %}
-      <div class="post-card bubble">
-        <div class="post-header">
-          <img class="profile-pic" src="{% if post.author.profile_picture and 'http' in post.author.profile_picture %}
-                                          {{ post.author.profile_picture }}
-                                        {% else %}
-                                          {{ url_for('static', filename='profile_pics/' + (post.author.profile_picture or 'default.png')) }}
-                                        {% endif %}"
-                alt="{{ _('Foto de perfil') }}">
-          <div>
-            <div class="post-user">{{ post.author.username }}</div>
-            <div class="post-date">{{ post.timestamp.strftime('%d/%m/%Y %H:%M') }}</div>
+  <div class="center-container">
+    <div class="main-card">
+      <h2 class="feed-title">{{ _('📰 Publicaciones recientes') }}</h2>
+      <div class="feed-list">
+      {% for post in publicaciones %}
+        <div class="post-card" style="background:var(--blur-bg);border-radius:16px;padding:19px 16px;margin-bottom:18px;box-shadow:0 4px 18px rgba(32,55,39,0.09);">
+          <div class="post-header" style="display:flex;align-items:center;margin-bottom:12px;">
+            <img class="profile-pic" src="{% if post.author.profile_picture and 'http' in post.author.profile_picture %}
+                                            {{ post.author.profile_picture }}
+                                          {% else %}
+                                            {{ url_for('static', filename='profile_pics/' + (post.author.profile_picture or 'default.png')) }}
+                                          {% endif %}"
+                  alt="{{ _('Foto de perfil') }}"
+                  style="width:42px;height:42px;border-radius:50%;object-fit:cover;margin-right:12px;">
+            <div>
+              <div class="post-user" style="font-weight:700;color:#a3f1c7;font-size:1.05em;">
+                {{ post.author.username }}
+              </div>
+              <div class="post-date" style="color:#92bfae;font-size:0.91em;">{{ post.timestamp.strftime('%d/%m/%Y %H:%M') }}</div>
+            </div>
           </div>
+          <div class="post-content" style="color:#eefcfa;margin-bottom:8px;font-size:1.08em;">
+            {{ post.content }}
+          </div>
+          {% if post.image_url %}
+            <img class="post-image" src="{{ post.image_url }}" alt="{{ _('Imagen de publicación') }}"
+                 style="width:100%;max-width:340px;max-height:250px;border-radius:11px;margin-top:8px;box-shadow:0 2px 9px rgba(70,220,170,0.12);object-fit:cover;">
+          {% endif %}
         </div>
-        <div class="post-content">
-          {{ post.content }}
-        </div>
-        {% if post.image_url %}
-        <img class="post-image" src="{{ post.image_url }}" alt="{{ _('Imagen de publicación') }}">
-        {% endif %}
+      {% else %}
+        <div class="feed-empty">{{ _('No hay publicaciones todavía.') }}</div>
+      {% endfor %}
       </div>
-    {% else %}
-      <div class="feed-empty">{{ _('No hay publicaciones todavía.') }}</div>
-    {% endfor %}
+      <a href="{{ url_for('home.home') }}" class="back-link" style="display:block;text-align:center;margin-top:14px;">⬅ {{ _('Volver al inicio') }}</a>
     </div>
   </div>
   <script src="{{ url_for('static', filename='main.js') }}"></script>
 </body>
 </html>
+

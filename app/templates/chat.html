@@ -1,3 +1,4 @@
+<!-- templates/chat.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,21 +7,26 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+  <script src="{{ url_for('static', filename='main.js') }}"></script>
 </head>
 <body>
-  <div class="chat-global-wrapper">
-    <h2 class="chat-global-title">{{ _('💬 Chat Global') }}</h2>
-    <div id="mensajes" class="chat-global-box">
+  <div class="chat-global-wrapper main-card center-container" style="max-width:470px;margin:auto;">
+    <!-- Mascota/logo -->
+    <div style="display:flex;justify-content:center;margin-bottom:10px;">
+      <img src="{{ url_for('static', filename='frog.svg') }}" alt="{{ _('Mascota SafeSpace') }}" width="50" height="50" style="border-radius:14px;box-shadow:0 2px 9px rgba(60,170,90,0.08);background:#f6faf6;">
+    </div>
+    <h2 class="chat-global-title" style="text-align:center;">{{ _('💬 Chat Global') }}</h2>
+    <div id="mensajes" class="chat-global-box" style="min-height:220px;max-height:44vh;overflow-y:auto;scroll-behavior:smooth;">
       {% if messages %}
         {% for msg in messages %}
-          <div class="mensaje-global bubble">
+          <div class="mensaje-global bubble {% if msg.sender_id == user.id %}yo{% else %}otro{% endif %}">
             {% if msg.content %}
               <div class="chat-global-text">{{ msg.content }}</div>
             {% endif %}
             {% if msg.image_url %}
               <img src="{{ msg.image_url }}" alt="{{ _('Imagen') }}" class="chat-image">
             {% endif %}
-            <div class="mensaje-meta">
+            <div class="mensaje-meta" style="font-size:0.93em;">
               👤 {{ msg.sender_username if msg.sender_username else msg.sender_id }} | 🕒 {{ msg.timestamp }}
             </div>
           </div>
@@ -30,25 +36,26 @@
       {% endif %}
     </div>
 
-    <form id="formulario" class="chat-global-form" enctype="multipart/form-data" autocomplete="off">
-      <input type="text" id="mensaje" class="chat-input" placeholder="{{ _('Escribí tu mensaje...') }}">
-      <label class="upload-btn">
-        📷 {{ _('Adjuntar imagen') }}
+    <form id="formulario" class="chat-global-form" enctype="multipart/form-data" autocomplete="off" style="display:flex;gap:7px;margin-top:13px;align-items:center;">
+      <input type="text" id="mensaje" class="chat-input" placeholder="{{ _('Escribí tu mensaje...') }}" style="flex:1;">
+      <label class="upload-btn" style="margin:0;">
+        📷
         <input type="file" id="imagen" accept="image/*" class="hidden-file">
       </label>
-      <!-- Vista previa -->
-      <img class="preview-img" style="display:none;margin-left:10px;max-height:70px;border-radius:10px;" id="img-preview">
+      <img class="preview-img" style="display:none;margin-left:8px;max-height:58px;border-radius:10px;" id="img-preview">
       <button type="submit" class="btn btn-chat-send">{{ _('Enviar') }}</button>
     </form>
 
-    <a href="/" class="chat-back-link">⬅ {{ _('Volver al inicio') }}</a>
+    <a href="/" class="chat-back-link" style="margin-top:18px;display:block;text-align:center;">⬅ {{ _('Volver al inicio') }}</a>
   </div>
-  <script src="{{ url_for('static', filename='main.js') }}"></script>
   <script>
+    // --- USER_ID seguro desde Jinja ---
+    const USER_ID = {{ user.id|tojson }};
+
     // Vista previa de imagen en el chat
     const inputImagen = document.getElementById('imagen');
     const preview = document.getElementById('img-preview');
-    inputImagen.addEventListener('change', function(e) {
+    inputImagen?.addEventListener('change', function(e) {
       const file = this.files[0];
       if (file) {
         preview.src = URL.createObjectURL(file);
@@ -65,15 +72,12 @@
     const inputMensaje = document.getElementById('mensaje');
     formulario.addEventListener('submit', async (e) => {
       e.preventDefault();
-
       const mensaje = inputMensaje.value.trim();
       const imagen = inputImagen.files[0];
-
       if (!mensaje && !imagen) {
         alert("{{ _('Debes escribir un mensaje o subir una imagen.') }}");
         return;
       }
-
       showLoader();
       const formData = new FormData();
       formData.append('content', mensaje);
@@ -94,8 +98,7 @@
 
     socket.on('mensaje', (data) => {
       const div = document.createElement('div');
-      div.className = 'mensaje-global bubble';
-
+      div.className = 'mensaje-global bubble ' + (data.sender_id == USER_ID ? 'yo' : 'otro');
       if (data.content) {
         const texto = document.createElement('div');
         texto.className = 'chat-global-text';
@@ -112,7 +115,6 @@
       meta.className = 'mensaje-meta';
       meta.textContent = `👤 ${data.sender_username || data.sender_id} | 🕒 {{ _('ahora') }}`;
       div.appendChild(meta);
-
       mensajes.appendChild(div);
       mensajes.scrollTop = mensajes.scrollHeight;
       document.querySelector('.placeholder-msg')?.remove();

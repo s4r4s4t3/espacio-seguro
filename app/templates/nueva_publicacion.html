@@ -1,13 +1,19 @@
+<!-- templates/nueva_publicacion.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>{{ _('📝 Nueva Publicación') }}</title>
+  <title>{{ _('📝 Nueva publicación') }}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="{{ url_for('static', filename='main.js') }}"></script>
 </head>
 <body>
-  <div class="nueva-publicacion-wrapper">
+  <div class="main-card center-container">
+    <!-- Mascota/logo -->
+    <div style="display:flex;justify-content:center;margin-bottom:14px;">
+      <img src="{{ url_for('static', filename='frog.svg') }}" alt="{{ _('Mascota SafeSpace') }}" width="56" height="56" style="border-radius:13px;box-shadow:0 2px 10px rgba(60,170,90,0.10);background:#f6faf6;">
+    </div>
     <h2 class="nueva-publicacion-title">{{ _('📝 Crear una nueva publicación') }}</h2>
     <form method="POST" enctype="multipart/form-data" class="nueva-publicacion-form">
       <label for="content" class="nueva-publicacion-label">{{ _('¿Qué querés compartir?') }}</label>
@@ -15,26 +21,20 @@
       <label for="image" class="file-label">
         📎 {{ _('Subir foto') }}
         <input type="file" id="image" name="image" accept="image/*" class="hidden-input">
+        <img class="preview-img" style="display:none;margin-top:12px;max-width:120px;max-height:120px;border-radius:10px;" id="img-preview-np" />
       </label>
-      <!-- Vista previa -->
-      <img class="preview-img" style="display:none;margin-left:10px;max-height:70px;border-radius:10px;" id="img-preview">
       <button type="submit" class="btn btn-nueva-publicacion">{{ _('Publicar') }}</button>
     </form>
     <a href="{{ url_for('home.feed') }}" class="nueva-publicacion-back-link">⬅ {{ _('Volver al feed') }}</a>
   </div>
-  <script src="{{ url_for('static', filename='main.js') }}"></script>
   <script>
-    // Vista previa de imagen en publicación
-    const inputImagen = document.getElementById('image');
-    const preview = document.getElementById('img-preview');
-    inputImagen.addEventListener('change', function(e) {
+    // Vista previa imagen
+    const inputNP = document.getElementById('image');
+    const previewNP = document.getElementById('img-preview-np');
+    inputNP?.addEventListener('change', function(e) {
       const file = this.files[0];
-      if (file) {
-        preview.src = URL.createObjectURL(file);
-        preview.style.display = 'inline-block';
-      } else {
-        preview.style.display = 'none';
-      }
+      previewNP.style.display = file ? 'block' : 'none';
+      if (file) previewNP.src = URL.createObjectURL(file);
     });
   </script>
 </body>

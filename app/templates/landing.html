@@ -1,47 +1,40 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>SafeSpace - Tu lugar de apoyo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta charset="UTF-8">
+    <title>{{ _('SafeSpace - Tu lugar de apoyo') }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-  <header>
-    <div class="logo">
-      <h1>SafeSpace</h1>
-    </div>
-    <div class="language-selector">
-      <!-- selector de idioma con banderitas si tenés -->
-      {{ _('🌐 Idioma') }}:
-      <div class="dropdown">
-        <button class="dropbtn">{{ _('Español') }}</button>
-        <div class="dropdown-content">
-          <a href="/lang/es">{{ _('Español') }}</a>
-          <a href="/lang/en">{{ _('English') }}</a>
-          <a href="/lang/pt">{{ _('Português') }}</a>
-          <a href="/lang/de">{{ _('Deutsch') }}</a>
-          <a href="/lang/fr">{{ _('Français') }}</a>
-          <a href="/lang/it">{{ _('Italiano') }}</a>
-        </div>
+  <div class="center-container">
+    <div class="main-card" style="max-width:400px;">
+      <!-- Logo/Mascota (Sapito) -->
+      <div style="text-align:center;">
+        <img src="{{ url_for('static', filename='frog.svg') }}" alt="Mascota SafeSpace" style="max-width:110px; margin-bottom:18px;" />
       </div>
+      <h2 style="color:#27d284">{{ _('SafeSpace - Tu lugar de apoyo') }}</h2>
+      <div class="subtitle" style="font-size:1.17em;">
+        {{ _('Tu espacio de contención y apoyo real') }}
+      </div>
+      <form method="POST" style="margin-bottom: 17px;">
+        <button type="submit" class="btn">{{ _('Iniciar Sesión') }}</button>
+        <a href="/register" class="btn" style="display:block;">{{ _('Crear Cuenta') }}</a>
+        <a href="/login/google" class="btn btn-google" style="background:#fff;color:#219150;border:1px solid #6ac694;margin-top:6px;">
+          <img src="{{ url_for('static', filename='icons/google.svg') }}" style="width:23px;vertical-align:middle;margin-right:10px;">{{ _('Iniciar sesión con Google') }}
+        </a>
+      </form>
+      <div class="subtitle" style="font-size:0.98em;opacity:0.78;">
+        <span style="font-style:italic;">{{ _('Recuerda: aquí nunca estás solo/a. Cada paso, aunque pequeño, cuenta.') }}</span>
+      </div>
+      <footer>
+        © 2025 SafeSpace. Todos los derechos reservados.
+        <div style="margin-top:6px;">
+          <a href="/privacy">{{ _('Política de Privacidad') }}</a> | <a href="/terms">{{ _('Términos y Condiciones') }}</a>
+        </div>
+      </footer>
     </div>
-  </header>
-  <main class="hero">
-    <img src="{{ url_for('static', filename='img/hero-landing.svg') }}" class="hero-illustration" alt="Apoyo">
-    <h2>{{ _('SafeSpace - Tu lugar de apoyo') }}</h2>
-    <p>{{ _('Tu espacio de contención y apoyo real') }}</p>
-    <div class="cta-buttons">
-      <a href="/login" class="btn">{{ _('Iniciar Sesión') }}</a>
-      <a href="/register" class="btn secondary">{{ _('Crear Cuenta') }}</a>
-    </div>
-    <div class="motivational-footer">{{ _('Recuerda: aquí nunca estás solo/a. Cada paso, aunque pequeño, cuenta.') }}</div>
-  </main>
-  <footer>
-    <p>{{ _('© 2025 SafeSpace. Todos los derechos reservados.') }}</p>
-    <p><a href="/privacy">{{ _('Política de Privacidad') }}</a> | <a href="/terms">{{ _('Términos y Condiciones') }}</a></p>
-    <p>{{ _('Síguenos en Instagram y TikTok') }}</p>
-  </footer>
+  </div>
   <script src="{{ url_for('static', filename='main.js') }}"></script>
 </body>
 </html>

@@ -20,9 +20,10 @@ chat_bp = Blueprint('chat', __name__)
 @login_required
 def chat_global():
     messages = Message.query.filter_by(receiver_id=None).order_by(Message.timestamp.asc()).all()
-    return render_template('chat.html', messages=messages)
+    # 🚩 Pasamos current_user explícitamente como 'user' para evitar errores en el template
+    return render_template('chat.html', messages=messages, user=current_user)
 
-# ✅ Ruta: Chat Privado (sin cambios)
+# ✅ Ruta: Chat Privado (sin cambios, pero agrego user para coherencia y facilidad)
 @chat_bp.route('/chat/<int:friend_id>', methods=['GET'])
 @login_required
 def chat_privado(friend_id):
@@ -36,7 +37,8 @@ def chat_privado(friend_id):
         ((Message.sender_id == friend_id) & (Message.receiver_id == current_user.id))
     ).order_by(Message.timestamp).all()
 
-    return render_template('chat_privado.html', friend=friend, messages=messages)
+    # 🚩 Pasamos 'user' explícitamente para el template
+    return render_template('chat_privado.html', friend=friend, messages=messages, user=current_user)
 
 # ✅ Ruta: Envía mensaje GLOBAL (guarda en base y responde)
 @chat_bp.route('/send_message_global', methods=['POST'])
@@ -77,7 +79,7 @@ def send_message_global():
         'sender_username': current_user.username
     })
 
-# ✅ Ruta: Envía mensaje PRIVADO (sin cambios)
+# ✅ Ruta: Envía mensaje PRIVADO (sin cambios, pero agrego user por coherencia)
 @chat_bp.route('/send_message_privado', methods=['POST'])
 @login_required
 def send_message_privado():
@@ -118,6 +120,7 @@ def send_message_privado():
         'receiver_id': receiver_id,
         'sender_username': current_user.username
     })
+
 # ✅ Ruta: Elimina mensaje (sin cambios)
 @chat_bp.route('/delete_message/<int:message_id>', methods=['POST'])
 @login_required
@@ -131,6 +134,7 @@ def delete_message(message_id):
     db.session.commit()
 
     return jsonify({'success': True, 'message': 'Mensaje eliminado correctamente'})
+
 # ✅ Ruta: Edita mensaje (sin cambios)
 @chat_bp.route('/edit_message/<int:message_id>', methods=['POST'])
 @login_required
@@ -152,6 +156,7 @@ def edit_message(message_id):
         'message': 'Mensaje editado correctamente',
         'new_content': message.content
     })
+
 # ✅ Ruta: Marca mensajes como leídos (sin cambios)
 @chat_bp.route('/mark_as_read/<int:friend_id>', methods=['POST'])
 @login_required
@@ -173,6 +178,7 @@ def mark_as_read(friend_id):
     db.session.commit()
 
     return jsonify({'success': True, 'message': 'Mensajes marcados como leídos'})
+
 # ✅ Ruta: Obtiene mensajes no leídos (sin cambios)
 @chat_bp.route('/unread_messages/<int:friend_id>', methods=['GET'])
 @login_required
@@ -192,6 +198,7 @@ def unread_messages(friend_id):
         'unread_count': len(unread_messages),
         'messages': [{'id': msg.id, 'content': msg.content, 'timestamp': msg.timestamp} for msg in unread_messages]
     })
+
 # ✅ Ruta: Obtiene mensajes de un usuario específico (sin cambios)
 @chat_bp.route('/messages/<int:user_id>', methods=['GET'])
 @login_required
@@ -209,4 +216,3 @@ def get_messages(user_id):
     return jsonify({
         'messages': [{'id': msg.id, 'content': msg.content, 'image_url': msg.image_url, 'timestamp': msg.timestamp} for msg in messages]
     })
-    

@@ -1,13 +1,19 @@
+<!-- templates/diary.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>{{ _('Mi Diario') }}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>{{ _('Mi Diario') }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="{{ url_for('static', filename='main.js') }}"></script>
 </head>
 <body>
-  <div class="diary-wrapper">
+  <div class="diary-wrapper main-card center-container">
+    <!-- Mascota/logo -->
+    <div style="display:flex;justify-content:center;margin-bottom:10px;">
+      <img src="{{ url_for('static', filename='frog.svg') }}" alt="{{ _('Mascota SafeSpace') }}" width="48" height="48" style="border-radius:12px;box-shadow:0 2px 9px rgba(60,170,90,0.08);background:#f6faf6;">
+    </div>
     <h1 class="diary-title">{{ _('Mi Diario Personal') }}</h1>
     <form method="POST" class="diary-form">
         <textarea name="content" rows="4" placeholder="{{ _('Escribí tu entrada...') }}" class="diary-textarea"></textarea>
@@ -16,7 +22,7 @@
     <h2 class="diary-entries-title">{{ _('Entradas Anteriores') }}</h2>
     <div class="diary-entries-list">
     {% for entry in entries %}
-      <div class="diary-entry bubble">
+      <div class="diary-entry">
         <div class="diary-entry-date">{{ entry.date_created.strftime('%Y-%m-%d %H:%M') }}</div>
         <div class="diary-entry-content">{{ entry.content }}</div>
       </div>
@@ -26,6 +32,5 @@
     </div>
     <a href="{{ url_for('home.home') }}" class="diary-back-link">⬅ {{ _('Volver al inicio') }}</a>
   </div>
-  <script src="{{ url_for('static', filename='main.js') }}"></script>
 </body>
 </html>
