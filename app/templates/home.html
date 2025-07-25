@@ -6,14 +6,15 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="{{ url_for('static', filename='home.js') }}"></script>
-  <!-- Web App Manifest -->
-<link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
-<meta name="theme-color" content="#219150">
 
-<!-- iOS Support -->
-<link rel="apple-touch-icon" href="{{ url_for('static', filename='icon-192x192.png') }}">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <!-- Web App Manifest -->
+  <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+  <meta name="theme-color" content="#219150">
+
+  <!-- iOS Support -->
+  <link rel="apple-touch-icon" href="{{ url_for('static', filename='icon-192x192.png') }}">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 </head>
 <body>
   <div class="page-wrapper">
@@ -21,16 +22,28 @@
       <div class="center-content">
         <img src="{{ url_for('static', filename='frog.svg') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
 
+        <!-- 🌐 Selector de idioma -->
         <form id="language-form" method="GET" class="language-form">
           <select name="lang" id="language-select">
-            <option value="es" {% if g.get('lang', 'es') == 'es' %}selected{% endif %}>🇪🇸 Español</option>
-            <option value="en" {% if g.get('lang', 'es') == 'en' %}selected{% endif %}>🇺🇸 English</option>
-            <option value="pt" {% if g.get('lang', 'es') == 'pt' %}selected{% endif %}>🇧🇷 Português</option>
+            <option value="es" {% if g.get('lang') == 'es' %}selected{% endif %}>🇪🇸 Español</option>
+            <option value="en" {% if g.get('lang') == 'en' %}selected{% endif %}>🇺🇸 English</option>
+            <option value="pt" {% if g.get('lang') == 'pt' %}selected{% endif %}>🇵🇹 Português</option>
+            <option value="br" {% if g.get('lang') == 'br' %}selected{% endif %}>🇧🇷 Português (BR)</option>
+            <option value="de" {% if g.get('lang') == 'de' %}selected{% endif %}>🇩🇪 Deutsch</option>
+            <option value="fr" {% if g.get('lang') == 'fr' %}selected{% endif %}>🇫🇷 Français</option>
+            <option value="it" {% if g.get('lang') == 'it' %}selected{% endif %}>🇮🇹 Italiano</option>
           </select>
         </form>
 
+        <!-- 👤 Bienvenida -->
         <h2>{{ _('Bienvenido, %(username)s', username=user.username) }}</h2>
 
+        <!-- 📲 Botón de instalación PWA -->
+        <button id="install-btn" class="btn full-width" style="display:none;">
+          {{ _('📲 Instalar SafeSpace') }}
+        </button>
+
+        <!-- 🧭 Navegación principal -->
         <div class="home-nav">
           <a href="/config" class="btn">{{ _('Perfil') }}</a>
           <a href="/chat" class="btn">{{ _('Chat Global') }}</a>
@@ -44,16 +57,35 @@
       </div>
     </div>
   </div>
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register("{{ url_for('static', filename='service-worker.js') }}")
-      .then(function(reg) {
-        console.log("✅ Service Worker registrado con éxito:", reg.scope);
-      })
-      .catch(function(error) {
-        console.error("❌ Error al registrar el Service Worker:", error);
+
+  <!-- 🔧 Service Worker + PWA -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register("{{ url_for('static', filename='service-worker.js') }}")
+        .then(function(reg) {
+          console.log("✅ Service Worker registrado con éxito:", reg.scope);
+        })
+        .catch(function(error) {
+          console.error("❌ Error al registrar el Service Worker:", error);
+        });
+    }
+
+    let deferredPrompt;
+    const installBtn = document.getElementById('install-btn');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBtn.style.display = 'block';
+
+      installBtn.addEventListener('click', async () => {
+        installBtn.style.display = 'none';
+        deferredPrompt.prompt();
+        const choiceResult = await deferredPrompt.userChoice;
+        console.log("✅ Instalación:", choiceResult.outcome);
+        deferredPrompt = null;
       });
-  }
-</script>
+    });
+  </script>
 </body>
 </html>

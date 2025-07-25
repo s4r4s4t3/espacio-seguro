@@ -5,14 +5,15 @@
   <title>{{ _('SafeSpace - Tu lugar de apoyo') }}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- Web App Manifest -->
-<link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
-<meta name="theme-color" content="#219150">
 
-<!-- iOS Support -->
-<link rel="apple-touch-icon" href="{{ url_for('static', filename='icon-192x192.png') }}">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <!-- Web App Manifest -->
+  <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+  <meta name="theme-color" content="#219150">
+
+  <!-- iOS Support -->
+  <link rel="apple-touch-icon" href="{{ url_for('static', filename='icon-192x192.png') }}">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 </head>
 <body>
   <div class="page-wrapper">
@@ -20,6 +21,7 @@
       <div class="center-content">
         <img src="{{ url_for('static', filename='frog.svg') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
 
+        <!-- 🌐 Selector de idioma -->
         <form id="language-form" method="GET" class="language-form">
           <select name="lang" id="language-select">
             <option value="es" {% if g.get('lang') == 'es' %}selected{% endif %}>🇪🇸 Español</option>
@@ -32,9 +34,16 @@
           </select>
         </form>
 
+        <!-- 👤 Bienvenida -->
         <h2>{{ _('SafeSpace - Tu lugar de apoyo') }}</h2>
         <p class="subtitle">{{ _('Tu espacio de contención y apoyo real') }}</p>
 
+        <!-- 📲 Botón de instalación PWA -->
+        <button id="install-btn" class="btn full-width" style="display:none;">
+          {{ _('📲 Instalar SafeSpace') }}
+        </button>
+
+        <!-- 🔐 Autenticación -->
         <form method="GET" action="/login" class="auth-form">
           <button type="submit" class="btn full-width">{{ _('Iniciar Sesión') }}</button>
           <a href="/register" class="btn full-width">{{ _('Crear Cuenta') }}</a>
@@ -44,8 +53,10 @@
           </a>
         </form>
 
+        <!-- 💬 Frase -->
         <p class="quote">{{ _('Recuerda: aquí nunca estás solo/a. Cada paso, aunque pequeño, cuenta.') }}</p>
 
+        <!-- 📄 Footer -->
         <footer class="footer">
           <small>© 2025 SafeSpace</small>
           <div>
@@ -57,17 +68,35 @@
     </div>
   </div>
 
+  <!-- Scripts -->
   <script src="{{ url_for('static', filename='landing.js') }}"></script>
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register("{{ url_for('static', filename='service-worker.js') }}")
-      .then(function(reg) {
-        console.log("✅ Service Worker registrado con éxito:", reg.scope);
-      })
-      .catch(function(error) {
-        console.error("❌ Error al registrar el Service Worker:", error);
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register("{{ url_for('static', filename='service-worker.js') }}")
+        .then(function(reg) {
+          console.log("✅ Service Worker registrado con éxito:", reg.scope);
+        })
+        .catch(function(error) {
+          console.error("❌ Error al registrar el Service Worker:", error);
+        });
+    }
+
+    let deferredPrompt;
+    const installBtn = document.getElementById('install-btn');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBtn.style.display = 'block';
+
+      installBtn.addEventListener('click', async () => {
+        installBtn.style.display = 'none';
+        deferredPrompt.prompt();
+        const choiceResult = await deferredPrompt.userChoice;
+        console.log("✅ Instalación:", choiceResult.outcome);
+        deferredPrompt = null;
       });
-  }
-</script>
+    });
+  </script>
 </body>
 </html>
