@@ -9,12 +9,12 @@ import cloudinary.uploader
 
 home_bp = Blueprint('home', __name__)
 
-# Landing pública
+# 🌍 Landing pública
 @home_bp.route('/')
 def landing():
     return render_template("landing.html")
 
-# Selección de idioma (cookie)
+# 🌐 Selección de idioma (cookie)
 @home_bp.route('/set_language/<lang_code>')
 def set_language(lang_code):
     supported = ['es', 'en', 'pt', 'br', 'de', 'fr', 'it']
@@ -23,7 +23,7 @@ def set_language(lang_code):
     resp.set_cookie('lang', lang, max_age=30*24*60*60)
     return resp
 
-# Bienvenida (primera vez, aceptación de términos)
+# 👋 Bienvenida (primera vez, aceptación de términos)
 @home_bp.route('/welcome', methods=['GET', 'POST'])
 @login_required
 def welcome():
@@ -38,19 +38,19 @@ def welcome():
 
     return render_template("welcome.html", user=current_user)
 
-# Dashboard
+# 🏠 Dashboard
 @home_bp.route('/home')
 @login_required
 def home():
     return render_template("home.html", user=current_user)
 
-# Chat global (compatibilidad con old routing)
+# 💬 Chat global (compatibilidad con ruta antigua)
 @home_bp.route('/chat')
 @login_required
 def chat():
     return render_template("chat.html", user=current_user)
 
-# Botón de Pánico
+# 🚨 Botón de Pánico
 @home_bp.route('/panico', methods=['GET', 'POST'])
 @login_required
 def panico():
@@ -60,7 +60,7 @@ def panico():
         db.session.add(log)
         db.session.commit()
 
-        # Notifica a los últimos contactos de chat global o privado
+        # Opcional: notificar a los últimos contactos (real o con push simulado)
         recent_receivers = (
             db.session.query(User)
             .join(Message, Message.receiver_id == User.id)
@@ -70,23 +70,22 @@ def panico():
             .limit(5)
             .all()
         )
-        # Acá se podría integrar notificaciones push reales
         for friend in recent_receivers:
             print(f"Notificación push a {friend.username}: {panic_message}")
 
         flash(_('Botón de Pánico activado. Tus contactos recibirán una alerta.'), 'info')
         return redirect(url_for('home.home'))
 
-    return render_template('panico.html')
+    return render_template('panico.html', user=current_user)
 
-# Feed público/privado (según login)
+# 📰 Feed del usuario (privado)
 @home_bp.route('/feed')
 @login_required
 def feed():
     publicaciones = Post.query.order_by(desc(Post.timestamp)).all()
     return render_template("feed.html", publicaciones=publicaciones, user=current_user)
 
-# Nueva publicación (formulario + subida a Cloudinary)
+# 📝 Nueva publicación
 @home_bp.route('/nueva_publicacion', methods=['GET', 'POST'])
 @login_required
 def nueva_publicacion():

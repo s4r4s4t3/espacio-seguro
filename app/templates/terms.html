@@ -1,6 +1,5 @@
-<!-- templates/terms.html -->
 <!DOCTYPE html>
-<html lang="es">
+<html lang="{{ g.get('lang', 'es') }}">
 <head>
   <meta charset="UTF-8">
   <title>{{ _('Términos y Condiciones - SafeSpace') }}</title>
@@ -9,12 +8,19 @@
   <script src="{{ url_for('static', filename='main.js') }}"></script>
 </head>
 <body>
-  <div class="legal-wrapper main-card center-container">
-    <h2 class="legal-title">{{ _('Términos y Condiciones - SafeSpace') }}</h2>
-    <p>{{ _('Aquí irán tus términos legales completos cuando estén listos.') }}</p>
-    <p>{{ _('Este documento describe los términos de uso de la plataforma, las responsabilidades y derechos de los usuarios y de SafeSpace.') }}</p>
-    <p>{{ _('Recomendación: redactar con ayuda de un profesional legal para adaptarse a la normativa local.') }}</p>
-    <a href="{{ url_for('home.home') }}" class="legal-back-link">⬅ {{ _('Volver al inicio') }}</a>
+  <div class="main-card center-container legal-wrapper" style="max-width:680px;margin:auto;padding:30px 22px;">
+    <!-- Mascota/logo -->
+    <div style="text-align:center;margin-bottom:15px;">
+      <img src="{{ url_for('static', filename='frog.svg') }}" alt="{{ _('Mascota SafeSpace') }}" width="50" height="50" style="border-radius:12px;box-shadow:0 2px 9px rgba(60,170,90,0.08);background:#f6faf6;">
+    </div>
+
+    <h2 style="text-align:center;margin-bottom:16px;">{{ _('Términos y Condiciones - SafeSpace') }}</h2>
+
+    <p style="margin-bottom:14px;">{{ _('Aquí irán tus términos legales completos cuando estén listos.') }}</p>
+    <p style="margin-bottom:14px;">{{ _('Este documento describe los términos de uso de la plataforma, las responsabilidades y derechos de los usuarios y de SafeSpace.') }}</p>
+    <p style="margin-bottom:18px;">{{ _('Recomendación: redactar con ayuda de un profesional legal para adaptarse a la normativa local.') }}</p>
+
+    <a href="{{ url_for('home.home') }}" class="btn" style="display:block;text-align:center;margin-top:20px;">⬅ {{ _('Volver al inicio') }}</a>
   </div>
 </body>
 </html>

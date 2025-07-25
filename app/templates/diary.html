@@ -1,36 +1,38 @@
-<!-- templates/diary.html -->
 <!DOCTYPE html>
-<html lang="es">
+<html lang="{{ g.get('lang', 'es') }}">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>{{ _('Mi Diario') }}</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="{{ url_for('static', filename='main.js') }}"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <body>
-  <div class="diary-wrapper main-card center-container" style="max-width:470px;margin:auto;">
-    <!-- Mascota/logo -->
-    <div style="display:flex;justify-content:center;margin-bottom:10px;">
-      <img src="{{ url_for('static', filename='frog.svg') }}" alt="{{ _('Mascota SafeSpace') }}" width="48" height="48" style="border-radius:12px;box-shadow:0 2px 9px rgba(60,170,90,0.08);background:#f6faf6;">
-    </div>
-    <h1 class="diary-title" style="text-align:center;">{{ _('Mi Diario Personal') }}</h1>
-    <form method="POST" class="diary-form" style="margin-bottom:17px;">
-        <textarea name="content" rows="4" placeholder="{{ _('Escribí tu entrada...') }}" class="diary-textarea" style="width:100%;border-radius:9px;min-height:100px;"></textarea>
-        <button type="submit" class="btn btn-diary-save" style="margin-top:9px;">{{ _('Guardar Entrada') }}</button>
-    </form>
-    <h2 class="diary-entries-title" style="margin-top:20px;">{{ _('Entradas Anteriores') }}</h2>
-    <div class="diary-entries-list">
-    {% for entry in entries %}
-      <div class="diary-entry" style="margin-bottom:15px;padding:10px 14px;background:rgba(240,245,240,0.82);border-radius:11px;box-shadow:0 2px 9px rgba(60,170,90,0.06);">
-        <div class="diary-entry-date" style="color:#219150;font-size:0.96em;font-weight:bold;margin-bottom:3px;">{{ entry.date_created.strftime('%Y-%m-%d %H:%M') }}</div>
-        <div class="diary-entry-content" style="font-size:1.08em;white-space:pre-line;">{{ entry.content }}</div>
+  <div class="page-wrapper">
+    <div class="card diary-card">
+      <div class="center-content">
+        <img src="{{ url_for('static', filename='frog.svg') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
+        <h1>{{ _('Mi Diario Personal') }}</h1>
+
+        <form method="POST" class="diary-form">
+          <textarea name="content" rows="5" placeholder="{{ _('Escribí tu entrada...') }}" class="diary-textarea"></textarea>
+          <button type="submit" class="btn btn-diary-save">{{ _('Guardar Entrada') }}</button>
+        </form>
+
+        <h2>{{ _('Entradas Anteriores') }}</h2>
+        <div class="diary-entries-list">
+          {% for entry in entries %}
+            <div class="diary-entry">
+              <div class="diary-entry-date">{{ entry.date_created.strftime('%Y-%m-%d %H:%M') }}</div>
+              <div class="diary-entry-content">{{ entry.content }}</div>
+            </div>
+          {% else %}
+            <div class="diary-empty">{{ _('No tenés entradas aún.') }}</div>
+          {% endfor %}
+        </div>
+
+        <a href="{{ url_for('home.home') }}" class="back-link">⬅ {{ _('Volver al inicio') }}</a>
       </div>
-    {% else %}
-      <div class="diary-empty" style="text-align:center;margin:25px 0 12px 0;font-size:1.09em;color:#888;">{{ _('No tenés entradas aún.') }}</div>
-    {% endfor %}
     </div>
-    <a href="{{ url_for('home.home') }}" class="diary-back-link" style="display:block;text-align:center;margin-top:18px;">⬅ {{ _('Volver al inicio') }}</a>
   </div>
 </body>
 </html>

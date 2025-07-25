@@ -7,19 +7,23 @@ from app.models import User, FriendRequest, db
 
 amigos_bp = Blueprint('amigos', __name__)
 
+# ===============================
+# 🤝 Vista principal de amigos
+# ===============================
 @amigos_bp.route('/amigos')
 @login_required
 def amigos():
-    # Amigos aceptados (ambos sentidos)
+    # Amigos aceptados (de ambos lados)
     amigos = User.query.join(
-        FriendRequest, ((FriendRequest.sender_id == User.id) | (FriendRequest.receiver_id == User.id))
+        FriendRequest,
+        ((FriendRequest.sender_id == User.id) | (FriendRequest.receiver_id == User.id))
     ).filter(
         FriendRequest.status == 'accepted',
         ((FriendRequest.sender_id == current_user.id) | (FriendRequest.receiver_id == current_user.id)),
         User.id != current_user.id
     ).all()
 
-    # Solicitudes recibidas: obtenemos username real del remitente
+    # Solicitudes recibidas (pendientes)
     solicitudes_query = (
         db.session.query(FriendRequest, User.username)
         .join(User, FriendRequest.sender_id == User.id)
@@ -37,8 +41,17 @@ def amigos():
         for solicitud, username in solicitudes_query
     ]
 
-    # Todos los demás usuarios (sin repetir amigos)
-    usuarios = User.query.filter(User.id != current_user.id).all()
+    # Usuarios a los que NO se envió solicitud ni son amigos
+    usuarios = User.query.filter(
+        User.id != current_user.id,
+        ~User.id.in_(
+            db.session.query(FriendRequest.receiver_id).filter(FriendRequest.sender_id == current_user.id)
+        ),
+        ~User.id.in_(
+            db.session.query(FriendRequest.sender_id).filter(FriendRequest.receiver_id == current_user.id)
+        ),
+        ~User.id.in_([amigo.id for amigo in amigos])
+    ).all()
 
     return render_template(
         "amigos.html",
@@ -47,23 +60,36 @@ def amigos():
         solicitudes=solicitudes
     )
 
+# ===============================
+# ➕ Enviar solicitud de amistad
+# ===============================
 @amigos_bp.route('/enviar_solicitud/<int:user_id>')
 @login_required
 def enviar_solicitud(user_id):
-    # No envía solicitud si ya existe o es a sí mismo
     if user_id == current_user.id:
         flash(_("No puedes enviarte solicitud a vos mismo/a."), "warning")
         return redirect(url_for('amigos.amigos'))
 
-    if not FriendRequest.query.filter_by(sender_id=current_user.id, receiver_id=user_id).first():
+    ya_enviada = FriendRequest.query.filter_by(
+        sender_id=current_user.id, receiver_id=user_id
+    ).first()
+    ya_recibida = FriendRequest.query.filter_by(
+        sender_id=user_id, receiver_id=current_user.id
+    ).first()
+
+    if not ya_enviada and not ya_recibida:
         nueva = FriendRequest(sender_id=current_user.id, receiver_id=user_id)
         db.session.add(nueva)
         db.session.commit()
         flash(_("Solicitud enviada"), "info")
     else:
-        flash(_("Ya enviaste una solicitud a este usuario."), "info")
+        flash(_("Ya existe una solicitud entre vos y este usuario."), "info")
+
     return redirect(url_for('amigos.amigos'))
 
+# ===============================
+# ✅ Aceptar solicitud
+# ===============================
 @amigos_bp.route('/aceptar/<int:solicitud_id>')
 @login_required
 def aceptar(solicitud_id):
@@ -76,6 +102,9 @@ def aceptar(solicitud_id):
         flash(_("No puedes aceptar esta solicitud."), "warning")
     return redirect(url_for('amigos.amigos'))
 
+# ===============================
+# ❌ Rechazar solicitud
+# ===============================
 @amigos_bp.route('/rechazar/<int:solicitud_id>')
 @login_required
 def rechazar(solicitud_id):

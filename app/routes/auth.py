@@ -9,9 +9,7 @@ from app import db
 
 auth_bp = Blueprint('auth', __name__)
 
-# ----------------------------
-# Ruta de Login
-# ----------------------------
+# 🔐 Login
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -24,25 +22,22 @@ def login():
             login_user(user)
             flash(_('Bienvenido de nuevo, %(username)s!', username=username), 'success')
 
-            # ✅ Verifica si aceptó términos
+            # Redirige a bienvenida si no aceptó términos
             if not user.accepted_terms:
                 return redirect(url_for('home.welcome'))
             return redirect(url_for('home.home'))
 
-        else:
-            flash(_('Credenciales inválidas. Intenta de nuevo.'), 'danger')
-            return redirect(url_for('auth.login'))
+        flash(_('Credenciales inválidas. Intenta de nuevo.'), 'danger')
+        return redirect(url_for('auth.login'))
 
     return render_template('login.html')
 
-# ----------------------------
-# Ruta de Registro
-# ----------------------------
+# 📝 Registro
 @auth_bp.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
         username = request.form.get('username')
-        email = request.form.get('email')  # Lo sumo por tu formulario
+        email = request.form.get('email')  # opcional, depende del form
         password = request.form.get('password')
 
         existing_user = User.query.filter_by(username=username).first()
@@ -52,20 +47,18 @@ def register():
 
         hashed_password = generate_password_hash(password)
 
-        # ✅ Nuevo usuario arranca con accepted_terms=False por default
+        # Nuevo usuario se crea con foto por defecto y accepted_terms=False
         new_user = User(username=username, email=email, password=hashed_password, profile_picture='default.png')
         db.session.add(new_user)
         db.session.commit()
 
         flash(_('Usuario creado con éxito. Ahora puedes iniciar sesión.'), 'success')
         login_user(new_user)
-        return redirect(url_for('home.welcome'))  # Solo 1ra vez
+        return redirect(url_for('home.welcome'))
 
     return render_template('register.html')
 
-# ----------------------------
-# Ruta de Logout
-# ----------------------------
+# 🔓 Logout
 @auth_bp.route('/logout')
 @login_required
 def logout():
@@ -73,9 +66,7 @@ def logout():
     flash(_('Sesión cerrada correctamente.'), 'info')
     return redirect(url_for('auth.login'))
 
-# ----------------------------
-# 🚫 Ruta de Login con Google (comentada)
-# ----------------------------
+# 🔐 Login con Google (futuro)
 """
 @auth_bp.route('/login/google')
 def login_google():

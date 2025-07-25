@@ -51,6 +51,11 @@ class FriendRequest(db.Model):
     status = db.Column(db.String(10), default='pending')  # pending, accepted, rejected
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
+    # ✅ Asegura que no se dupliquen solicitudes entre 2 usuarios
+    __table_args__ = (
+        db.UniqueConstraint('sender_id', 'receiver_id', name='uq_friend_request_unique_pair'),
+    )
+
 # --------------------
 # Mensajes (Global y Privado)
 # --------------------

@@ -6,11 +6,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-07-23 18:00-0300\n"
-"PO-Revision-Date: 2025-07-23 18:00-0300\n"
+"POT-Creation-Date: 2025-07-25 15:50-0300\n"
+"PO-Revision-Date: 2025-07-25 15:50-0300\n"
 "Last-Translator: Ezequiel Sarasate <sarasate8@gmail.com>\n"
-"Language: br\n"
-"Language-Team: br <LL@li.org>\n"
+"Language: pt_BR\n"
+"Language-Team: pt_BR <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -141,7 +141,7 @@ msgid "No tenés entradas aún."
 msgstr "Você ainda não tem entradas."
 
 msgid "Volver al inicio"
-msgstr "Voltar ao início"
+msgstr "Voltar para o início"
 
 msgid "Volver a amigos"
 msgstr "Voltar aos amigos"
@@ -159,7 +159,7 @@ msgid "Aceptar"
 msgstr "Aceitar"
 
 msgid "Rechazar"
-msgstr "Rejeitar"
+msgstr "Recusar"
 
 msgid "No tenés solicitudes nuevas."
 msgstr "Você não tem novas solicitações."
@@ -198,7 +198,7 @@ msgid "Contraseña"
 msgstr "Senha"
 
 msgid "Ver contraseña"
-msgstr "Ver senha"
+msgstr "Mostrar senha"
 
 msgid "Entrar"
 msgstr "Entrar"
@@ -213,10 +213,10 @@ msgid "¿Ya tenés cuenta?"
 msgstr "Já tem uma conta?"
 
 msgid "Ingresá acá"
-msgstr "Acesse aqui"
+msgstr "Entre aqui"
 
 msgid "Este botón enviará una alerta inmediata a tus contactos de confianza. Úsalo solo si realmente lo necesitás."
-msgstr "Este botão enviará um alerta imediato para seus contatos de confiança. Use somente se realmente precisar."
+msgstr "Este botão enviará um alerta imediato para seus contatos de confiança. Use apenas se for realmente necessário."
 
 msgid "Mi Perfil"
 msgstr "Meu Perfil"
@@ -255,7 +255,7 @@ msgid "Email"
 msgstr "Email"
 
 msgid "Registrar"
-msgstr "Cadastrar"
+msgstr "Registrar"
 
 msgid "📝 Nueva Publicación"
 msgstr "📝 Nova Publicação"
@@ -264,7 +264,7 @@ msgid "📝 Crear una nueva publicación"
 msgstr "📝 Criar uma nova publicação"
 
 msgid "¿Qué querés compartir?"
-msgstr "O que você quer compartilhar?"
+msgstr "O que você gostaria de compartilhar?"
 
 msgid "Escribí algo..."
 msgstr "Escreva algo..."
@@ -282,22 +282,22 @@ msgid "Política de Privacidad - SafeSpace"
 msgstr "Política de Privacidade - SafeSpace"
 
 msgid "Aquí irá tu política de privacidad completa cuando esté lista."
-msgstr "Sua política de privacidade completa irá aqui quando estiver pronta."
+msgstr "Aqui estará sua política de privacidade completa quando estiver pronta."
 
 msgid "Este documento explica cómo SafeSpace recopila, utiliza y protege la información personal de los usuarios."
-msgstr "Este documento explica como o SafeSpace coleta, usa e protege as informações pessoais dos usuários."
+msgstr "Este documento explica como o SafeSpace coleta, utiliza e protege as informações pessoais dos usuários."
 
 msgid "Recomendación: redactar con ayuda de un profesional legal para cumplir con leyes de protección de datos (por ejemplo GDPR o similares)."
-msgstr "Recomendação: redija com a ajuda de um profissional jurídico para cumprir as leis de proteção de dados (por exemplo, LGPD ou similares)."
+msgstr "Recomendação: redigir com ajuda de um profissional jurídico para cumprir com leis de proteção de dados (como o GDPR)."
 
 msgid "Términos y Condiciones - SafeSpace"
 msgstr "Termos e Condições - SafeSpace"
 
 msgid "Aquí irán tus términos legales completos cuando estén listos."
-msgstr "Seus termos legais completos estarão aqui quando estiverem prontos."
+msgstr "Aqui estarão seus termos legais completos quando estiverem prontos."
 
 msgid "Este documento describe los términos de uso de la plataforma, las responsabilidades y derechos de los usuarios y de SafeSpace."
 msgstr "Este documento descreve os termos de uso da plataforma, direitos e responsabilidades dos usuários e do SafeSpace."
 
 msgid "Recomendación: redactar con ayuda de un profesional legal para adaptarse a la normativa local."
-msgstr "Recomendação: redija com a ajuda de um profissional jurídico para se adequar à legislação local."
+msgstr "Recomendação: redigir com ajuda de um profissional jurídico para adequar-se às normas locais."

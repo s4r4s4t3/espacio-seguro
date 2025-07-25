@@ -41,7 +41,7 @@ def config():
                 return redirect(url_for('config.config'))
             user.bio = bio
 
-        # === Botón borrar foto ===
+        # === Botón "Borrar foto" ===
         if 'delete_photo' in request.form:
             if user.profile_picture and 'cloudinary' in user.profile_picture:
                 public_id = user.profile_picture.rsplit('/', 1)[-1].split('.')[0]
@@ -54,14 +54,14 @@ def config():
             flash(_('Foto de perfil eliminada.'), 'success')
             return redirect(url_for('config.config'))
 
-        # === Guardar nueva imagen de perfil ===
+        # === Nueva imagen de perfil ===
         file = request.files.get('profile_picture')
         if file and file.filename:
             if not allowed_file(file.filename):
                 flash(_('Solo se permiten imágenes: png, jpg, jpeg, gif.'), 'danger')
                 return redirect(url_for('config.config'))
 
-            # Control de tamaño antes de leer
+            # Validación de tamaño
             file.seek(0, os.SEEK_END)
             file_length = file.tell()
             file.seek(0)
@@ -70,6 +70,7 @@ def config():
                 return redirect(url_for('config.config'))
 
             try:
+                # ✅ Subir a Cloudinary
                 upload_result = cloudinary.uploader.upload(
                     file,
                     folder='espacio_seguro/perfiles',
@@ -78,6 +79,7 @@ def config():
                 user.profile_picture = upload_result['secure_url']
                 flash(_('Imagen subida a Cloudinary correctamente.'), 'success')
             except Exception as e:
+                # 🧱 Fallback local
                 flash(_('Error al subir a Cloudinary: %(err)s. Guardando localmente.', err=str(e)), 'warning')
                 ext = file.filename.rsplit('.', 1)[1].lower()
                 filename = f"{uuid.uuid4().hex}.{ext}"

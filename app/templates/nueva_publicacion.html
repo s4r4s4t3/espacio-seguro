@@ -1,41 +1,33 @@
-<!-- templates/nueva_publicacion.html -->
 <!DOCTYPE html>
-<html lang="es">
+<html lang="{{ g.get('lang', 'es') }}">
 <head>
   <meta charset="UTF-8">
   <title>{{ _('📝 Nueva publicación') }}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="{{ url_for('static', filename='main.js') }}"></script>
+  <script src="{{ url_for('static', filename='nueva_publicacion.js') }}"></script>
 </head>
 <body>
-  <div class="main-card center-container" style="max-width:410px;margin:auto;">
-    <!-- Mascota/logo -->
-    <div style="display:flex;justify-content:center;margin-bottom:14px;">
-      <img src="{{ url_for('static', filename='frog.svg') }}" alt="{{ _('Mascota SafeSpace') }}" width="56" height="56" style="border-radius:13px;box-shadow:0 2px 10px rgba(60,170,90,0.10);background:#f6faf6;">
+  <div class="page-wrapper">
+    <div class="card nueva-publicacion-card">
+      <div class="center-content">
+        <img src="{{ url_for('static', filename='frog.svg') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
+        <h2>{{ _('📝 Crear una nueva publicación') }}</h2>
+
+        <form method="POST" enctype="multipart/form-data" class="nueva-publicacion-form">
+          <label for="content">{{ _('¿Qué querés compartir?') }}</label>
+          <textarea id="content" name="content" rows="4" placeholder="{{ _('Escribí algo...') }}" required></textarea>
+
+          <label for="image" class="upload-btn">📎 {{ _('Subir foto') }}</label>
+          <input type="file" id="image" name="image" accept="image/*" class="hidden-file" />
+          <img id="img-preview-np" class="preview-img" style="display:none;" />
+
+          <button type="submit" class="btn btn-nueva-publicacion">{{ _('Publicar') }}</button>
+        </form>
+
+        <a href="{{ url_for('home.feed') }}" class="back-link">⬅ {{ _('Volver al feed') }}</a>
+      </div>
     </div>
-    <h2 class="nueva-publicacion-title" style="text-align:center;">{{ _('📝 Crear una nueva publicación') }}</h2>
-    <form method="POST" enctype="multipart/form-data" class="nueva-publicacion-form" style="display:flex;flex-direction:column;gap:14px;">
-      <label for="content" class="nueva-publicacion-label">{{ _('¿Qué querés compartir?') }}</label>
-      <textarea id="content" name="content" rows="4" class="nueva-publicacion-textarea" placeholder="{{ _('Escribí algo...') }}" required style="resize:vertical;"></textarea>
-      <label for="image" class="file-label" style="margin-bottom:7px;">
-        📎 {{ _('Subir foto') }}
-        <input type="file" id="image" name="image" accept="image/*" class="hidden-input">
-        <img class="preview-img" style="display:none;margin-top:12px;max-width:120px;max-height:120px;border-radius:10px;" id="img-preview-np" />
-      </label>
-      <button type="submit" class="btn btn-nueva-publicacion" style="margin-top:10px;">{{ _('Publicar') }}</button>
-    </form>
-    <a href="{{ url_for('home.feed') }}" class="nueva-publicacion-back-link" style="margin-top:17px;display:block;text-align:center;">⬅ {{ _('Volver al feed') }}</a>
   </div>
-  <script>
-    // Vista previa imagen
-    const inputNP = document.getElementById('image');
-    const previewNP = document.getElementById('img-preview-np');
-    inputNP?.addEventListener('change', function(e) {
-      const file = this.files[0];
-      previewNP.style.display = file ? 'block' : 'none';
-      if (file) previewNP.src = URL.createObjectURL(file);
-    });
-  </script>
 </body>
 </html>

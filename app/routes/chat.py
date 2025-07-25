@@ -8,7 +8,7 @@ import cloudinary
 import cloudinary.uploader
 from datetime import datetime
 
-# === Configura Cloudinary ===
+# Configura Cloudinary
 cloudinary.config(
     cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"),
     api_key=os.getenv("CLOUDINARY_API_KEY"),
@@ -17,14 +17,18 @@ cloudinary.config(
 
 chat_bp = Blueprint('chat', __name__)
 
-# === Ruta: Chat Global (renderiza mensajes globales persistentes) ===
+# ===============================
+# 📢 Chat Global (público)
+# ===============================
 @chat_bp.route('/chat')
 @login_required
 def chat_global():
     messages = Message.query.filter_by(receiver_id=None).order_by(Message.timestamp.asc()).all()
     return render_template('chat.html', messages=messages, user=current_user)
 
-# === Ruta: Chat Privado ===
+# ===============================
+# 💬 Chat Privado
+# ===============================
 @chat_bp.route('/chat/<int:friend_id>', methods=['GET'])
 @login_required
 def chat_privado(friend_id):
@@ -36,9 +40,12 @@ def chat_privado(friend_id):
         ((Message.sender_id == current_user.id) & (Message.receiver_id == friend_id)) |
         ((Message.sender_id == friend_id) & (Message.receiver_id == current_user.id))
     ).order_by(Message.timestamp).all()
+
     return render_template('chat_privado.html', friend=friend, messages=messages, user=current_user)
 
-# === Ruta: Envía mensaje GLOBAL (guarda y responde por AJAX) ===
+# ===============================
+# 📨 Enviar mensaje Global (AJAX)
+# ===============================
 @chat_bp.route('/send_message_global', methods=['POST'])
 @login_required
 def send_message_global():
@@ -75,11 +82,13 @@ def send_message_global():
         'content': new_message.content,
         'image_url': new_message.image_url,
         'sender_username': current_user.username,
-        'sender_id': current_user.id,  # Útil para frontend
+        'sender_id': current_user.id,
         'timestamp': new_message.timestamp.strftime('%Y-%m-%d %H:%M')
     })
 
-# === Ruta: Envía mensaje PRIVADO (guarda y responde por AJAX) ===
+# ===============================
+# 📩 Enviar mensaje Privado (AJAX)
+# ===============================
 @chat_bp.route('/send_message_privado', methods=['POST'])
 @login_required
 def send_message_privado():
@@ -122,7 +131,9 @@ def send_message_privado():
         'timestamp': new_message.timestamp.strftime('%Y-%m-%d %H:%M')
     })
 
-# === Ruta: Elimina mensaje (solo el dueño puede) ===
+# ===============================
+# ❌ Eliminar mensaje
+# ===============================
 @chat_bp.route('/delete_message/<int:message_id>', methods=['POST'])
 @login_required
 def delete_message(message_id):
@@ -134,7 +145,9 @@ def delete_message(message_id):
     db.session.commit()
     return jsonify({'success': True, 'message': 'Mensaje eliminado correctamente'})
 
-# === Ruta: Edita mensaje (solo el dueño puede) ===
+# ===============================
+# ✏️ Editar mensaje
+# ===============================
 @chat_bp.route('/edit_message/<int:message_id>', methods=['POST'])
 @login_required
 def edit_message(message_id):
@@ -154,7 +167,9 @@ def edit_message(message_id):
         'new_content': message.content
     })
 
-# === Ruta: Marca mensajes como leídos ===
+# ===============================
+# ✅ Marcar mensajes como leídos
+# ===============================
 @chat_bp.route('/mark_as_read/<int:friend_id>', methods=['POST'])
 @login_required
 def mark_as_read(friend_id):
@@ -174,7 +189,9 @@ def mark_as_read(friend_id):
     db.session.commit()
     return jsonify({'success': True, 'message': 'Mensajes marcados como leídos'})
 
-# === Ruta: Obtiene mensajes no leídos de un amigo ===
+# ===============================
+# 📥 Obtener mensajes no leídos
+# ===============================
 @chat_bp.route('/unread_messages/<int:friend_id>', methods=['GET'])
 @login_required
 def unread_messages(friend_id):
@@ -196,7 +213,9 @@ def unread_messages(friend_id):
         ]
     })
 
-# === Ruta: Obtiene historial de mensajes de un usuario ===
+# ===============================
+# 📚 Historial de mensajes
+# ===============================
 @chat_bp.route('/messages/<int:user_id>', methods=['GET'])
 @login_required
 def get_messages(user_id):

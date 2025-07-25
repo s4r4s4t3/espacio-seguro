@@ -1,42 +1,37 @@
-<!-- templates/login.html -->
 <!DOCTYPE html>
-<html lang="es">
+<html lang="{{ g.get('lang', 'es') }}">
 <head>
-    <meta charset="UTF-8">
-    <title>{{ _('Login - SafeSpace') }}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="{{ url_for('static', filename='main.js') }}"></script>
+  <meta charset="UTF-8" />
+  <title>{{ _('Login - SafeSpace') }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="{{ url_for('static', filename='login.js') }}"></script>
 </head>
 <body>
-  <div class="center-container" style="min-height: 100vh; display: flex; align-items: center; justify-content: center;">
-    <div class="main-card" style="width:100%;max-width:380px;padding:32px 24px 22px 24px;">
-      <!-- Mascota/logo arriba -->
-      <div style="display:flex;justify-content:center;margin-bottom:13px;">
-        <img src="{{ url_for('static', filename='frog.svg') }}" alt="{{ _('Mascota SafeSpace') }}" width="52" height="52" style="border-radius:14px;box-shadow:0 2px 11px rgba(60,170,90,0.08);background:#f6faf6;">
-      </div>
-      <h2 class="login-title" style="text-align:center;margin-bottom:23px;">{{ _('Iniciar Sesión') }}</h2>
-      <form method="POST" class="login-form" autocomplete="off" style="display:flex;flex-direction:column;gap:15px;">
-        <input type="text" name="username" class="login-input" placeholder="{{ _('Usuario') }}" required autofocus>
-        <input type="password" name="password" id="loginPassword" class="login-input" placeholder="{{ _('Contraseña') }}" required>
-        <label class="login-checkbox" style="margin-bottom:10px;display:flex;align-items:center;gap:7px;">
-          <input type="checkbox" id="toggleLoginPassword">
-          <span style="font-size:0.97em;">{{ _('Ver contraseña') }}</span>
-        </label>
-        <button type="submit" class="btn btn-login">{{ _('Entrar') }}</button>
-      </form>
-      <div class="login-link" style="margin-top:16px;text-align:center;font-size:1em;">
-        {{ _('¿No tenés cuenta?') }}
-        <a href="/register" style="color:#23a06b;font-weight:600;">{{ _('Registrate acá') }}</a>
+  <div class="page-wrapper">
+    <div class="card login-card">
+      <div class="center-content">
+        <img src="{{ url_for('static', filename='frog.svg') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
+        <h2>{{ _('Iniciar Sesión') }}</h2>
+
+        <form method="POST" autocomplete="off" class="login-form">
+          <input type="text" name="username" placeholder="{{ _('Usuario') }}" required class="login-input" autofocus />
+          <input type="password" name="password" id="loginPassword" placeholder="{{ _('Contraseña') }}" required class="login-input" />
+
+          <label class="login-checkbox">
+            <input type="checkbox" id="toggleLoginPassword" />
+            <span>{{ _('Ver contraseña') }}</span>
+          </label>
+
+          <button type="submit" class="btn btn-login">{{ _('Entrar') }}</button>
+        </form>
+
+        <div class="login-link">
+          {{ _('¿No tenés cuenta?') }}
+          <a href="/register">{{ _('Registrate acá') }}</a>
+        </div>
       </div>
     </div>
   </div>
-  <script>
-    const toggleLoginPassword = document.getElementById('toggleLoginPassword');
-    const loginPassword = document.getElementById('loginPassword');
-    toggleLoginPassword.addEventListener('change', function () {
-      loginPassword.type = this.checked ? 'text' : 'password';
-    });
-  </script>
 </body>
 </html>

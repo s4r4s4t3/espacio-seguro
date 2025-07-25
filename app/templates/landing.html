@@ -1,4 +1,3 @@
-<!-- templates/landing.html -->
 <!DOCTYPE html>
 <html lang="{{ g.get('lang', 'es') }}">
 <head>
@@ -6,74 +5,69 @@
   <title>{{ _('SafeSpace - Tu lugar de apoyo') }}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Web App Manifest -->
+<link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+<meta name="theme-color" content="#219150">
+
+<!-- iOS Support -->
+<link rel="apple-touch-icon" href="{{ url_for('static', filename='icon-192x192.png') }}">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 </head>
 <body>
-  <div class="center-container">
-    <div class="main-card" style="max-width:430px; margin:auto; padding:30px 16px 18px 16px;">
-      <div style="text-align:center;">
-        <img
-          src="{{ url_for('static', filename='frog.svg') }}"
-          alt="{{ _('Mascota SafeSpace') }}"
-          style="max-width:108px; margin-bottom:13px;"
-        />
-      </div>
-      <div style="text-align:right; margin-bottom:5px;">
-        <form id="language-form" method="GET" action="{{ url_for('home.set_language', lang_code='es') }}">
-          <select
-            name="lang"
-            id="language-select"
-            style="font-size:1.05em; border-radius:8px; border:1px solid #cceee6; padding:2px 9px;"
-          >
-            <option value="es" {% if g.get('lang', 'es') == 'es' %}selected{% endif %}>🇪🇸 Español</option>
-            <option value="en" {% if g.get('lang', 'es') == 'en' %}selected{% endif %}>🇺🇸 English</option>
-            <option value="pt" {% if g.get('lang', 'es') == 'pt' %}selected{% endif %}>🇧🇷 Português</option>
+  <div class="page-wrapper">
+    <div class="card landing-card">
+      <div class="center-content">
+        <img src="{{ url_for('static', filename='frog.svg') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
+
+        <form id="language-form" method="GET" class="language-form">
+          <select name="lang" id="language-select">
+            <option value="es" {% if g.get('lang') == 'es' %}selected{% endif %}>🇪🇸 Español</option>
+            <option value="en" {% if g.get('lang') == 'en' %}selected{% endif %}>🇺🇸 English</option>
+            <option value="pt" {% if g.get('lang') == 'pt' %}selected{% endif %}>🇵🇹 Português</option>
+            <option value="br" {% if g.get('lang') == 'br' %}selected{% endif %}>🇧🇷 Português (BR)</option>
+            <option value="de" {% if g.get('lang') == 'de' %}selected{% endif %}>🇩🇪 Deutsch</option>
+            <option value="fr" {% if g.get('lang') == 'fr' %}selected{% endif %}>🇫🇷 Français</option>
+            <option value="it" {% if g.get('lang') == 'it' %}selected{% endif %}>🇮🇹 Italiano</option>
           </select>
         </form>
+
+        <h2>{{ _('SafeSpace - Tu lugar de apoyo') }}</h2>
+        <p class="subtitle">{{ _('Tu espacio de contención y apoyo real') }}</p>
+
+        <form method="GET" action="/login" class="auth-form">
+          <button type="submit" class="btn full-width">{{ _('Iniciar Sesión') }}</button>
+          <a href="/register" class="btn full-width">{{ _('Crear Cuenta') }}</a>
+          <a href="/login/google" class="btn btn-google full-width">
+            <img src="{{ url_for('static', filename='icons/google.svg') }}" class="icon" />
+            {{ _('Iniciar sesión con Google') }}
+          </a>
+        </form>
+
+        <p class="quote">{{ _('Recuerda: aquí nunca estás solo/a. Cada paso, aunque pequeño, cuenta.') }}</p>
+
+        <footer class="footer">
+          <small>© 2025 SafeSpace</small>
+          <div>
+            <a href="/privacy">{{ _('Política de Privacidad') }}</a> | 
+            <a href="/terms">{{ _('Términos y Condiciones') }}</a>
+          </div>
+        </footer>
       </div>
-      <h2 style="color:#27d284; text-align:center; margin-bottom:5px;">
-        {{ _('SafeSpace - Tu lugar de apoyo') }}
-      </h2>
-      <div class="subtitle" style="font-size:1.14em; text-align:center;">
-        {{ _('Tu espacio de contención y apoyo real') }}
-      </div>
-      <form method="GET" action="/login" style="margin-bottom: 16px; margin-top:16px;">
-        <button type="submit" class="btn" style="width:100%;margin-bottom:7px;">{{ _('Iniciar Sesión') }}</button>
-        <a href="/register" class="btn" style="display:block; width:100%; margin-bottom:7px;">{{ _('Crear Cuenta') }}</a>
-        <a
-          href="/login/google"
-          class="btn btn-google"
-          style="background:#fff; color:#219150; border:1px solid #6ac694; width:100%; display:block;"
-        >
-          <img
-            src="{{ url_for('static', filename='icons/google.svg') }}"
-            style="width:23px;vertical-align:middle;margin-right:10px;"
-          />
-          {{ _('Iniciar sesión con Google') }}
-        </a>
-      </form>
-      <div class="subtitle" style="font-size:0.97em; opacity:0.78; text-align:center;">
-        <span style="font-style:italic;">
-          {{ _('Recuerda: aquí nunca estás solo/a. Cada paso, aunque pequeño, cuenta.') }}
-        </span>
-      </div>
-      <footer style="margin-top:16px;text-align:center;">
-        <small>© 2025 SafeSpace.</small>
-        <div style="margin-top:7px; font-size:0.98em;">
-          <a href="/privacy">{{ _('Política de Privacidad') }}</a> | <a href="/terms">{{ _('Términos y Condiciones') }}</a>
-        </div>
-      </footer>
     </div>
   </div>
 
-  <script src="{{ url_for('static', filename='main.js') }}"></script>
-  <script>
-    // Manejar cambio de idioma sin usar JS inline para evitar errores de sintaxis
-    document.getElementById('language-select').addEventListener('change', function () {
-      const form = document.getElementById('language-form');
-      const baseAction = "{{ url_for('home.set_language', lang_code='') }}";
-      form.action = baseAction + this.value;
-      form.submit();
-    });
-  </script>
+  <script src="{{ url_for('static', filename='landing.js') }}"></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register("{{ url_for('static', filename='service-worker.js') }}")
+      .then(function(reg) {
+        console.log("✅ Service Worker registrado con éxito:", reg.scope);
+      })
+      .catch(function(error) {
+        console.error("❌ Error al registrar el Service Worker:", error);
+      });
+  }
+</script>
 </body>
 </html>
