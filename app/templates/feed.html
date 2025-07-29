@@ -1,16 +1,10 @@
-<!DOCTYPE html>
-<html lang="{{ g.get('lang', 'es') }}">
-<head>
-  <meta charset="UTF-8">
-  <title>{{ _('📰 Feed - SafeSpace') }}</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
-  <div class="page-wrapper">
+{% extends 'base.html' %}
+{% block title %}{{ _('📰 Feed - SafeSpace') }}{% endblock %}
+{% block content %}
+
     <div class="card feed-card">
       <div class="center-content">
-        <img src="{{ url_for('static', filename='frog.svg') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
+        <img src="{{ url_for('static', filename='heart.png') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
         <h2>{{ _('📰 Publicaciones recientes') }}</h2>
 
         <div class="feed-list">
@@ -42,9 +36,8 @@
         {% endfor %}
         </div>
 
-        <a href="{{ url_for('home.home') }}" class="back-link">⬅ {{ _('Volver al inicio') }}</a>
+        
       </div>
     </div>
-  </div>
-</body>
-</html>
+  
+{% endblock %}

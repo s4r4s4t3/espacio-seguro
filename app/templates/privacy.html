@@ -1,13 +1,7 @@
-<!DOCTYPE html>
-<html lang="{{ g.get('lang', 'es') }}">
-<head>
-  <meta charset="UTF-8" />
-  <title>{{ _('Política de Privacidad - SafeSpace') }}</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
-</head>
-<body>
-  <div class="page-wrapper">
+{% extends 'base.html' %}
+{% block title %}{{ _('Política de Privacidad - SafeSpace') }}{% endblock %}
+{% block content %}
+
     <div class="card legal-card">
       <h2>{{ _('Política de Privacidad - SafeSpace') }}</h2>
 
@@ -15,8 +9,7 @@
       <p>{{ _('Este documento explica cómo SafeSpace recopila, utiliza y protege la información personal de los usuarios.') }}</p>
       <p>{{ _('Recomendación: redactar con ayuda de un profesional legal para cumplir con leyes de protección de datos (por ejemplo GDPR o similares).') }}</p>
 
-      <a href="{{ url_for('home.home') }}" class="back-link">⬅ {{ _('Volver al inicio') }}</a>
+      
     </div>
-  </div>
-</body>
-</html>
+  
+{% endblock %}

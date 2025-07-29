@@ -1,26 +1,10 @@
-<!DOCTYPE html>
-<html lang="{{ g.get('lang', 'es') }}">
-<head>
-  <meta charset="UTF-8" />
-  <title>{{ _('Inicio - SafeSpace') }}</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script src="{{ url_for('static', filename='home.js') }}"></script>
+{% extends 'base.html' %}
+{% block title %}{{ _('Inicio - SafeSpace') }}{% endblock %}
+{% block content %}
 
-  <!-- Web App Manifest -->
-  <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
-  <meta name="theme-color" content="#219150">
-
-  <!-- iOS Support -->
-  <link rel="apple-touch-icon" href="{{ url_for('static', filename='icon-192x192.png') }}">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-</head>
-<body>
-  <div class="page-wrapper">
     <div class="card home-card">
       <div class="center-content">
-        <img src="{{ url_for('static', filename='frog.svg') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
+        <img src="{{ url_for('static', filename='heart.png') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
 
         <!-- 🌐 Selector de idioma -->
         <form id="language-form" method="GET" class="language-form">
@@ -87,5 +71,4 @@
       });
     });
   </script>
-</body>
-</html>
+{% endblock %}

@@ -11,7 +11,7 @@
   <div class="page-wrapper">
     <div class="card login-card">
       <div class="center-content">
-        <img src="{{ url_for('static', filename='frog.svg') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
+        <img src="{{ url_for('static', filename='heart.png') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
         <h2>{{ _('Iniciar Sesión') }}</h2>
 
         <form method="POST" autocomplete="off" class="login-form">
@@ -33,5 +33,6 @@
       </div>
     </div>
   </div>
+  <script src="{{ url_for('static', filename='main.js') }}"></script>
 </body>
 </html>

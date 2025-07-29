@@ -1,18 +1,10 @@
-<!DOCTYPE html>
-<html lang="{{ g.get('lang', 'es') }}">
-<head>
-  <meta charset="UTF-8" />
-  <title>{{ _('💬 Chat Global') }}</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
-  <script src="{{ url_for('static', filename='chat.js') }}"></script>
-</head>
-<body>
-  <div class="page-wrapper">
+{% extends 'base.html' %}
+{% block title %}{{ _('💬 Chat Global - SafeSpace') }}{% endblock %}
+{% block content %}
+
     <div class="card chat-card">
       <div class="center-content">
-        <img src="{{ url_for('static', filename='frog.svg') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
+        <img src="{{ url_for('static', filename='heart.png') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
         <h2>{{ _('💬 Chat Global') }}</h2>
 
         <div id="mensajes" class="chat-global-box">
@@ -42,12 +34,16 @@
           <button type="submit" class="btn btn-chat-send">{{ _('Enviar') }}</button>
         </form>
 
-        <a href="/" class="back-link">⬅ {{ _('Volver al inicio') }}</a>
+        
       </div>
     </div>
   </div>
   <script>
     window.USER_ID = "{{ user.id }}";
   </script>
-</body>
-</html>
+{% endblock %}
+{% block scripts %}
+<script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+<script src="{{ url_for('static', filename='chat.js') }}"></script>
+<script>window.USER_ID = "{{ user.id }}";</script>
+{% endblock %}

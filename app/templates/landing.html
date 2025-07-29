@@ -19,7 +19,7 @@
   <div class="page-wrapper">
     <div class="card landing-card">
       <div class="center-content">
-        <img src="{{ url_for('static', filename='frog.svg') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
+        <img src="{{ url_for('static', filename='heart.png') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
 
         <!-- 🌐 Selector de idioma -->
         <form id="language-form" method="GET" class="language-form">
@@ -98,5 +98,6 @@
       });
     });
   </script>
+  <script src="{{ url_for('static', filename='main.js') }}"></script>
 </body>
 </html>

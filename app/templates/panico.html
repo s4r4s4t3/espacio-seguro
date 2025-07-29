@@ -1,17 +1,10 @@
-<!DOCTYPE html>
-<html lang="{{ g.get('lang', 'es') }}">
-<head>
-  <meta charset="UTF-8">
-  <title>{{ _('Botón de Pánico') }}</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  <script src="{{ url_for('static', filename='panico.js') }}"></script>
-</head>
-<body>
-  <div class="page-wrapper">
+{% extends 'base.html' %}
+{% block title %}{{ _('Botón de Pánico - SafeSpace') }}{% endblock %}
+{% block content %}
+
     <div class="card panic-card">
       <div class="center-content">
-        <img src="{{ url_for('static', filename='frog.svg') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
+        <img src="{{ url_for('static', filename='heart.png') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
         <h2 style="color:#e74747;">{{ _('Botón de Pánico') }}</h2>
         <p class="info-text red">{{ _('Este botón enviará una alerta inmediata a tus contactos de confianza. Úsalo solo si realmente lo necesitás.') }}</p>
 
@@ -20,9 +13,11 @@
           <span class="panic-label">{{ _('¡Solo para emergencias reales!') }}</span>
         </form>
 
-        <a href="{{ url_for('home.home') }}" class="back-link">⬅ {{ _('Volver al inicio') }}</a>
+        
       </div>
     </div>
-  </div>
-</body>
-</html>
+  
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='panico.js') }}"></script>
+{% endblock %}

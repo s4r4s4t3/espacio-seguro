@@ -1,17 +1,10 @@
-<!DOCTYPE html>
-<html lang="{{ g.get('lang', 'es') }}">
-<head>
-  <meta charset="UTF-8" />
-  <title>{{ _('🤝 Amigos') }}</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="{{ url_for('static', filename='main.js') }}"></script>
-</head>
-<body>
-  <div class="page-wrapper">
+{% extends 'base.html' %}
+{% block title %}{{ _('🤝 Amigos - SafeSpace') }}{% endblock %}
+{% block content %}
+
     <div class="card amigos-card">
       <div class="center-content">
-        <img src="{{ url_for('static', filename='frog.svg') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
+        <img src="{{ url_for('static', filename='heart.png') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
         <h2>{{ _('Tus Amigos') }}</h2>
         <p class="subtitle">{{ _('Aún no agregaste amigos.') }} 💚</p>
 
@@ -44,11 +37,10 @@
           {% endfor %}
         </div>
 
-        <a href="/" class="back-link">← {{ _('Volver al inicio') }}</a>
+        
       </div>
     </div>
   </div>
 
   <button id="darkModeToggle" title="Modo claro/oscuro" class="dark-toggle">🌙</button>
-</body>
-</html>
+{% endblock %}

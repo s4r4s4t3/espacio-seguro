@@ -2,6 +2,26 @@
 // Creado por Eze, modular, pro, y documentado
 
 document.addEventListener('DOMContentLoaded', () => {
+  // PWA install button and service worker registration
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/static/service-worker.js').then(function(reg) {
+      console.log('Service Worker registrado', reg);
+    }).catch(function(err) { console.error(err); });
+  }
+  let deferredPrompt;
+  const installEl = document.getElementById('install-btn');
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    if (installEl) installEl.style.display = 'block';
+    if (installEl) installEl.addEventListener('click', async () => {
+      installEl.style.display = 'none';
+      deferredPrompt.prompt();
+      await deferredPrompt.userChoice;
+      deferredPrompt = null;
+    });
+  });
+
   // ======= Toggle modo oscuro (único y funcional) =======
   const body = document.body;
   const toggleBtn = document.createElement('button');
@@ -21,12 +41,12 @@ document.addEventListener('DOMContentLoaded', () => {
   document.body.appendChild(toggleBtn);
 
   // Estado inicial
-  if (localStorage.getItem('darkMode') === 'on') body.classList.add('dark-mode');
+  if (localStorage.getItem('darkMode') === 'on') body.classList.add('dark');
 
   toggleBtn.onclick = () => {
-    body.classList.toggle('dark-mode');
-    localStorage.setItem('darkMode', body.classList.contains('dark-mode') ? 'on' : 'off');
-    toggleBtn.innerHTML = body.classList.contains('dark-mode') ? '☀️' : '🌙';
+    body.classList.toggle('dark');
+    localStorage.setItem('darkMode', body.classList.contains('dark') ? 'on' : 'off');
+    toggleBtn.innerHTML = body.classList.contains('dark') ? '☀️' : '🌙';
   };
 
   // ======= Loader animado global =======

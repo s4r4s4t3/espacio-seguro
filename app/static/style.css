@@ -2070,3 +2070,65 @@ textarea, input[type="text"], input[type="email"], input[type="password"] {
 }
 
 /* --- FIN MEJORAS SAFEPLACE 2025 v2 --- */
+
+
+/*
+ * New Layout for SafeSpace
+ * Introduces a three-column layout with a persistent navigation sidebar, a central content area
+ * and a right sidebar for contextual information. Adapts automatically to dark mode when
+ * the body has the `dark` class.
+ */
+.app-container {
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+}
+.sidebar {
+  width: 240px;
+  padding: 20px;
+  background: var(--card-bg);
+  box-shadow: 2px 0 4px rgba(0,0,0,0.08);
+  box-sizing: border-box;
+}
+.sidebar .logo {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+.sidebar .logo img {
+  width: 36px;
+  height: 36px;
+  margin-right: 10px;
+}
+.sidebar a {
+  display: block;
+  padding: 10px 0;
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.15s;
+}
+.sidebar a:hover {
+  text-decoration: underline;
+}
+.main-content {
+  flex: 1;
+  padding: 20px;
+  box-sizing: border-box;
+}
+.right-sidebar {
+  width: 240px;
+  padding: 20px;
+  background: var(--card-bg);
+  box-shadow: -2px 0 4px rgba(0,0,0,0.08);
+  box-sizing: border-box;
+}
+body.dark .sidebar,
+body.dark .right-sidebar {
+  background: var(--card-bg-dark);
+  color: var(--text-light);
+}
+body.dark .sidebar a {
+  color: #90ffb2;
+}
