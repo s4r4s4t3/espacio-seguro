@@ -42,7 +42,11 @@ def welcome():
 @home_bp.route('/home')
 @login_required
 def home():
-    return render_template("home.html", user=current_user)
+    """
+    Página de inicio para usuarios autenticados. En lugar de mostrar un dashboard
+    separado con navegación duplicada, redirigimos directamente al feed.
+    """
+    return redirect(url_for('home.feed'))
 
 # 💬 Chat global (compatibilidad con ruta antigua)
 @home_bp.route('/chat')

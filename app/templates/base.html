@@ -15,22 +15,22 @@
   <div class="app-container">
     <nav class="sidebar">
       <div class="logo">
-        <img src="{{ url_for('static', filename='heart.png') }}" alt="SafeSpace">
-        <span>SafeSpace</span>
+        <!-- Logo con texto integrado para un aspecto más profesional -->
+        <img src="{{ url_for('static', filename='heart_with_text2.png') }}" alt="SafeSpace logo" class="logo-img">
       </div>
-      <form id="language-form" method="GET">
-        <select name="lang" id="language-select" onchange="this.form.submit()">
-          <option value="es" {% if g.get('lang') == 'es' %}selected{% endif %}>🇪🇸 Español</option>
-          <option value="en" {% if g.get('lang') == 'en' %}selected{% endif %}>🇺🇸 English</option>
-          <option value="pt" {% if g.get('lang') == 'pt' %}selected{% endif %}>🇵🇹 Português</option>
-          <option value="br" {% if g.get('lang') == 'br' %}selected{% endif %}>🇧🇷 Português (BR)</option>
-          <option value="de" {% if g.get('lang') == 'de' %}selected{% endif %}>🇩🇪 Deutsch</option>
-          <option value="fr" {% if g.get('lang') == 'fr' %}selected{% endif %}>🇫🇷 Français</option>
-          <option value="it" {% if g.get('lang') == 'it' %}selected{% endif %}>🇮🇹 Italiano</option>
-        </select>
-      </form>
+      <!-- Idioma: reemplazamos el formulario por un selector independiente. Al cambiar
+           se redirigirá a /set_language/<lang> mediante JavaScript (ver main.js) -->
+      <select id="language-select" class="lang-select">
+        <option value="es" {% if g.get('lang') == 'es' %}selected{% endif %}>🇪🇸 Español</option>
+        <option value="en" {% if g.get('lang') == 'en' %}selected{% endif %}>🇺🇸 English</option>
+        <option value="pt" {% if g.get('lang') == 'pt' %}selected{% endif %}>🇵🇹 Português</option>
+        <option value="br" {% if g.get('lang') == 'br' %}selected{% endif %}>🇧🇷 Português (BR)</option>
+        <option value="de" {% if g.get('lang') == 'de' %}selected{% endif %}>🇩🇪 Deutsch</option>
+        <option value="fr" {% if g.get('lang') == 'fr' %}selected{% endif %}>🇫🇷 Français</option>
+        <option value="it" {% if g.get('lang') == 'it' %}selected{% endif %}>🇮🇹 Italiano</option>
+      </select>
       {% if current_user.is_authenticated %}
-      <a href="{{ url_for('home.home') }}">{{ _('Inicio') }}</a>
+      <!-- Navegación principal: Feed como página inicial -->
       <a href="{{ url_for('home.feed') }}">{{ _('Feed') }}</a>
       <a href="{{ url_for('home.nueva_publicacion') }}">{{ _('Nueva publicación') }}</a>
       <a href="{{ url_for('home.chat') }}">{{ _('Chat Global') }}</a>
@@ -56,6 +56,12 @@
       <p>{{ _('Tu espacio de contención y apoyo real') }}</p>
       <button id="install-btn" style="display:none;">{{ _('📲 Instalar SafeSpace') }}</button>
     </aside>
+
+    <!-- Modal para ver imágenes en grande. Se muestra al hacer clic en una imagen de una publicación -->
+    <div id="imgModal" class="modal">
+      <span class="close" id="imgModalClose">&times;</span>
+      <img class="modal-content" id="imgModalContent">
+    </div>
   </div>
   <script src="{{ url_for('static', filename='main.js') }}"></script>
   {% block scripts %}{% endblock %}

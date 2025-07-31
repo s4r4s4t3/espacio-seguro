@@ -23,6 +23,100 @@
   --blur: blur(12px);
 }
 
+/* === Personalización selector de idioma === */
+.lang-select {
+  width: 100%;
+  padding: 8px 10px;
+  margin-bottom: 15px;
+  font-size: 1em;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  background: var(--primary);
+  color: #fff;
+  cursor: pointer;
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  position: relative;
+}
+.lang-select option {
+  color: #000;
+  background: #fff;
+}
+body.dark .lang-select {
+  background: #276b48;
+  color: #fff;
+}
+
+/* Ajustar tamaño del logo en páginas: evitar que sea demasiado grande en móviles */
+.landing-logo {
+  width: 120px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+/* Alinear botones en el formulario de autenticación de la landing */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  align-items: stretch;
+}
+.auth-form .btn {
+  width: 100%;
+}
+@media (max-width: 600px) {
+  .landing-logo {
+    width: 80px;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Responsive layout adjustments for mobile screens                    */
+/* Stack the sidebar on top and hide the right sidebar below 768px    */
+/* ------------------------------------------------------------------ */
+@media (max-width: 768px) {
+  .app-container {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    box-shadow: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 10px;
+  }
+  .sidebar .logo {
+    flex-basis: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+  }
+  .sidebar a {
+    flex: 1 1 auto;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 0.95em;
+    white-space: nowrap;
+  }
+  .sidebar .lang-select {
+    flex-basis: 100%;
+    max-width: 200px;
+    margin: 0 auto;
+  }
+  .right-sidebar {
+    display: none;
+  }
+  .main-content {
+    padding: 15px;
+  }
+}
+
 body {
   font-family: 'Segoe UI', 'Inter', 'Roboto', Arial, sans-serif;
   background: var(--bg-light);

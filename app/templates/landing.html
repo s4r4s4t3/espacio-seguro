@@ -21,18 +21,16 @@
       <div class="center-content">
         <img src="{{ url_for('static', filename='heart.png') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
 
-        <!-- 🌐 Selector de idioma -->
-        <form id="language-form" method="GET" class="language-form">
-          <select name="lang" id="language-select">
-            <option value="es" {% if g.get('lang') == 'es' %}selected{% endif %}>🇪🇸 Español</option>
-            <option value="en" {% if g.get('lang') == 'en' %}selected{% endif %}>🇺🇸 English</option>
-            <option value="pt" {% if g.get('lang') == 'pt' %}selected{% endif %}>🇵🇹 Português</option>
-            <option value="br" {% if g.get('lang') == 'br' %}selected{% endif %}>🇧🇷 Português (BR)</option>
-            <option value="de" {% if g.get('lang') == 'de' %}selected{% endif %}>🇩🇪 Deutsch</option>
-            <option value="fr" {% if g.get('lang') == 'fr' %}selected{% endif %}>🇫🇷 Français</option>
-            <option value="it" {% if g.get('lang') == 'it' %}selected{% endif %}>🇮🇹 Italiano</option>
-          </select>
-        </form>
+        <!-- 🌐 Selector de idioma: se aplica el mismo estilo que en la app. Cambia idioma vía JS. -->
+        <select id="language-select" class="lang-select">
+          <option value="es" {% if g.get('lang') == 'es' %}selected{% endif %}>🇪🇸 Español</option>
+          <option value="en" {% if g.get('lang') == 'en' %}selected{% endif %}>🇺🇸 English</option>
+          <option value="pt" {% if g.get('lang') == 'pt' %}selected{% endif %}>🇵🇹 Português</option>
+          <option value="br" {% if g.get('lang') == 'br' %}selected{% endif %}>🇧🇷 Português (BR)</option>
+          <option value="de" {% if g.get('lang') == 'de' %}selected{% endif %}>🇩🇪 Deutsch</option>
+          <option value="fr" {% if g.get('lang') == 'fr' %}selected{% endif %}>🇫🇷 Français</option>
+          <option value="it" {% if g.get('lang') == 'it' %}selected{% endif %}>🇮🇹 Italiano</option>
+        </select>
 
         <!-- 👤 Bienvenida -->
         <h2>{{ _('SafeSpace - Tu lugar de apoyo') }}</h2>
