@@ -55,6 +55,7 @@ body.dark .lang-select {
   height: auto;
   margin-bottom: 20px;
 }
+<<<<<<< HEAD
 
 /* Alinear botones en el formulario de autenticación de la landing */
 .auth-form {
@@ -67,12 +68,15 @@ body.dark .lang-select {
 .auth-form .btn {
   width: 100%;
 }
+=======
+>>>>>>> 3a46ef48ee8fabf1f0c49ba336ce2495ba18ce7b
 @media (max-width: 600px) {
   .landing-logo {
     width: 80px;
   }
 }
 
+<<<<<<< HEAD
 /* ------------------------------------------------------------------ */
 /* Responsive layout adjustments for mobile screens                    */
 /* Stack the sidebar on top and hide the right sidebar below 768px    */
@@ -117,6 +121,8 @@ body.dark .lang-select {
   }
 }
 
+=======
+>>>>>>> 3a46ef48ee8fabf1f0c49ba336ce2495ba18ce7b
 body {
   font-family: 'Segoe UI', 'Inter', 'Roboto', Arial, sans-serif;
   background: var(--bg-light);
