@@ -3,8 +3,6 @@
 {% block content %}
 
     <div class="card feed-card">
-      <div class="center-content">
-        <img src="{{ url_for('static', filename='heart.png') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
         <h2>{{ _('📰 Publicaciones recientes') }}</h2>
 
         <div class="feed-list">
@@ -35,9 +33,6 @@
           <div class="feed-empty">{{ _('No hay publicaciones todavía.') }}</div>
         {% endfor %}
         </div>
-
-        
-      </div>
     </div>
   
 {% endblock %}

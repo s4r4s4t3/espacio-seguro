@@ -3,43 +3,9 @@
 {% block content %}
 
     <div class="card home-card">
-      <div class="center-content">
-        <img src="{{ url_for('static', filename='heart.png') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
-
-        <!-- 🌐 Selector de idioma -->
-        <form id="language-form" method="GET" class="language-form">
-          <select name="lang" id="language-select">
-            <option value="es" {% if g.get('lang') == 'es' %}selected{% endif %}>🇪🇸 Español</option>
-            <option value="en" {% if g.get('lang') == 'en' %}selected{% endif %}>🇺🇸 English</option>
-            <option value="pt" {% if g.get('lang') == 'pt' %}selected{% endif %}>🇵🇹 Português</option>
-            <option value="br" {% if g.get('lang') == 'br' %}selected{% endif %}>🇧🇷 Português (BR)</option>
-            <option value="de" {% if g.get('lang') == 'de' %}selected{% endif %}>🇩🇪 Deutsch</option>
-            <option value="fr" {% if g.get('lang') == 'fr' %}selected{% endif %}>🇫🇷 Français</option>
-            <option value="it" {% if g.get('lang') == 'it' %}selected{% endif %}>🇮🇹 Italiano</option>
-          </select>
-        </form>
-
-        <!-- 👤 Bienvenida -->
-        <h2>{{ _('Bienvenido, %(username)s', username=user.username) }}</h2>
-
-        <!-- 📲 Botón de instalación PWA -->
-        <button id="install-btn" class="btn full-width" style="display:none;">
-          {{ _('📲 Instalar SafeSpace') }}
-        </button>
-
-        <!-- 🧭 Navegación principal -->
-        <div class="home-nav">
-          <a href="/config" class="btn">{{ _('Perfil') }}</a>
-          <a href="/chat" class="btn">{{ _('Chat Global') }}</a>
-          <a href="/amigos" class="btn">{{ _('Amigos') }}</a>
-          <a href="/panico" class="btn btn-reject">{{ _('Botón de Pánico') }}</a>
-          <a href="{{ url_for('diary.diary') }}" class="btn">{{ _('Diario') }}</a>
-          <a href="{{ url_for('home.feed') }}" class="btn">{{ _('Feed') }}</a>
-          <a href="{{ url_for('home.nueva_publicacion') }}" class="btn btn-add">{{ _('Nueva publicación') }}</a>
-          <a href="/logout" class="btn">{{ _('Cerrar sesión') }}</a>
-        </div>
-      </div>
-    </div>
+      <h2>{{ _('Bienvenido, %(username)s', username=user.username) }}</h2>
+      <p>{{ _('Gracias por unirte a SafeSpace. Navega utilizando el menú de la izquierda.') }}</p>
+    
   </div>
 
   <!-- 🔧 Service Worker + PWA -->

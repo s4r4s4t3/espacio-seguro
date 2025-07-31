@@ -169,4 +169,38 @@ document.addEventListener('DOMContentLoaded', () => {
     el.style.animation = 'bubblein 0.35s cubic-bezier(.34,1.56,.64,1)';
   });
 
+  // ======= Selector de idioma: redirige a la ruta /set_language/<lang> cuando cambia =======
+  const langSelects = document.querySelectorAll('#language-select');
+  langSelects.forEach(sel => {
+    sel.addEventListener('change', function() {
+      const lang = this.value;
+      // Redirigimos al endpoint que guarda la cookie y recarga la página
+      window.location.href = `/set_language/${lang}`;
+    });
+  });
+
+  // ======= Vista de imágenes de publicaciones a pantalla completa =======
+  const postImages = document.querySelectorAll('.post-image');
+  const modal = document.getElementById('imgModal');
+  const modalImg = document.getElementById('imgModalContent');
+  const modalCloseBtn = document.getElementById('imgModalClose');
+  if (postImages.length && modal && modalImg && modalCloseBtn) {
+    postImages.forEach(img => {
+      img.style.cursor = 'pointer';
+      img.addEventListener('click', () => {
+        modal.style.display = 'block';
+        modalImg.src = img.src;
+      });
+    });
+    modalCloseBtn.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+    // Cerrar modal al hacer clic fuera de la imagen
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+  }
+
 });
