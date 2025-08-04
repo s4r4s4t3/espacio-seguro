@@ -27,26 +27,43 @@ document.addEventListener('DOMContentLoaded', () => {
   const toggleBtn = document.createElement('button');
   toggleBtn.id = 'darkModeToggle';
   toggleBtn.title = 'Cambiar modo claro/oscuro';
-  toggleBtn.innerHTML = localStorage.getItem('darkMode') === 'on' ? '☀️' : '🌙';
+  // Creamos un botón redondeado sin texto.  El estado se indica
+  // mediante un degradado mitad blanco mitad negro que cambia de lado
+  // según el modo.  Los estilos básicos se establecen aquí y el
+  // degradado se actualiza en updateToggle().
   toggleBtn.style.position = 'fixed';
   toggleBtn.style.top = '22px';
   toggleBtn.style.right = '26px';
   toggleBtn.style.zIndex = '1100';
-  toggleBtn.style.background = 'rgba(34,34,34,0.08)';
-  toggleBtn.style.border = 'none';
+  toggleBtn.style.width = '44px';
+  toggleBtn.style.height = '44px';
+  toggleBtn.style.padding = '0';
+  toggleBtn.style.border = '2px solid rgba(33,145,80,0.4)';
   toggleBtn.style.borderRadius = '50%';
-  toggleBtn.style.fontSize = '2.1em';
   toggleBtn.style.cursor = 'pointer';
   toggleBtn.style.boxShadow = '0 2px 10px rgba(34,139,94,0.12)';
+  toggleBtn.style.backgroundSize = '100% 100%';
+  toggleBtn.style.backgroundRepeat = 'no-repeat';
+  toggleBtn.style.backgroundPosition = 'center';
   document.body.appendChild(toggleBtn);
 
+  // Función auxiliar para actualizar el aspecto del botón en función del
+  // modo actual.  Cuando dark está activado el degradado se invierte.
+  const updateToggle = () => {
+    const isDark = body.classList.contains('dark');
+    if (isDark) {
+      toggleBtn.style.background = 'linear-gradient(90deg, #000000 50%, #ffffff 50%)';
+    } else {
+      toggleBtn.style.background = 'linear-gradient(90deg, #ffffff 50%, #000000 50%)';
+    }
+  };
   // Estado inicial
   if (localStorage.getItem('darkMode') === 'on') body.classList.add('dark');
-
+  updateToggle();
   toggleBtn.onclick = () => {
     body.classList.toggle('dark');
     localStorage.setItem('darkMode', body.classList.contains('dark') ? 'on' : 'off');
-    toggleBtn.innerHTML = body.classList.contains('dark') ? '☀️' : '🌙';
+    updateToggle();
   };
 
   // ======= Loader animado global =======
@@ -168,5 +185,41 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.mensaje-global, .mensaje, .bubble').forEach(el => {
     el.style.animation = 'bubblein 0.35s cubic-bezier(.34,1.56,.64,1)';
   });
+
+  // ======= Selector de idioma: redirige a la ruta /set_language/<lang> cuando cambia =======
+  // Seleccionamos todos los elementos con la clase lang-select (incluye
+  // el selector en la barra lateral y en la navegación inferior móvil)
+  const langSelects = document.querySelectorAll('.lang-select');
+  langSelects.forEach(sel => {
+    sel.addEventListener('change', function() {
+      const lang = this.value;
+      // Redirigimos al endpoint que guarda la cookie y recarga la página
+      window.location.href = `/set_language/${lang}`;
+    });
+  });
+
+  // ======= Vista de imágenes de publicaciones a pantalla completa =======
+  const postImages = document.querySelectorAll('.post-image');
+  const modal = document.getElementById('imgModal');
+  const modalImg = document.getElementById('imgModalContent');
+  const modalCloseBtn = document.getElementById('imgModalClose');
+  if (postImages.length && modal && modalImg && modalCloseBtn) {
+    postImages.forEach(img => {
+      img.style.cursor = 'pointer';
+      img.addEventListener('click', () => {
+        modal.style.display = 'block';
+        modalImg.src = img.src;
+      });
+    });
+    modalCloseBtn.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+    // Cerrar modal al hacer clic fuera de la imagen
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+  }
 
 });

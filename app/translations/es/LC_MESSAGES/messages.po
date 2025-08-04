@@ -278,6 +278,13 @@ msgstr "Publicar"
 msgid "Volver al feed"
 msgstr "Volver al feed"
 
+# Nuevas cadenas para la barra de navegación móvil y las historias
+msgid "Crear estado"
+msgstr "Crear estado"
+
+msgid "Chat"
+msgstr "Chat"
+
 msgid "Política de Privacidad - SafeSpace"
 msgstr "Política de Privacidad - SafeSpace"
 

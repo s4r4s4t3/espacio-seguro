@@ -18,9 +18,109 @@
   --bubble-other: #ecefff;
   --bubble-dark: #222c28;
   --bubble-dark-user: #274634;
-  --primary: #2196f3;
+  /*
+   * Use the same green tone throughout the application.  Previously the
+   * primary colour was a blue (#2196f3) which clashed with the rest of
+   * the green palette.  Assigning --primary to var(--green) keeps all
+   * accents consistent.
+   */
+  --primary: var(--green);
   --danger: #e53935;
   --blur: blur(12px);
+}
+
+/* === Personalización selector de idioma === */
+.lang-select {
+  width: 100%;
+  padding: 8px 10px;
+  margin-bottom: 15px;
+  font-size: 1em;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  background: var(--primary);
+  color: #fff;
+  cursor: pointer;
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  position: relative;
+}
+.lang-select option {
+  color: #000;
+  background: #fff;
+}
+body.dark .lang-select {
+  background: #276b48;
+  color: #fff;
+}
+
+/* Ajustar tamaño del logo en páginas: evitar que sea demasiado grande en móviles */
+.landing-logo {
+  width: 120px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+/* Alinear botones en el formulario de autenticación de la landing */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  align-items: stretch;
+}
+.auth-form .btn {
+  width: 100%;
+}
+@media (max-width: 600px) {
+  .landing-logo {
+    width: 80px;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Responsive layout adjustments for mobile screens                    */
+/* Stack the sidebar on top and hide the right sidebar below 768px    */
+/* ------------------------------------------------------------------ */
+@media (max-width: 768px) {
+  .app-container {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    box-shadow: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 10px;
+  }
+  .sidebar .logo {
+    flex-basis: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+  }
+  .sidebar a {
+    flex: 1 1 auto;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 0.95em;
+    white-space: nowrap;
+  }
+  .sidebar .lang-select {
+    flex-basis: 100%;
+    max-width: 200px;
+    margin: 0 auto;
+  }
+  .right-sidebar {
+    display: none;
+  }
+  .main-content {
+    padding: 15px;
+  }
 }
 
 body {
@@ -565,8 +665,13 @@ footer a:hover { color: #388e3c; }
 .btn-accept:hover { background: #388e3c; }
 .btn-reject { background: #f44336; }
 .btn-reject:hover { background: #b71c1c; }
-.btn-add { background: #2196f3; }
-.btn-add:hover { background: #1565c0; }
+.btn-add {
+  /* Use the same green as other action buttons instead of blue */
+  background: #219150;
+}
+.btn-add:hover {
+  background: #12592c;
+}
 .empty-msg {
   text-align: center;
   color: #a5b9ad;
@@ -2131,4 +2236,151 @@ body.dark .right-sidebar {
 }
 body.dark .sidebar a {
   color: #90ffb2;
+}
+
+/* ------------------------------------------------------------- */
+/* Ajustes de IU para versiones móviles y nuevas características */
+/* ------------------------------------------------------------- */
+
+/*
+ * Alinear horizontalmente los botones de aceptar/rechazar en la lista
+ * de solicitudes de amistad.  Sin este estilo los enlaces se apilan
+ * verticalmente en algunas resoluciones.  La clase `.actions` se
+ * utiliza en amigos.html.
+ */
+.actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+/*
+ * Navegación inferior fija para pantallas pequeñas.  Esta barra
+ * reproduce las opciones del menú lateral en un formato compacto
+ * similar a otras redes sociales.  Se muestra únicamente en
+ * resoluciones inferiores a 768px.
+ */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: var(--card-bg);
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
+  display: none; /* visible solo en móviles mediante media query */
+  justify-content: space-around;
+  padding: 8px 0;
+  z-index: 1000;
+}
+.bottom-nav a {
+  flex: 1;
+  text-align: center;
+  text-decoration: none;
+  color: var(--primary);
+  font-size: 0.75em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.bottom-nav a:hover {
+  text-decoration: underline;
+}
+.bottom-nav .bottom-lang-select {
+  flex: none;
+  width: auto;
+  max-width: 90px;
+  padding: 4px 6px;
+  font-size: 0.7em;
+  border: none;
+  border-radius: 6px;
+  background: var(--primary);
+  color: #fff;
+  margin-right: 6px;
+}
+.bottom-nav .bottom-lang-select option {
+  color: #000;
+  background: #fff;
+}
+body.dark .bottom-nav .bottom-lang-select {
+  background: #276b48;
+  color: #fff;
+}
+.bottom-nav .icon {
+  font-size: 1.5em;
+  line-height: 1;
+}
+.bottom-nav .label {
+  font-size: 0.66em;
+}
+body.dark .bottom-nav {
+  background: var(--card-bg-dark);
+}
+body.dark .bottom-nav a {
+  color: #90ffb2;
+}
+
+/*
+ * Historias (estados) en la parte superior del feed.  Estas
+ * miniaturas circulares están pensadas como un placeholder para
+ * futuras historias de usuarios.  Se implementan de forma simple
+ * y son horizontales con scroll.
+ */
+.stories-row {
+  display: flex;
+  gap: 14px;
+  padding: 10px 0 16px 0;
+  overflow-x: auto;
+  margin-bottom: 10px;
+}
+.story-item {
+  flex: 0 0 auto;
+  width: 66px;
+  text-align: center;
+}
+.story-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--green-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin: 0 auto 6px auto;
+  color: #fff;
+  font-size: 2em;
+}
+.story-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.story-label {
+  font-size: 0.66em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+body.dark .story-avatar {
+  background: #276b48;
+  color: #fff;
+}
+
+/* Mostrar la navegación inferior solo en pantallas pequeñas */
+@media (max-width: 768px) {
+  .bottom-nav {
+    display: flex;
+  }
+  /* Ocultar la barra lateral para evitar redundancia con la
+     navegación inferior.  La flex-direction ya se ajusta arriba. */
+  .sidebar {
+    display: none;
+  }
+  .right-sidebar {
+    display: none;
+  }
+  .main-content {
+    padding-bottom: 70px; /* espacio para la barra inferior */
+  }
 }

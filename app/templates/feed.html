@@ -3,9 +3,29 @@
 {% block content %}
 
     <div class="card feed-card">
-      <div class="center-content">
-        <img src="{{ url_for('static', filename='heart.png') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
         <h2>{{ _('📰 Publicaciones recientes') }}</h2>
+
+        <!-- Historias/estados en la parte superior del feed -->
+        <div class="stories-row">
+          <!-- Botón para crear un nuevo estado -->
+          <div class="story-item create-story">
+            <div class="story-avatar">+</div>
+            <div class="story-label">{{ _('Crear estado') }}</div>
+          </div>
+          <!-- Mostrar algunos usuarios como ejemplo de historias existentes -->
+          {% for post in publicaciones[:6] %}
+            <div class="story-item">
+              <div class="story-avatar">
+                {% if post.author.profile_picture and 'http' in post.author.profile_picture %}
+                  <img src="{{ post.author.profile_picture }}" alt="{{ _('Foto de perfil') }}" />
+                {% else %}
+                  <img src="{{ url_for('static', filename='profile_pics/' + (post.author.profile_picture or 'default.png')) }}" alt="{{ _('Foto de perfil') }}" />
+                {% endif %}
+              </div>
+              <div class="story-label">{{ post.author.username }}</div>
+            </div>
+          {% endfor %}
+        </div>
 
         <div class="feed-list">
         {% for post in publicaciones %}
@@ -35,9 +55,6 @@
           <div class="feed-empty">{{ _('No hay publicaciones todavía.') }}</div>
         {% endfor %}
         </div>
-
-        
-      </div>
     </div>
   
 {% endblock %}

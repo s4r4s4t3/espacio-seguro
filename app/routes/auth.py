@@ -25,7 +25,8 @@ def login():
             # Redirige a bienvenida si no aceptó términos
             if not user.accepted_terms:
                 return redirect(url_for('home.welcome'))
-            return redirect(url_for('home.home'))
+            # Después de iniciar sesión y aceptar términos lleva al feed directamente
+            return redirect(url_for('home.feed'))
 
         flash(_('Credenciales inválidas. Intenta de nuevo.'), 'danger')
         return redirect(url_for('auth.login'))

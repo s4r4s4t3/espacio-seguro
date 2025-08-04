@@ -278,6 +278,13 @@ msgstr "Publish"
 msgid "Volver al feed"
 msgstr "Back to feed"
 
+# New navigation and stories strings added for the mobile feed redesign
+msgid "Crear estado"
+msgstr "Create story"
+
+msgid "Chat"
+msgstr "Chat"
+
 msgid "Política de Privacidad - SafeSpace"
 msgstr "Privacy Policy - SafeSpace"
 

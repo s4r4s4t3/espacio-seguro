@@ -62,12 +62,31 @@ def create_app():
     from app.routes.legales import legales_bp
     app.register_blueprint(legales_bp)
 
+
     @babel.localeselector
     def get_locale():
+        """
+        Determine the current locale based off of a cookie.  If the cookie
+        is not set or contains an unsupported language code the default
+        language from the application configuration is returned.  This
+        function is registered with Flask‑Babel as the locale selector.
+        """
         lang = request.cookies.get('lang')
         if lang in app.config['LANGUAGES']:
             return lang
         return app.config['BABEL_DEFAULT_LOCALE']
+
+    @app.before_request
+    def set_global_language():
+        """
+        Make the currently selected language available in templates via
+        the global `g` object.  Without this hook Jinja templates would
+        always see `g.lang` as undefined and default to Spanish, which
+        caused the language dropdown to always show the Spanish flag.
+        """
+        from flask import g as global_g  # import here to avoid circular import
+        # Use the same logic as get_locale() to determine the active language
+        global_g.lang = get_locale()
 
     return app
 
