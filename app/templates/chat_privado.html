@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
-{% block title %}{{ _('💬 Chat Privado - SafeSpace') }}{% endblock %}
+{% block title %}{{ _('📩 Mensajes Privados - SafeSpace') }}{% endblock %}
 {% block content %}
 
     <div class="card chat-card">
       <div class="center-content">
         <img src="{{ url_for('static', filename='heart.png') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
-        <h2>{{ _('💬 Chat con %(username)s', username=friend.username) }}</h2>
+        <h2>{{ _('📩 Mensajes con %(username)s', username=friend.username) }}</h2>
 
         <div class="chat-global-box">
-          {% for msg in mensajes %}
+          {# Usamos la variable "messages" que se pasa desde la vista #}
+          {% for msg in messages %}
             <div class="mensaje bubble {% if msg.sender_id == user.id %}yo{% else %}otro{% endif %}">
               {% if msg.content %}
                 <div class="chat-text">{{ msg.content }}</div>

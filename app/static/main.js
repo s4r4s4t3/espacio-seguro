@@ -22,42 +22,49 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ======= Toggle modo oscuro (único y funcional) =======
+  // ======= Toggle modo oscuro (rediseñado) =======
   const body = document.body;
   const toggleBtn = document.createElement('button');
   toggleBtn.id = 'darkModeToggle';
   toggleBtn.title = 'Cambiar modo claro/oscuro';
-  // Creamos un botón redondeado sin texto.  El estado se indica
-  // mediante un degradado mitad blanco mitad negro que cambia de lado
-  // según el modo.  Los estilos básicos se establecen aquí y el
-  // degradado se actualiza en updateToggle().
-  toggleBtn.style.position = 'fixed';
-  toggleBtn.style.top = '22px';
-  toggleBtn.style.right = '26px';
-  toggleBtn.style.zIndex = '1100';
-  toggleBtn.style.width = '44px';
-  toggleBtn.style.height = '44px';
-  toggleBtn.style.padding = '0';
-  toggleBtn.style.border = '2px solid rgba(33,145,80,0.4)';
-  toggleBtn.style.borderRadius = '50%';
-  toggleBtn.style.cursor = 'pointer';
-  toggleBtn.style.boxShadow = '0 2px 10px rgba(34,139,94,0.12)';
-  toggleBtn.style.backgroundSize = '100% 100%';
-  toggleBtn.style.backgroundRepeat = 'no-repeat';
-  toggleBtn.style.backgroundPosition = 'center';
+  // Posicionamiento y dimensiones del botón
+  Object.assign(toggleBtn.style, {
+    position: 'fixed',
+    top: '22px',
+    right: '26px',
+    zIndex: '1100',
+    width: '48px',
+    height: '48px',
+    padding: '0',
+    borderRadius: '50%',
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: '1.4rem',
+    transition: 'background 0.3s, color 0.3s, border-color 0.3s'
+  });
+  // Borde y sombra sutiles
+  toggleBtn.style.border = '2px solid #68e1b4';
+  toggleBtn.style.boxShadow = '0 2px 12px rgba(20,30,60,0.11)';
   document.body.appendChild(toggleBtn);
 
-  // Función auxiliar para actualizar el aspecto del botón en función del
-  // modo actual.  Cuando dark está activado el degradado se invierte.
+  // Actualiza el icono y colores según el modo actual
   const updateToggle = () => {
     const isDark = body.classList.contains('dark');
     if (isDark) {
-      toggleBtn.style.background = 'linear-gradient(90deg, #000000 50%, #ffffff 50%)';
+      toggleBtn.textContent = '🌙';
+      toggleBtn.style.background = '#23272f';
+      toggleBtn.style.color = '#b4ffde';
+      toggleBtn.style.borderColor = '#90ffb2';
     } else {
-      toggleBtn.style.background = 'linear-gradient(90deg, #ffffff 50%, #000000 50%)';
+      toggleBtn.textContent = '🌞';
+      toggleBtn.style.background = '#e8f5e9';
+      toggleBtn.style.color = '#219150';
+      toggleBtn.style.borderColor = '#68e1b4';
     }
   };
-  // Estado inicial
+  // Estado inicial desde localStorage
   if (localStorage.getItem('darkMode') === 'on') body.classList.add('dark');
   updateToggle();
   toggleBtn.onclick = () => {

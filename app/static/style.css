@@ -62,7 +62,6 @@ body.dark .lang-select {
   margin-bottom: 20px;
 }
 
-
 /* Alinear botones en el formulario de autenticación de la landing */
 .auth-form {
   display: flex;
@@ -74,7 +73,6 @@ body.dark .lang-select {
 .auth-form .btn {
   width: 100%;
 }
-
 @media (max-width: 600px) {
   .landing-logo {
     width: 80px;

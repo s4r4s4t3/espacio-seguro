@@ -33,7 +33,7 @@
       <!-- Navegación principal: Feed como página inicial -->
       <a href="{{ url_for('home.feed') }}">{{ _('Feed') }}</a>
       <a href="{{ url_for('home.nueva_publicacion') }}">{{ _('Nueva publicación') }}</a>
-      <a href="{{ url_for('home.chat') }}">{{ _('Chat Global') }}</a>
+      {# Enlace al chat global eliminado: el chat se encuentra ahora dentro del feed #}
       <a href="{{ url_for('amigos.amigos') }}">{{ _('Amigos') }}</a>
       <a href="{{ url_for('diary.diary') }}">{{ _('Diario') }}</a>
       <a href="{{ url_for('home.panico') }}">{{ _('Botón de Pánico') }}</a>
@@ -63,7 +63,8 @@
       <img class="modal-content" id="imgModalContent">
     </div>
 
-    <!-- Barra de navegación inferior para pantallas pequeñas. Incluye accesos directos a las principales secciones de la aplicación.
+    <!-- Barra de navegación inferior para pantallas pequeñas.  Incluye
+         accesos directos a las principales secciones de la aplicación.
          Se oculta en escritorio mediante CSS. -->
     {% if current_user.is_authenticated %}
     <nav class="bottom-nav">
@@ -85,10 +86,7 @@
         <span class="icon">➕</span>
         <span class="label">{{ _('Nueva publicación') }}</span>
       </a>
-      <a href="{{ url_for('home.chat') }}">
-        <span class="icon">💬</span>
-        <span class="label">{{ _('Chat') }}</span>
-      </a>
+      {# Enlace al chat global eliminado de la barra inferior #}
       <a href="{{ url_for('amigos.amigos') }}">
         <span class="icon">🤝</span>
         <span class="label">{{ _('Amigos') }}</span>

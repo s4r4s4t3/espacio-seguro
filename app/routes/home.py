@@ -49,10 +49,14 @@ def home():
     return redirect(url_for('home.feed'))
 
 # 💬 Chat global (compatibilidad con ruta antigua)
+# A partir de ahora el chat global se encuentra unificado con el feed.  Para mantener
+# compatibilidad con enlaces antiguos, redirigimos a la nueva página de feed.  El
+# chat se renderiza dentro de esa plantilla.
 @home_bp.route('/chat')
 @login_required
 def chat():
-    return render_template("chat.html", user=current_user)
+    # Redirigimos al feed, que ahora contiene también el chat global
+    return redirect(url_for('home.feed'))
 
 # 🚨 Botón de Pánico
 @home_bp.route('/panico', methods=['GET', 'POST'])
@@ -86,8 +90,21 @@ def panico():
 @home_bp.route('/feed')
 @login_required
 def feed():
+    """
+    Muestra el feed de publicaciones para el usuario.  A diferencia de la versión
+    anterior, esta vista también agrega los mensajes del chat global para que
+    puedan mostrarse en la misma página.  De esta manera se unifica el feed
+    con el chat global en una sola experiencia.
+    """
     publicaciones = Post.query.order_by(desc(Post.timestamp)).all()
-    return render_template("feed.html", publicaciones=publicaciones, user=current_user)
+    # Obtener mensajes del chat global (receiver_id None) en orden ascendente
+    mensajes_globales = Message.query.filter_by(receiver_id=None).order_by(Message.timestamp.asc()).all()
+    return render_template(
+        "feed.html",
+        publicaciones=publicaciones,
+        mensajes=mensajes_globales,
+        user=current_user
+    )
 
 # 📝 Nueva publicación
 @home_bp.route('/nueva_publicacion', methods=['GET', 'POST'])
