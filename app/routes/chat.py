@@ -23,12 +23,8 @@ chat_bp = Blueprint('chat', __name__)
 @chat_bp.route('/chat')
 @login_required
 def chat_global():
-    """
-    El chat global se ha unificado con la página de feed para mejorar la usabilidad.  Por
-    compatibilidad con URLs antiguas dentro de este blueprint, redirigimos al
-    feed.  Los mensajes globales se muestran y envían desde la plantilla feed.html.
-    """
-    return redirect(url_for('home.feed'))
+    messages = Message.query.filter_by(receiver_id=None).order_by(Message.timestamp.asc()).all()
+    return render_template('chat.html', messages=messages, user=current_user)
 
 # ===============================
 # 💬 Chat Privado

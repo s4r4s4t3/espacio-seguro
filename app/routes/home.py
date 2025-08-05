@@ -17,8 +17,23 @@ def landing():
 # 🌐 Selección de idioma (cookie)
 @home_bp.route('/set_language/<lang_code>')
 def set_language(lang_code):
-    supported = ['es', 'en', 'pt', 'br', 'de', 'fr', 'it']
-    lang = lang_code if lang_code in supported else 'es'
+    """
+    Define el idioma de la aplicación mediante una cookie. Algunos códigos
+    utilizados en el selector de idioma son alias que deben mapearse a
+    un código de idioma real reconocido por Flask‑Babel.  Por ejemplo,
+    "br" y "pt" apuntan al portugués de Brasil (pt_BR) ya que los
+    archivos de traducción de SafeSpace sólo incluyen esta variante.
+    """
+    supported = ['es', 'en', 'pt_BR', 'de', 'fr', 'it']
+    # Normalizamos alias: "br" y "pt" se mapearán a "pt_BR".  Esto permite
+    # que el selector de idioma muestre portugués (Brasil) mediante
+    # distintas banderas pero utilice la misma traducción.
+    if lang_code in ('br', 'pt', 'pt_BR'):
+        lang = 'pt_BR'
+    elif lang_code in supported:
+        lang = lang_code
+    else:
+        lang = 'es'
     resp = make_response(redirect(request.referrer or url_for('home.landing')))
     resp.set_cookie('lang', lang, max_age=30*24*60*60)
     return resp
@@ -49,13 +64,16 @@ def home():
     return redirect(url_for('home.feed'))
 
 # 💬 Chat global (compatibilidad con ruta antigua)
-# A partir de ahora el chat global se encuentra unificado con el feed.  Para mantener
-# compatibilidad con enlaces antiguos, redirigimos a la nueva página de feed.  El
-# chat se renderiza dentro de esa plantilla.
 @home_bp.route('/chat')
 @login_required
 def chat():
-    # Redirigimos al feed, que ahora contiene también el chat global
+    """
+    La aplicación ya no tiene un chat global independiente. Para mantener
+    compatibilidad con enlaces antiguos o favoritos de los usuarios,
+    cualquier visita a esta ruta redirige al feed principal.  El feed
+    ofrece el formulario para crear una publicación directamente en la
+    parte superior de la lista de publicaciones.
+    """
     return redirect(url_for('home.feed'))
 
 # 🚨 Botón de Pánico
@@ -90,21 +108,8 @@ def panico():
 @home_bp.route('/feed')
 @login_required
 def feed():
-    """
-    Muestra el feed de publicaciones para el usuario.  A diferencia de la versión
-    anterior, esta vista también agrega los mensajes del chat global para que
-    puedan mostrarse en la misma página.  De esta manera se unifica el feed
-    con el chat global en una sola experiencia.
-    """
     publicaciones = Post.query.order_by(desc(Post.timestamp)).all()
-    # Obtener mensajes del chat global (receiver_id None) en orden ascendente
-    mensajes_globales = Message.query.filter_by(receiver_id=None).order_by(Message.timestamp.asc()).all()
-    return render_template(
-        "feed.html",
-        publicaciones=publicaciones,
-        mensajes=mensajes_globales,
-        user=current_user
-    )
+    return render_template("feed.html", publicaciones=publicaciones, user=current_user)
 
 # 📝 Nueva publicación
 @home_bp.route('/nueva_publicacion', methods=['GET', 'POST'])

@@ -3,7 +3,22 @@
 {% block content %}
 
     <div class="card feed-card">
-        <h2>{{ _('📰 Publicaciones recientes') }}</h2>
+        {#
+          Formulario para crear una nueva publicación directamente en el feed.  Se
+          envía al mismo endpoint que la página "Nueva publicación" pero
+          desaparece del menú.  Incluye un campo de texto y la opción de
+          subir una imagen.  La vista previa de imagen se mostrará debajo
+          cuando el usuario seleccione un archivo.  Las traducciones se
+          reutilizan desde los archivos .po.
+        #}
+        <form method="POST" action="{{ url_for('home.nueva_publicacion') }}" enctype="multipart/form-data" class="nueva-publicacion-form feed-nueva-publicacion">
+          <label for="content-feed" class="nueva-publicacion-label">{{ _('¿Qué querés compartir?') }}</label>
+          <textarea id="content-feed" name="content" rows="3" class="nueva-publicacion-textarea" placeholder="{{ _('Escribí algo...') }}" required></textarea>
+          <label for="image-feed" class="file-label">📎 {{ _('Subir foto') }}</label>
+          <input type="file" id="image-feed" name="image" accept="image/*" class="hidden-input" />
+          <img id="img-preview-feed" class="preview-img" style="display:none;" />
+          <button type="submit" class="btn btn-nueva-publicacion">{{ _('Publicar') }}</button>
+        </form>
 
         <!-- Historias/estados en la parte superior del feed -->
         <div class="stories-row">
@@ -56,47 +71,5 @@
         {% endfor %}
         </div>
     </div>
-
-    {# Unificación del chat global dentro del feed #}
-    <div class="card chat-card">
-      <div class="center-content">
-        <img src="{{ url_for('static', filename='heart.png') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
-        <h2>💬 {{ _('Chat Global') }}</h2>
-
-        <div id="mensajes" class="chat-global-box">
-          {% if mensajes %}
-            {% for msg in mensajes %}
-              <div class="mensaje-global bubble {% if msg.sender_id == user.id %}yo{% else %}otro{% endif %}">
-                {% if msg.content %}
-                  <div class="chat-global-text">{{ msg.content }}</div>
-                {% endif %}
-                {% if msg.image_url %}
-                  <img src="{{ msg.image_url }}" alt="{{ _('Imagen') }}" class="chat-image" />
-                {% endif %}
-                <div class="mensaje-meta">👤 {{ msg.sender_username or msg.sender_id }} | 🕒 {{ msg.timestamp.strftime('%Y-%m-%d %H:%M') }}</div>
-              </div>
-            {% endfor %}
-          {% else %}
-            <div class="placeholder-msg">{{ _('No hay mensajes todavía...') }}</div>
-          {% endif %}
-        </div>
-
-        <form id="formulario" enctype="multipart/form-data" autocomplete="off" class="chat-global-form">
-          <input type="text" id="mensaje" placeholder="{{ _('Escribí tu mensaje...') }}" class="chat-input" />
-          <label class="upload-btn">📷
-            <input type="file" id="imagen" accept="image/*" class="hidden-file" />
-          </label>
-          <img id="img-preview" class="preview-img" style="display:none;" />
-          <button type="submit" class="btn btn-chat-send">{{ _('Enviar') }}</button>
-        </form>
-      </div>
-    </div>
-
-{% endblock %}
-
-{% block scripts %}
-  {{ super() }}
-  <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
-  <script src="{{ url_for('static', filename='chat.js') }}"></script>
-  <script>window.USER_ID = "{{ user.id }}";</script>
+  
 {% endblock %}

@@ -23,17 +23,16 @@
       <select id="language-select" class="lang-select">
         <option value="es" {% if g.get('lang') == 'es' %}selected{% endif %}>🇪🇸 Español</option>
         <option value="en" {% if g.get('lang') == 'en' %}selected{% endif %}>🇺🇸 English</option>
-        <option value="pt" {% if g.get('lang') == 'pt' %}selected{% endif %}>🇵🇹 Português</option>
-        <option value="br" {% if g.get('lang') == 'br' %}selected{% endif %}>🇧🇷 Português (BR)</option>
+        <!-- La traducción portuguesa disponible corresponde al portugués de Brasil -->
+        <option value="pt_BR" {% if g.get('lang') == 'pt_BR' %}selected{% endif %}>🇧🇷 Português</option>
         <option value="de" {% if g.get('lang') == 'de' %}selected{% endif %}>🇩🇪 Deutsch</option>
         <option value="fr" {% if g.get('lang') == 'fr' %}selected{% endif %}>🇫🇷 Français</option>
         <option value="it" {% if g.get('lang') == 'it' %}selected{% endif %}>🇮🇹 Italiano</option>
       </select>
       {% if current_user.is_authenticated %}
-      <!-- Navegación principal: Feed como página inicial -->
+      <!-- Navegación principal: se simplifica eliminando las entradas de Nueva publicación y Chat Global.
+           La creación de publicaciones ahora se realiza en el feed y no existe un chat global separado. -->
       <a href="{{ url_for('home.feed') }}">{{ _('Feed') }}</a>
-      <a href="{{ url_for('home.nueva_publicacion') }}">{{ _('Nueva publicación') }}</a>
-      {# Enlace al chat global eliminado: el chat se encuentra ahora dentro del feed #}
       <a href="{{ url_for('amigos.amigos') }}">{{ _('Amigos') }}</a>
       <a href="{{ url_for('diary.diary') }}">{{ _('Diario') }}</a>
       <a href="{{ url_for('home.panico') }}">{{ _('Botón de Pánico') }}</a>
@@ -59,8 +58,16 @@
 
     <!-- Modal para ver imágenes en grande. Se muestra al hacer clic en una imagen de una publicación -->
     <div id="imgModal" class="modal">
-      <span class="close" id="imgModalClose">&times;</span>
-      <img class="modal-content" id="imgModalContent">
+      {#
+        Envolvemos la imagen y el icono de cierre dentro de un contenedor
+        relativo para poder posicionar la X dentro de la foto.  De esta
+        forma, el botón de modo oscuro de la página no se superpone con el
+        botón de cierre al abrir una imagen.
+      #}
+      <div class="modal-inner">
+        <img class="modal-content" id="imgModalContent" />
+        <span class="close" id="imgModalClose">&times;</span>
+      </div>
     </div>
 
     <!-- Barra de navegación inferior para pantallas pequeñas.  Incluye
@@ -72,8 +79,8 @@
       <select class="lang-select bottom-lang-select">
         <option value="es" {% if g.get('lang') == 'es' %}selected{% endif %}>🇪🇸 Español</option>
         <option value="en" {% if g.get('lang') == 'en' %}selected{% endif %}>🇺🇸 English</option>
-        <option value="pt" {% if g.get('lang') == 'pt' %}selected{% endif %}>🇵🇹 Português</option>
-        <option value="br" {% if g.get('lang') == 'br' %}selected{% endif %}>🇧🇷 Português (BR)</option>
+        <!-- Sólo hay una traducción portuguesa disponible: portugués de Brasil -->
+        <option value="pt_BR" {% if g.get('lang') == 'pt_BR' %}selected{% endif %}>🇧🇷 Português</option>
         <option value="de" {% if g.get('lang') == 'de' %}selected{% endif %}>🇩🇪 Deutsch</option>
         <option value="fr" {% if g.get('lang') == 'fr' %}selected{% endif %}>🇫🇷 Français</option>
         <option value="it" {% if g.get('lang') == 'it' %}selected{% endif %}>🇮🇹 Italiano</option>
@@ -82,11 +89,6 @@
         <span class="icon">🏠</span>
         <span class="label">{{ _('Feed') }}</span>
       </a>
-      <a href="{{ url_for('home.nueva_publicacion') }}">
-        <span class="icon">➕</span>
-        <span class="label">{{ _('Nueva publicación') }}</span>
-      </a>
-      {# Enlace al chat global eliminado de la barra inferior #}
       <a href="{{ url_for('amigos.amigos') }}">
         <span class="icon">🤝</span>
         <span class="label">{{ _('Amigos') }}</span>

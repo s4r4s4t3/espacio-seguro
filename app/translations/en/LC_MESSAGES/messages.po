@@ -17,12 +17,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
 
-msgid "📩 Mensajes Privados - SafeSpace"
-msgstr "📩 Private Messages - SafeSpace"
-
-msgid "📩 Mensajes con %(username)s"
-msgstr "📩 Private messages with %(username)s"
-
 msgid "SafeSpace - Tu lugar de apoyo"
 msgstr "SafeSpace - Your place of support"
 

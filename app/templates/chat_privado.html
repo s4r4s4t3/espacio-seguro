@@ -8,7 +8,6 @@
         <h2>{{ _('📩 Mensajes con %(username)s', username=friend.username) }}</h2>
 
         <div class="chat-global-box">
-          {# Usamos la variable "messages" que se pasa desde la vista #}
           {% for msg in messages %}
             <div class="mensaje bubble {% if msg.sender_id == user.id %}yo{% else %}otro{% endif %}">
               {% if msg.content %}
