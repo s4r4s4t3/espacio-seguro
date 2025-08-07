@@ -95,4 +95,53 @@ def config():
         flash(_('Perfil actualizado correctamente.'), 'success')
         return redirect(url_for('config.config'))
 
-    return render_template('config.html', user=user)
+    # Al mostrar la página, incluimos las publicaciones y las historias del usuario
+    from app.models import Post, Story
+    from sqlalchemy import desc
+    publicaciones = Post.query.filter_by(user_id=current_user.id).order_by(desc(Post.timestamp)).all()
+    historias = Story.query.filter_by(user_id=current_user.id).order_by(desc(Story.timestamp)).all()
+    return render_template('config.html', user=user, publicaciones=publicaciones, historias=historias)
+
+
+@config_bp.route('/perfil/<string:username>')
+@login_required
+def perfil(username):
+    """
+    Muestra el perfil público de otro usuario o del propio.  Incluye
+    su foto de perfil, biografía, historias y publicaciones.  La
+    información es de sólo lectura; la edición se realiza en
+    /config.
+    """
+    user_profile = User.query.filter_by(username=username).first_or_404()
+    from app.models import Post, Story
+    from sqlalchemy import desc
+    publicaciones = Post.query.filter_by(user_id=user_profile.id).order_by(desc(Post.timestamp)).all()
+    historias = Story.query.filter_by(user_id=user_profile.id).order_by(desc(Story.timestamp)).all()
+
+    # Determinar la relación de amistad entre el usuario actual y el perfil mostrado
+    from app.models import FriendRequest
+    status = 'none'
+    pending_request_id = None
+    if user_profile.id != current_user.id:
+        fr = FriendRequest.query.filter(
+            ((FriendRequest.sender_id == current_user.id) & (FriendRequest.receiver_id == user_profile.id)) |
+            ((FriendRequest.sender_id == user_profile.id) & (FriendRequest.receiver_id == current_user.id))
+        ).first()
+        if fr:
+            if fr.status == 'accepted':
+                status = 'friend'
+            elif fr.status == 'pending':
+                # Si yo envié la solicitud
+                if fr.sender_id == current_user.id:
+                    status = 'sent'
+                else:
+                    status = 'received'
+                    pending_request_id = fr.id
+    return render_template(
+        'perfil.html',
+        perfil=user_profile,
+        publicaciones=publicaciones,
+        historias=historias,
+        friend_status=status,
+        pending_request_id=pending_request_id
+    )

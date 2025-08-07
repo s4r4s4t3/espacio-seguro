@@ -2,7 +2,7 @@
 
 from flask import Blueprint, render_template, request, redirect, url_for, flash, make_response
 from flask_login import login_required, current_user
-from ..models import db, PanicLog, User, Message, Post
+from ..models import db, PanicLog, User, Message, Post, Story
 from flask_babel import _
 from sqlalchemy import desc
 import cloudinary.uploader
@@ -108,8 +108,23 @@ def panico():
 @home_bp.route('/feed')
 @login_required
 def feed():
+    """
+    Muestra el feed principal para el usuario autenticado.  Incluye
+    publicaciones y estados de todos los usuarios ordenados por fecha de
+    creación.  Los estados se muestran en una franja horizontal con las
+    miniaturas de los usuarios.  Las publicaciones se listan debajo.
+    """
     publicaciones = Post.query.order_by(desc(Post.timestamp)).all()
-    return render_template("feed.html", publicaciones=publicaciones, user=current_user)
+    # Obtenemos todas las historias ordenadas por fecha descendente para
+    # mostrarlas en el feed.  Podríamos limitar a las últimas 24h pero
+    # por simplicidad mostramos todas.
+    historias = Story.query.order_by(desc(Story.timestamp)).all()
+    return render_template(
+        "feed.html",
+        publicaciones=publicaciones,
+        historias=historias,
+        user=current_user
+    )
 
 # 📝 Nueva publicación
 @home_bp.route('/nueva_publicacion', methods=['GET', 'POST'])

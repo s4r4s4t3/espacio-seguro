@@ -4,12 +4,8 @@
 
     <div class="card feed-card">
         {#
-          Formulario para crear una nueva publicación directamente en el feed.  Se
-          envía al mismo endpoint que la página "Nueva publicación" pero
-          desaparece del menú.  Incluye un campo de texto y la opción de
-          subir una imagen.  La vista previa de imagen se mostrará debajo
-          cuando el usuario seleccione un archivo.  Las traducciones se
-          reutilizan desde los archivos .po.
+          Formulario para crear una nueva publicación directamente en el feed.
+          Incluye campo de texto y opción de subir imagen con vista previa.
         #}
         <form method="POST" action="{{ url_for('home.nueva_publicacion') }}" enctype="multipart/form-data" class="nueva-publicacion-form feed-nueva-publicacion">
           <label for="content-feed" class="nueva-publicacion-label">{{ _('¿Qué querés compartir?') }}</label>
@@ -26,18 +22,30 @@
           <div class="story-item create-story">
             <div class="story-avatar">+</div>
             <div class="story-label">{{ _('Crear estado') }}</div>
+            <!-- Formulario oculto para subir la historia -->
+            <form id="crearEstadoForm" method="POST" action="{{ url_for('stories.crear_estado') }}" enctype="multipart/form-data" style="display:none;">
+              <input type="file" id="story-image-input" name="story_image" accept="image/*" data-preview="story-preview" />
+            </form>
+            <!-- Vista previa de la historia seleccionada -->
+            <img id="story-preview" class="preview-img" style="display:none;" />
+            <button id="publish-story-btn" type="button" class="btn btn-nueva-publicacion" style="display:none;">{{ _('Publicar estado') }}</button>
           </div>
-          <!-- Mostrar algunos usuarios como ejemplo de historias existentes -->
-          {% for post in publicaciones[:6] %}
+          <!-- Mostrar historias existentes -->
+          {% for story in historias %}
             <div class="story-item">
-              <div class="story-avatar">
-                {% if post.author.profile_picture and 'http' in post.author.profile_picture %}
-                  <img src="{{ post.author.profile_picture }}" alt="{{ _('Foto de perfil') }}" />
+              <div class="story-avatar"
+                   data-image="{{ story.image_url }}"
+                   data-caption="{{ story.caption or '' }}"
+                   data-username="{{ story.author.username }}"
+                   data-story-id="{{ story.id }}"
+                   data-author-id="{{ story.user_id }}">
+                {% if story.author.profile_picture and 'http' in story.author.profile_picture %}
+                  <img src="{{ story.author.profile_picture }}" alt="{{ _('Foto de perfil') }}" />
                 {% else %}
-                  <img src="{{ url_for('static', filename='profile_pics/' + (post.author.profile_picture or 'default.png')) }}" alt="{{ _('Foto de perfil') }}" />
+                  <img src="{{ url_for('static', filename='profile_pics/' + (story.author.profile_picture or 'default.png')) }}" alt="{{ _('Foto de perfil') }}" />
                 {% endif %}
               </div>
-              <div class="story-label">{{ post.author.username }}</div>
+              <div class="story-label">{{ story.author.username }}</div>
             </div>
           {% endfor %}
         </div>
@@ -71,5 +79,92 @@
         {% endfor %}
         </div>
     </div>
+
+    <!-- Modal para ver historias en grande -->
+    <div id="storyModal" class="modal">
+      <div class="modal-inner">
+        <img class="modal-content" id="storyModalContent" />
+        <span class="close" id="storyModalClose">&times;</span>
+        <div id="storyCaption" class="story-caption"></div>
+        <form id="deleteStoryForm" method="POST" style="display:none;">
+          <button type="submit" class="btn delete-story-btn">{{ _('Eliminar estado') }}</button>
+        </form>
+      </div>
+    </div>
   
+{% endblock %}
+{% block scripts %}
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // === Crear historia ===
+    const createStoryItem = document.querySelector('.create-story');
+    const storyInput = document.getElementById('story-image-input');
+    const storyPreview = document.getElementById('story-preview');
+    const publishStoryBtn = document.getElementById('publish-story-btn');
+    const crearEstadoForm = document.getElementById('crearEstadoForm');
+    if (createStoryItem && storyInput) {
+      // Abrir selector de archivos al hacer clic en el ícono
+      createStoryItem.addEventListener('click', (e) => {
+        // Evitar que se dispare cuando ya se muestra la vista previa o botón
+        if (!storyPreview.style.display || storyPreview.style.display === 'none') {
+          storyInput.click();
+        }
+      });
+      // Mostrar vista previa y botón de publicar cuando se selecciona una imagen
+      storyInput.addEventListener('change', function() {
+        const file = this.files[0];
+        if (file) {
+          storyPreview.src = URL.createObjectURL(file);
+          storyPreview.style.display = 'block';
+          publishStoryBtn.style.display = 'block';
+        } else {
+          storyPreview.style.display = 'none';
+          publishStoryBtn.style.display = 'none';
+        }
+      });
+      // Al hacer clic en publicar, enviamos el formulario
+      publishStoryBtn.addEventListener('click', function(ev) {
+        ev.stopPropagation();
+        crearEstadoForm.submit();
+      });
+    }
+
+    // === Visualizar historias ===
+    document.querySelectorAll('.story-item .story-avatar').forEach(item => {
+      item.addEventListener('click', function(ev) {
+        const imageUrl = this.dataset.image;
+        const caption = this.dataset.caption;
+        const username = this.dataset.username;
+        const storyId = this.dataset.storyId;
+        const authorId = parseInt(this.dataset.authorId || '0');
+        const modal = document.getElementById('storyModal');
+        const modalImg = document.getElementById('storyModalContent');
+        const modalCaption = document.getElementById('storyCaption');
+        const deleteForm = document.getElementById('deleteStoryForm');
+        // Construir la URL: si es remota la usamos tal cual; si es local, servimos desde /static/stories
+        let fullUrl = imageUrl;
+        if (imageUrl && !imageUrl.startsWith('http')) {
+          fullUrl = "{{ url_for("static", filename="stories/") }}" + imageUrl;
+        }
+        modalImg.src = fullUrl;
+        // Mostrar caption: si hay texto mostrar usuario y caption, si no sólo el usuario
+        modalCaption.textContent = caption ? `${username}: ${caption}` : `${username}`;
+        // Preparar formulario de eliminación si es del usuario actual
+        deleteForm.style.display = (authorId === {{ current_user.id }}) ? 'block' : 'none';
+        if (authorId === {{ current_user.id }}) {
+          deleteForm.action = '{{ url_for('stories.eliminar_estado', story_id=0) }}'.replace('0', storyId);
+        }
+        modal.style.display = 'block';
+      });
+    });
+    // Cerrar modal de historias
+    const closeStoryBtn = document.getElementById('storyModalClose');
+    if (closeStoryBtn) {
+      closeStoryBtn.addEventListener('click', () => {
+        const modal = document.getElementById('storyModal');
+        modal.style.display = 'none';
+      });
+    }
+  });
+  </script>
 {% endblock %}

@@ -6,17 +6,39 @@
       <div class="center-content">
         <img src="{{ url_for('static', filename='heart.png') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
         <h2>{{ _('Tus Amigos') }}</h2>
-        <p class="subtitle">{{ _('Aún no agregaste amigos.') }} 💚</p>
+        <!-- Lista de amigos aceptados -->
+        <div class="section-title">{{ _('Amigos') }}</div>
+        <div class="friends-list">
+          {% for amigo in amigos %}
+            <div class="card-row">
+              <div class="avatar">
+                {% if amigo.profile_picture and 'http' in amigo.profile_picture %}
+                  <img src="{{ amigo.profile_picture }}" alt="{{ _('Foto de perfil') }}" class="mini-avatar" />
+                {% else %}
+                  <img src="{{ url_for('static', filename='profile_pics/' + (amigo.profile_picture or 'default.png')) }}" alt="{{ _('Foto de perfil') }}" class="mini-avatar" />
+                {% endif %}
+              </div>
+              <div class="username">{{ amigo.username }}</div>
+              <div class="actions">
+                <a href="{{ url_for('config.perfil', username=amigo.username) }}" class="btn-view">{{ _('Ver perfil') }}</a>
+                <a href="{{ url_for('amigos.eliminar_amigo', user_id=amigo.id) }}" class="btn-reject">{{ _('Eliminar') }}</a>
+              </div>
+            </div>
+          {% else %}
+            <div class="empty-msg">{{ _('Aún no agregaste amigos.') }}</div>
+          {% endfor %}
+        </div>
 
-        <div class="section-title">📥 {{ _('Solicitudes Recibidas') }}</div>
+        <!-- Solicitudes recibidas -->
+        <div class="section-title">📥 {{ _('Solicitudes recibidas') }}</div>
         <div class="requests-list">
           {% for solicitud in solicitudes %}
             <div class="card-row">
               <div class="avatar">👤</div>
               <div class="username">{{ solicitud.sender_username }}</div>
               <div class="actions">
-                <a href="/aceptar/{{ solicitud.id }}" class="btn-accept">{{ _('Aceptar') }}</a>
-                <a href="/rechazar/{{ solicitud.id }}" class="btn-reject">{{ _('Rechazar') }}</a>
+                <a href="{{ url_for('amigos.aceptar', solicitud_id=solicitud.id) }}" class="btn-accept">{{ _('Aceptar') }}</a>
+                <a href="{{ url_for('amigos.rechazar', solicitud_id=solicitud.id) }}" class="btn-reject">{{ _('Rechazar') }}</a>
               </div>
             </div>
           {% else %}
@@ -24,16 +46,20 @@
           {% endfor %}
         </div>
 
-        <div class="section-title">🌍 {{ _('Otros usuarios') }}</div>
-        <div class="users-list">
+        <!-- Buscador y otros usuarios -->
+        <div class="section-title">🌍 {{ _('Buscar usuarios') }}</div>
+        <input type="text" id="friendSearch" class="search-input" placeholder="{{ _('Buscar por nombre...') }}" />
+        <div class="users-list" id="usersList">
           {% for user in usuarios %}
-            <div class="card-row">
+            <div class="card-row user-row">
               <div class="avatar">👤</div>
               <div class="username">{{ user.username }}</div>
               <div class="actions">
-                <a href="/enviar_solicitud/{{ user.id }}" class="btn-add">{{ _('Agregar amigo') }}</a>
+                <a href="{{ url_for('amigos.enviar_solicitud', user_id=user.id) }}" class="btn-add">{{ _('Agregar amigo') }}</a>
               </div>
             </div>
+          {% else %}
+            <div class="empty-msg">{{ _('No hay usuarios disponibles.') }}</div>
           {% endfor %}
         </div>
 
@@ -42,5 +68,27 @@
     </div>
   </div>
 
-  <button id="darkModeToggle" title="Modo claro/oscuro" class="dark-toggle">🌙</button>
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const searchInput = document.getElementById('friendSearch');
+      const userRows = document.querySelectorAll('#usersList .user-row');
+      if (searchInput) {
+        searchInput.addEventListener('input', function() {
+          const term = this.value.toLowerCase();
+          userRows.forEach(row => {
+            const username = row.querySelector('.username').textContent.toLowerCase();
+            if (username.includes(term)) {
+              row.style.display = 'flex';
+            } else {
+              row.style.display = 'none';
+            }
+          });
+        });
+      }
+    });
+  </script>
 {% endblock %}

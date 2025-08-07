@@ -62,6 +62,10 @@ def create_app():
     from app.routes.legales import legales_bp
     app.register_blueprint(legales_bp)
 
+    # 📸 Historias/Estados
+    from app.routes.stories import stories_bp
+    app.register_blueprint(stories_bp)
+
 
     @babel.localeselector
     def get_locale():

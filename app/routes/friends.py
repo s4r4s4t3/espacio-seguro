@@ -60,6 +60,34 @@ def amigos():
         solicitudes=solicitudes
     )
 
+
+# ===============================
+# 👋 Eliminar amigo
+# ===============================
+@amigos_bp.route('/eliminar_amigo/<int:user_id>')
+@login_required
+def eliminar_amigo(user_id):
+    """
+    Elimina a un usuario de la lista de amigos del actual.  Para ello
+    buscamos una solicitud aceptada entre ambos usuarios y la
+    eliminamos.  Si no existe o no está aceptada, se informa al
+    usuario.
+    """
+    # Encontrar la solicitud mutua
+    solicitud = FriendRequest.query.filter(
+        (
+            (FriendRequest.sender_id == current_user.id) & (FriendRequest.receiver_id == user_id) |
+            (FriendRequest.sender_id == user_id) & (FriendRequest.receiver_id == current_user.id)
+        )
+    ).first()
+    if solicitud and solicitud.status == 'accepted':
+        db.session.delete(solicitud)
+        db.session.commit()
+        flash(_('Amigo eliminado'), 'info')
+    else:
+        flash(_('No se pudo eliminar la amistad.'), 'warning')
+    return redirect(url_for('amigos.amigos'))
+
 # ===============================
 # ➕ Enviar solicitud de amistad
 # ===============================

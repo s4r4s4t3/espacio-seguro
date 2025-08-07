@@ -105,3 +105,34 @@ class Post(db.Model):
     image_url = db.Column(db.String(500), nullable=True)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+# --------------------
+# 📸 Historias/Estados
+# --------------------
+class Story(db.Model):
+    """
+    Modelo para historias efímeras (estados) al estilo Instagram.  Cada
+    historia está asociada a un usuario y consiste en una imagen, un
+    texto opcional (caption) y una marca de tiempo.  Las historias se
+    muestran en la parte superior del feed en forma de miniaturas
+    circulares.  Pueden ser eliminadas por su autor.
+
+    Attributes:
+        id (int): Identificador único de la historia.
+        image_url (str): URL de la imagen alojada (Cloudinary o local).
+        caption (str): Texto opcional que acompaña a la imagen.
+        timestamp (datetime): Fecha y hora de creación.
+        user_id (int): Identificador del usuario autor de la historia.
+    """
+    __tablename__ = 'story'
+
+    id = db.Column(db.Integer, primary_key=True)
+    image_url = db.Column(db.String(500), nullable=False)
+    caption = db.Column(db.String(300), nullable=True)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+
+# Añadimos relación de historias al usuario para un acceso más cómodo.
+# Utilizamos lazy='dynamic' para poder consultar y filtrar fácilmente las historias de un usuario.
+User.stories = db.relationship('Story', backref='author', lazy='dynamic', cascade='all, delete-orphan')
