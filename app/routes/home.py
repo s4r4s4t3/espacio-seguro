@@ -7,6 +7,8 @@ from flask_babel import _
 from sqlalchemy import desc
 import cloudinary.uploader
 
+from flask import request  # Para obtener la URL de referencia en eliminaciones
+
 home_bp = Blueprint('home', __name__)
 
 # 🌍 Landing pública
@@ -154,3 +156,41 @@ def nueva_publicacion():
         return redirect(url_for('home.feed'))
 
     return render_template("nueva_publicacion.html", user=current_user)
+
+# 🗑️ Eliminar publicación
+@home_bp.route('/eliminar_post/<int:post_id>', methods=['POST'])
+@login_required
+def eliminar_post(post_id):
+    """
+    Elimina una publicación existente si pertenece al usuario actual.
+    También intenta eliminar la imagen asociada de Cloudinary o del
+    almacenamiento local cuando corresponde.  Si el usuario no es el
+    autor de la publicación se mostrará un mensaje de error.
+    """
+    post = Post.query.get_or_404(post_id)
+    if post.user_id != current_user.id:
+        flash(_('No tienes permiso para eliminar esta publicación.'), 'danger')
+        return redirect(request.referrer or url_for('home.feed'))
+
+    # Eliminar imagen remota o local si existe
+    if post.image_url:
+        if post.image_url.startswith('http'):
+            try:
+                public_id = post.image_url.rsplit('/', 1)[-1].split('.')[0]
+                cloudinary.uploader.destroy(public_id)
+            except Exception:
+                pass
+        else:
+            # Fallback: eliminar archivo local en static/post_images
+            from flask import current_app
+            import os
+            local_path = os.path.join(current_app.root_path, 'static', 'post_images', post.image_url)
+            if os.path.exists(local_path):
+                try:
+                    os.remove(local_path)
+                except Exception:
+                    pass
+    db.session.delete(post)
+    db.session.commit()
+    flash(_('Publicación eliminada.'), 'info')
+    return redirect(request.referrer or url_for('home.feed'))

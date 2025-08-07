@@ -66,6 +66,13 @@ def create_app():
     from app.routes.stories import stories_bp
     app.register_blueprint(stories_bp)
 
+    # ⚙️  Configuración/Ajustes
+    # Registramos el blueprint de ajustes que centraliza idioma,
+    # tema, información de la app y enlaces legales.  Esta ruta
+    # requiere autenticación y se encuentra en app/routes/settings.py.
+    from app.routes.settings import settings_bp
+    app.register_blueprint(settings_bp)
+
 
     @babel.localeselector
     def get_locale():

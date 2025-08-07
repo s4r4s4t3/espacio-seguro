@@ -66,13 +66,16 @@
         <option value="it" {% if g.get('lang') == 'it' %}selected{% endif %}>🇮🇹 Italiano</option>
       </select>
       {% if current_user.is_authenticated %}
-      <!-- Navegación principal: se simplifica eliminando las entradas de Nueva publicación y Chat Global.
-           La creación de publicaciones ahora se realiza en el feed y no existe un chat global separado. -->
+      <!-- Navegación principal: incluye accesos directos al feed, amigos, diario,
+           botón de pánico, perfil, configuración y cerrar sesión.  La creación
+           de publicaciones se realiza en el feed y no existe un chat global
+           separado. -->
       <a href="{{ url_for('home.feed') }}">{{ _('Feed') }}</a>
       <a href="{{ url_for('amigos.amigos') }}">{{ _('Amigos') }}</a>
       <a href="{{ url_for('diary.diary') }}">{{ _('Diario') }}</a>
       <a href="{{ url_for('home.panico') }}">{{ _('Botón de Pánico') }}</a>
       <a href="{{ url_for('config.config') }}">{{ _('Perfil') }}</a>
+      <a href="{{ url_for('settings.settings') }}">{{ _('Configuración') }}</a>
       <a href="{{ url_for('auth.logout') }}">{{ _('Cerrar sesión') }}</a>
       {% endif %}
     </nav>
@@ -133,9 +136,17 @@
         <span class="icon">📓</span>
         <span class="label">{{ _('Diario') }}</span>
       </a>
+      <a href="{{ url_for('home.panico') }}">
+        <span class="icon">🚨</span>
+        <span class="label">{{ _('Pánico') }}</span>
+      </a>
       <a href="{{ url_for('config.config') }}">
         <span class="icon">👤</span>
         <span class="label">{{ _('Perfil') }}</span>
+      </a>
+      <a href="{{ url_for('settings.settings') }}">
+        <span class="icon">⚙️</span>
+        <span class="label">{{ _('Config') }}</span>
       </a>
     </nav>
     {% endif %}

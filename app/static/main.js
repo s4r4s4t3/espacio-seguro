@@ -22,48 +22,34 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ======= Toggle modo oscuro (único y funcional) =======
+  // ======= Inicialización de tema oscuro/claro =======
   const body = document.body;
-  const toggleBtn = document.createElement('button');
-  toggleBtn.id = 'darkModeToggle';
-  toggleBtn.title = 'Cambiar modo claro/oscuro';
-  // Creamos un botón redondeado sin texto.  El estado se indica
-  // mediante un degradado mitad blanco mitad negro que cambia de lado
-  // según el modo.  Los estilos básicos se establecen aquí y el
-  // degradado se actualiza en updateToggle().
-  toggleBtn.style.position = 'fixed';
-  toggleBtn.style.top = '22px';
-  toggleBtn.style.right = '26px';
-  toggleBtn.style.zIndex = '1100';
-  toggleBtn.style.width = '44px';
-  toggleBtn.style.height = '44px';
-  toggleBtn.style.padding = '0';
-  toggleBtn.style.border = '2px solid rgba(33,145,80,0.4)';
-  toggleBtn.style.borderRadius = '50%';
-  toggleBtn.style.cursor = 'pointer';
-  toggleBtn.style.boxShadow = '0 2px 10px rgba(34,139,94,0.12)';
-  toggleBtn.style.backgroundSize = '100% 100%';
-  toggleBtn.style.backgroundRepeat = 'no-repeat';
-  toggleBtn.style.backgroundPosition = 'center';
-  document.body.appendChild(toggleBtn);
-
-  // Función auxiliar para actualizar el aspecto del botón en función del
-  // modo actual.  Cuando dark está activado el degradado se invierte.
-  const updateToggle = () => {
-    const isDark = body.classList.contains('dark');
-    if (isDark) {
-      toggleBtn.style.background = 'linear-gradient(90deg, #000000 50%, #ffffff 50%)';
+  // Aplica el modo oscuro si el valor almacenado es 'on'
+  if (localStorage.getItem('darkMode') === 'on') {
+    body.classList.add('dark');
+  }
+  /**
+   * Aplica el modo oscuro de forma global.  Esta función se expone
+   * mediante window.applyDarkMode para que pueda ser utilizada desde
+   * cualquier plantilla (por ejemplo, la página de configuración).
+   *
+   * @param {boolean} state - Verdadero para activar el modo oscuro,
+   *                          falso para desactivarlo.  Si se omite,
+   *                          se invertirá el estado actual.
+   */
+  window.applyDarkMode = function(state) {
+    let enable;
+    if (typeof state === 'undefined') {
+      enable = !body.classList.contains('dark');
     } else {
-      toggleBtn.style.background = 'linear-gradient(90deg, #ffffff 50%, #000000 50%)';
+      enable = !!state;
     }
-  };
-  // Estado inicial
-  if (localStorage.getItem('darkMode') === 'on') body.classList.add('dark');
-  updateToggle();
-  toggleBtn.onclick = () => {
-    body.classList.toggle('dark');
-    localStorage.setItem('darkMode', body.classList.contains('dark') ? 'on' : 'off');
-    updateToggle();
+    if (enable) {
+      body.classList.add('dark');
+    } else {
+      body.classList.remove('dark');
+    }
+    localStorage.setItem('darkMode', enable ? 'on' : 'off');
   };
 
   // ======= Loader animado global =======

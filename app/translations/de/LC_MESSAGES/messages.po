@@ -18,6 +18,47 @@ msgstr ""
 "Generated-By: Babel 2.17.0\n"
 
 #: app/routes/auth.py:23
+msgid "Configuración"
+msgstr "Einstellungen"
+
+msgid "Modo oscuro"
+msgstr "Dunkler Modus"
+
+msgid "Idioma"
+msgstr "Sprache"
+
+msgid "Tema"
+msgstr "Thema"
+
+msgid "Selecciona tu idioma preferido:"
+msgstr "Wähle deine bevorzugte Sprache:"
+
+msgid "Información de la app"
+msgstr "App-Informationen"
+
+msgid "SafeSpace es una red social de apoyo emocional que te permite compartir tus emociones, conectarte con amigos y encontrar ayuda en momentos difíciles."
+msgstr "SafeSpace ist ein soziales Netzwerk für emotionale Unterstützung, das es dir ermöglicht, deine Emotionen zu teilen, dich mit Freunden zu verbinden und in schwierigen Momenten Hilfe zu finden."
+
+msgid "Versión"
+msgstr "Version"
+
+msgid "Legales"
+msgstr "Rechtliches"
+
+msgid "Publicación eliminada."
+msgstr "Beitrag gelöscht."
+
+msgid "No tienes permiso para eliminar esta publicación."
+msgstr "Du hast keine Berechtigung, diesen Beitrag zu löschen."
+
+msgid "Eliminar publicación"
+msgstr "Beitrag löschen"
+
+msgid "Pánico"
+msgstr "Panik"
+
+msgid "Config"
+msgstr "Config"
 #, fuzzy, python-format
 msgid "Bienvenido de nuevo, %(username)s!"
 msgstr "Willkommen, %(username)s"
