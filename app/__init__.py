@@ -20,7 +20,11 @@ def create_app():
     app.config['SESSION_COOKIE_SECURE'] = True
     app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
     app.config['BABEL_DEFAULT_LOCALE'] = 'es'
-    app.config['LANGUAGES'] = ['es', 'en', 'pt', 'br', 'de', 'fr', 'it']
+    # Idiomas soportados por la aplicación.
+    # Incluimos explícitamente 'pt_BR' para que Flask‑Babel reconozca la cookie
+    # establecida por /set_language.  También mantenemos los alias 'pt' y 'br'
+    # para compatibilidad con los directorios de traducción existentes.
+    app.config['LANGUAGES'] = ['es', 'en', 'pt_BR', 'pt', 'br', 'de', 'fr', 'it']
 
     db.init_app(app)
     # Usar "eventlet" solo si tu entorno lo soporta (Render sí)
