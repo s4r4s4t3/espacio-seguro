@@ -130,18 +130,79 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ======= Easter egg: motivacional (Ctrl+M) =======
-  const frases = [
-    "Hoy puede ser un gran día para comenzar de nuevo.",
-    "Recuerda: aquí nunca estás solo/a. Cada paso, aunque pequeño, cuenta.",
-    "Lo importante no es la meta, sino seguir caminando.",
-    "Siempre hay alguien dispuesto a escucharte aquí.",
-    "Tus emociones importan. Tu historia vale.",
-    "Un día a la vez. Vos podés."
-  ];
+  // Selección de frases motivacionales según el idioma.  Tomamos la lengua desde
+  // window.APP_LANG (inyectada en base.html) o, en su defecto, del atributo
+  // lang del documento.  Si no coincide con una clave conocida, usamos español.
+  const currentLang = (window.APP_LANG || document.documentElement.lang || 'es').toLowerCase();
+  const frasesByLang = {
+    es: [
+      "Hoy puede ser un gran día para comenzar de nuevo.",
+      "Recuerda: aquí nunca estás solo/a. Cada paso, aunque pequeño, cuenta.",
+      "Lo importante no es la meta, sino seguir caminando.",
+      "Siempre hay alguien dispuesto a escucharte aquí.",
+      "Tus emociones importan. Tu historia vale.",
+      "Un día a la vez. Vos podés."
+    ],
+    en: [
+      "Today could be a great day to start over.",
+      "Remember: you're never alone here. Every step, even small, counts.",
+      "What matters is not the goal but to keep walking.",
+      "There is always someone willing to listen to you here.",
+      "Your emotions matter. Your story counts.",
+      "One day at a time. You can do it."
+    ],
+    'pt_br': [
+      "Hoje pode ser um grande dia para recomeçar.",
+      "Lembre-se: aqui você nunca está sozinho(a). Cada passo, mesmo pequeno, conta.",
+      "O importante não é o destino, mas continuar caminhando.",
+      "Sempre há alguém disposto a ouvir você aqui.",
+      "Suas emoções importam. Sua história vale.",
+      "Um dia de cada vez. Você consegue."
+    ],
+    'pt-pt': [
+      "Hoje pode ser um grande dia para recomeçar.",
+      "Lembra-te: aqui nunca estás sozinho/a. Cada passo, mesmo pequeno, conta.",
+      "O importante não é o destino, mas continuar a caminhar.",
+      "Há sempre alguém disposto a ouvir-te aqui.",
+      "As tuas emoções importam. A tua história vale.",
+      "Um dia de cada vez. Tu consegues."
+    ],
+    de: [
+      "Heute könnte ein großartiger Tag sein, um neu anzufangen.",
+      "Denke daran: Du bist hier nie allein. Jeder Schritt, auch ein kleiner, zählt.",
+      "Wichtig ist nicht das Ziel, sondern weiterzugehen.",
+      "Hier gibt es immer jemanden, der dir zuhört.",
+      "Deine Gefühle sind wichtig. Deine Geschichte zählt.",
+      "Ein Tag nach dem anderen. Du schaffst das."
+    ],
+    fr: [
+      "Aujourd'hui peut être un grand jour pour recommencer.",
+      "Rappelle-toi : tu n'es jamais seul(e) ici. Chaque pas, même petit, compte.",
+      "Ce qui compte, ce n'est pas la destination, mais de continuer à avancer.",
+      "Il y a toujours quelqu'un prêt à t'écouter ici.",
+      "Tes émotions comptent. Ton histoire a de la valeur.",
+      "Un jour à la fois. Tu peux le faire."
+    ],
+    it: [
+      "Oggi può essere un grande giorno per ricominciare.",
+      "Ricorda: qui non sei mai solo/a. Ogni passo, anche piccolo, conta.",
+      "Non importa la meta, ma continuare a camminare.",
+      "C'è sempre qualcuno disposto ad ascoltarti qui.",
+      "Le tue emozioni contano. La tua storia vale.",
+      "Un giorno alla volta. Ce la puoi fare."
+    ]
+  };
+  // Normalizamos claves para que coincidan con el objeto.  pt_br, pt-br, etc.
+  let frasesArray = frasesByLang[currentLang];
+  if (!frasesArray) {
+    // Soportamos alias: pt_BR se normaliza a pt_br
+    const normalized = currentLang.replace('-', '_');
+    frasesArray = frasesByLang[normalized] || frasesByLang['es'];
+  }
   window.addEventListener('keydown', e => {
     if (e.ctrlKey && e.key.toLowerCase() === 'm') {
-      const idx = Math.floor(Math.random() * frases.length);
-      showToast(frases[idx]);
+      const idx = Math.floor(Math.random() * frasesArray.length);
+      showToast(frasesArray[idx]);
     }
   });
 
@@ -172,16 +233,67 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // ======= Shift+M motivacional clásico con alert() + loader =======
+  // Muestra mensajes de inspiración en una ventana alert().  Selecciona el
+  // arreglo según el idioma actual, con alias igual que en las frases.
+  const frasesShiftByLang = {
+    es: [
+      "¡No estás solo/a! Siempre se puede empezar de nuevo.",
+      "Cada pequeño paso cuenta.",
+      "Aquí siempre hay alguien para escucharte.",
+      "Hoy puede ser un gran día para vos. 🌟",
+      "Tu historia importa. Tu valor es infinito."
+    ],
+    en: [
+      "You're not alone! You can always start again.",
+      "Every little step counts.",
+      "There is always someone here to listen to you.",
+      "Today could be a great day for you. 🌟",
+      "Your story matters. Your worth is infinite."
+    ],
+    'pt_br': [
+      "Você não está sozinho(a)! Sempre é possível recomeçar.",
+      "Cada pequeno passo conta.",
+      "Sempre há alguém aqui para te ouvir.",
+      "Hoje pode ser um grande dia para você. 🌟",
+      "Sua história importa. Seu valor é infinito."
+    ],
+    'pt-pt': [
+      "Não estás sozinho/a! É sempre possível recomeçar.",
+      "Cada pequeno passo conta.",
+      "Há sempre alguém aqui para te ouvir.",
+      "Hoje pode ser um grande dia para ti. 🌟",
+      "A tua história importa. O teu valor é infinito."
+    ],
+    de: [
+      "Du bist nicht allein! Du kannst immer wieder neu beginnen.",
+      "Jeder kleine Schritt zählt.",
+      "Hier ist immer jemand, der dir zuhört.",
+      "Heute könnte ein großartiger Tag für dich sein. 🌟",
+      "Deine Geschichte ist wichtig. Dein Wert ist unendlich."
+    ],
+    fr: [
+      "Tu n'es pas seul(e) ! On peut toujours recommencer.",
+      "Chaque petit pas compte.",
+      "Il y a toujours quelqu'un ici pour t'écouter.",
+      "Aujourd'hui peut être un grand jour pour toi. 🌟",
+      "Ton histoire compte. Ta valeur est infinie."
+    ],
+    it: [
+      "Non sei solo/a! Si può sempre ricominciare.",
+      "Ogni piccolo passo conta.",
+      "C'è sempre qualcuno qui per ascoltarti.",
+      "Oggi può essere un grande giorno per te. 🌟",
+      "La tua storia conta. Il tuo valore è infinito."
+    ]
+  };
   document.addEventListener('keydown', (e) => {
     if (e.shiftKey && e.key.toLowerCase() === 'm') {
-      const frases = [
-        "¡No estás solo/a! Siempre se puede empezar de nuevo.",
-        "Cada pequeño paso cuenta.",
-        "Aquí siempre hay alguien para escucharte.",
-        "Hoy puede ser un gran día para ti. 🌟",
-        "Tu historia importa. Tu valor es infinito."
-      ];
-      const msg = frases[Math.floor(Math.random() * frases.length)];
+      let arr = frasesShiftByLang[currentLang];
+      if (!arr) {
+        const norm = currentLang.replace('-', '_');
+        arr = frasesShiftByLang[norm] || frasesShiftByLang['es'];
+      }
+      const msg = arr[Math.floor(Math.random() * arr.length)];
       showLoader();
       setTimeout(() => {
         hideLoader();

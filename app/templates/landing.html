@@ -7,7 +7,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Web App Manifest -->
-  <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+  {#
+    Seleccionamos el manifiesto correcto según el idioma igual que en base.html.
+    Esto asegura que la PWA se instale con los metadatos en el idioma del usuario.
+  #}
+  {% set lang_code = g.get('lang', 'es') %}
+  {% if lang_code.lower() in ('pt', 'br', 'pt_br') %}
+    {% set manifest_file = 'manifest_pt.json' %}
+  {% elif lang_code.lower() in ('pt-pt', 'pt_pt') %}
+    {% set manifest_file = 'manifest_pt-pt.json' %}
+  {% elif lang_code.lower() == 'en' %}
+    {% set manifest_file = 'manifest_en.json' %}
+  {% elif lang_code.lower() == 'de' %}
+    {% set manifest_file = 'manifest_de.json' %}
+  {% elif lang_code.lower() == 'fr' %}
+    {% set manifest_file = 'manifest_fr.json' %}
+  {% elif lang_code.lower() == 'it' %}
+    {% set manifest_file = 'manifest_it.json' %}
+  {% else %}
+    {% set manifest_file = 'manifest_es.json' %}
+  {% endif %}
+  <link rel="manifest" href="{{ url_for('static', filename=manifest_file) }}">
   <meta name="theme-color" content="#219150">
 
   <!-- iOS Support -->
@@ -56,7 +76,7 @@
 
         <!-- 📄 Footer -->
         <footer class="footer">
-          <small>© 2025 SafeSpace</small>
+          <small>{{ _('© 2025 SafeSpace') }}</small>
           <div>
             <a href="/privacy">{{ _('Política de Privacidad') }}</a> | 
             <a href="/terms">{{ _('Términos y Condiciones') }}</a>

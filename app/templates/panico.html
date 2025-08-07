@@ -9,7 +9,8 @@
         <p class="info-text red">{{ _('Este botón enviará una alerta inmediata a tus contactos de confianza. Úsalo solo si realmente lo necesitás.') }}</p>
 
         <form method="POST" id="panicForm" class="panic-form" autocomplete="off">
-          <button type="submit" class="panic-btn">🚨</button>
+          {# Botón de pánico accesible.  Agregamos aria-label para lectores de pantalla. #}
+          <button type="submit" class="panic-btn" aria-label="{{ _('Activar Botón de Pánico') }}">🚨</button>
           <span class="panic-label">{{ _('¡Solo para emergencias reales!') }}</span>
         </form>
 

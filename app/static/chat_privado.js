@@ -23,7 +23,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const imagen = inputImagen.files[0];
 
     if (!mensaje && !imagen) {
-      alert("Debes escribir un mensaje o subir una imagen.");
+      // Utilizamos una cadena localizada si está disponible
+      const msg = window.TRANSLATIONS && window.TRANSLATIONS.chat_no_content
+        ? window.TRANSLATIONS.chat_no_content
+        : "You must write a message or upload an image.";
+      alert(msg);
       return;
     }
 

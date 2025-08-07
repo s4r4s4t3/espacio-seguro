@@ -1,0 +1,22 @@
+{
+  "name": "SafeSpace",
+  "short_name": "SafeSpace",
+  "description": "O seu espaço de apoio emocional, onde quer que esteja.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#219150",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/static/icon-192x192-new.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/icon-512x512-new.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

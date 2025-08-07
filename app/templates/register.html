@@ -5,6 +5,36 @@
   <title>{{ _('Registro - SafeSpace') }}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  {# Selección dinámica del manifest según el idioma, igual que en base.html #}
+  {% set lang_code = g.get('lang', 'es') %}
+  {% if lang_code.lower() in ('pt', 'br', 'pt_br') %}
+    {% set manifest_file = 'manifest_pt.json' %}
+  {% elif lang_code.lower() in ('pt-pt', 'pt_pt') %}
+    {% set manifest_file = 'manifest_pt-pt.json' %}
+  {% elif lang_code.lower() == 'en' %}
+    {% set manifest_file = 'manifest_en.json' %}
+  {% elif lang_code.lower() == 'de' %}
+    {% set manifest_file = 'manifest_de.json' %}
+  {% elif lang_code.lower() == 'fr' %}
+    {% set manifest_file = 'manifest_fr.json' %}
+  {% elif lang_code.lower() == 'it' %}
+    {% set manifest_file = 'manifest_it.json' %}
+  {% else %}
+    {% set manifest_file = 'manifest_es.json' %}
+  {% endif %}
+  <link rel="manifest" href="{{ url_for('static', filename=manifest_file) }}">
+  <meta name="theme-color" content="#219150">
+  <link rel="apple-touch-icon" href="{{ url_for('static', filename='icon-192x192.png') }}">
+
+  {# Inyectamos traducciones globales para consistencia #}
+  <script type="text/javascript">
+    window.APP_LANG = "{{ g.get('lang', 'es') }}";
+    window.TRANSLATIONS = {
+      chat_no_content: "{{ _('Debes escribir un mensaje o subir una imagen.') }}",
+      panic_alert_sent: "{{ _('🚨 ¡Alerta enviada a tus contactos de confianza!') }}"
+    };
+  </script>
+
   <script src="{{ url_for('static', filename='register.js') }}"></script>
 </head>
 <body>

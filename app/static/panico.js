@@ -10,14 +10,24 @@ document.addEventListener("DOMContentLoaded", function () {
     setTimeout(function () {
       if (typeof hideLoader === "function") hideLoader();
       if (typeof window.showToast === "function") {
-        window.showToast("🚨 ¡Alerta enviada a tus contactos de confianza!");
+        // Utilizamos la traducción disponible o una alternativa en inglés
+        const msg = window.TRANSLATIONS && window.TRANSLATIONS.panic_alert_sent
+          ? window.TRANSLATIONS.panic_alert_sent
+          : "🚨 Alert sent to your trusted contacts!";
+        window.showToast(msg);
       }
-
-      // Opcional: sonido si tenés alert.mp3 en /static/sounds/
-      /*
-      const audio = new Audio("/static/sounds/alert.mp3");
-      audio.play();
-      */
+      // Reproducimos un breve tono usando la API Web Audio para reforzar la notificación.
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(880, ctx.currentTime);
+        osc.connect(ctx.destination);
+        osc.start();
+        setTimeout(() => osc.stop(), 600);
+      } catch (err) {
+        // Si AudioContext no está soportado, ignoramos el error silenciosamente
+      }
     }, 1200);
   });
 });
