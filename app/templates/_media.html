@@ -1,0 +1,15 @@
+{% macro responsive_img(url, alt, widths=[360,720,1080], cls='') %}
+  {# If Cloudinary, inject f_auto,q_auto and build srcset #}
+  {% set is_cloud = 'res.cloudinary.com' in (url or '') %}
+  {% if is_cloud %}
+    {% set base = url.split('/upload/')[0] + '/upload' %}
+    {% set tail = url.split('/upload/')[1] if '/upload/' in url else url %}
+    {% set src = base + '/f_auto,q_auto/' + tail %}
+    <img class="{{ cls }}" src="{{ src }}" alt="{{ alt }}" 
+         loading="lazy"
+         srcset="{% for w in widths %}{{ base }}/c_scale,w_{{w}}/f_auto,q_auto/{{ tail }} {{w}}w{% if not loop.last %}, {% endif %}{% endfor %}"
+         sizes="(max-width: 600px) 100vw, 600px">
+  {% else %}
+    <img class="{{ cls }}" src="{{ url }}" alt="{{ alt }}" loading="lazy">
+  {% endif %}
+{% endmacro %}

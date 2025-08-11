@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 {% block title %}{{ _('📰 Feed - SafeSpace') }}{% endblock %}
+{% from '_media.html' import responsive_img %}
 {% block content %}
 
-    <div class="card feed-card">
+    <div class="card feed-card post-card">
         <!-- Historias/estados en la parte superior del feed -->
         <div class="stories-row">
           <!-- Botón para crear un nuevo estado -->
@@ -69,7 +70,7 @@
               {{ post.content }}
             </div>
             {% if post.image_url %}
-              <img class="post-image" src="{{ post.image_url }}" alt="{{ _('Imagen de publicación') }}">
+              {{ responsive_img(post.image_url, _("Imagen de la publicación"), cls="post-image") }}
             {% endif %}
 
             {# Botón para eliminar la publicación si pertenece al usuario actual #}
@@ -173,3 +174,10 @@
   });
   </script>
 {% endblock %}
+
+
+<!-- Story Modal -->
+<div id="story-modal" class="modal" aria-hidden="true" role="dialog" aria-label="{{ _('Historia') }}">
+  <button class="modal-close" aria-label="{{ _('Cerrar') }}">×</button>
+  <div class="story-stage" tabindex="0"></div>
+</div>
