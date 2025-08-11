@@ -105,8 +105,6 @@ def create_app():
     except Exception as _e:
         pass
 
-    return app.config['BABEL_DEFAULT_LOCALE']
-
     @app.before_request
     def set_global_language():
         """
