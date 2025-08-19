@@ -3,6 +3,7 @@
 {% from '_media.html' import responsive_img %}
 {% block content %}
 
+<<<<<<< HEAD
     <div class="card feed-card post-card">
         <!-- Historias/estados en la parte superior del feed -->
         <div class="stories-row">
@@ -48,17 +49,20 @@
           <img id="img-preview-feed" class="preview-img" style="display:none;" />
           <button type="submit" class="btn btn-nueva-publicacion">{{ _('Publicar') }}</button>
         </form>
+=======
+  <div class="card feed-card">
+    <div class="center-content">
+      <img src="{{ url_for('static', filename='heart.png') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
+      <h2>{{ _('📰 Publicaciones recientes') }}</h2>
+>>>>>>> 6530948 (feat: i18n + PWA offline; SW v1.0.1, manifest EN y base dinámica; JS chat/toggles/previews/dark-mode)
 
-        <div class="feed-list">
+      <div class="feed-list">
         {% for post in publicaciones %}
           <div class="post-card">
             <div class="post-header">
-              <img class="profile-pic"
-                src="{% if post.author.profile_picture and 'http' in post.author.profile_picture %}
-                       {{ post.author.profile_picture }}
-                     {% else %}
-                       {{ url_for('static', filename='profile_pics/' + (post.author.profile_picture or 'default.png')) }}
-                     {% endif %}"
+              <img
+                class="profile-pic"
+                src="{{ post.author.profile_picture if post.author.profile_picture and ('http' in post.author.profile_picture) else url_for('static', filename='profile_pics/' + (post.author.profile_picture or 'default.png')) }}"
                 alt="{{ _('Foto de perfil') }}"
               />
               <div>
@@ -66,9 +70,11 @@
                 <div class="post-date">{{ post.timestamp.strftime('%d/%m/%Y %H:%M') }}</div>
               </div>
             </div>
+
             <div class="post-content">
               {{ post.content }}
             </div>
+
             {% if post.image_url %}
               {{ responsive_img(post.image_url, _("Imagen de la publicación"), cls="post-image") }}
             {% endif %}
@@ -83,6 +89,7 @@
         {% else %}
           <div class="feed-empty">{{ _('No hay publicaciones todavía.') }}</div>
         {% endfor %}
+<<<<<<< HEAD
         </div>
     </div>
 
@@ -95,9 +102,12 @@
         <form id="deleteStoryForm" method="POST" style="display:none;">
           <button type="submit" class="btn delete-story-btn">{{ _('Eliminar estado') }}</button>
         </form>
+=======
+>>>>>>> 6530948 (feat: i18n + PWA offline; SW v1.0.1, manifest EN y base dinámica; JS chat/toggles/previews/dark-mode)
       </div>
     </div>
-  
+  </div>
+
 {% endblock %}
 {% block scripts %}
   <script>

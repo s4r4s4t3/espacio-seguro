@@ -2,25 +2,36 @@
 {% block title %}{{ _('📝 Nueva publicación - SafeSpace') }}{% endblock %}
 {% block content %}
 
+<<<<<<< HEAD
     <div class="card nueva-publicacion-card">
       <div class="center-content">
         <img class="skeleton" src="{{ url_for('static', filename='heart.png') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
         <h2>{{ _('📝 Crear una nueva publicación') }}</h2>
+=======
+  <div class="card nueva-publicacion-card">
+    <div class="center-content">
+      <img src="{{ url_for('static', filename='heart.png') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
+      <h2>{{ _('📝 Crear una nueva publicación') }}</h2>
+>>>>>>> 6530948 (feat: i18n + PWA offline; SW v1.0.1, manifest EN y base dinámica; JS chat/toggles/previews/dark-mode)
 
-        <form method="POST" enctype="multipart/form-data" class="nueva-publicacion-form">
-          <label for="content">{{ _('¿Qué querés compartir?') }}</label>
-          <textarea id="content" name="content" rows="4" placeholder="{{ _('Escribí algo...') }}" required></textarea>
+      <form method="POST" enctype="multipart/form-data" class="nueva-publicacion-form">
+        <label for="content">{{ _('¿Qué querés compartir?') }}</label>
+        <textarea id="content" name="content" rows="4" placeholder="{{ _('Escribí algo...') }}" required></textarea>
 
+<<<<<<< HEAD
           <label for="image" class="upload-btn">📎 {{ _('Subir foto') }}</label>
           <input type="file" id="image" name="image" accept="image/*" class="hidden-file" />
 <p><small>{{ _(\'Describe tu imagen (alt)\') }}</small><input type="text" name="alt_text" required></p>
           <img class="skeleton" id="img-preview-np" class="preview-img" style="display:none;" />
+=======
+        <label for="image" class="upload-btn">📎 {{ _('Subir foto') }}</label>
+        <input type="file" id="image" name="image" accept="image/*" class="hidden-file" />
+        <img id="img-preview-np" class="preview-img" style="display:none;" alt="{{ _('Vista previa') }}" />
+>>>>>>> 6530948 (feat: i18n + PWA offline; SW v1.0.1, manifest EN y base dinámica; JS chat/toggles/previews/dark-mode)
 
-          <button type="submit" class="btn btn-nueva-publicacion">{{ _('Publicar') }}</button>
-        </form>
-
-        
-      </div>
+        <button type="submit" class="btn btn-nueva-publicacion">{{ _('Publicar') }}</button>
+      </form>
     </div>
-  
+  </div>
+
 {% endblock %}

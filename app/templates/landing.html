@@ -41,6 +41,7 @@
       <div class="center-content">
         <img src="{{ url_for('static', filename='heart.png') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
 
+<<<<<<< HEAD
         <!-- 🌐 Selector de idioma: se aplica el mismo estilo que en la app. Cambia idioma vía JS. -->
         <select id="language-select" class="lang-select">
           <option value="es" {% if g.get('lang') == 'es' %}selected{% endif %}>🇪🇸 Español</option>
@@ -51,6 +52,20 @@
           <option value="fr" {% if g.get('lang') == 'fr' %}selected{% endif %}>🇫🇷 Français</option>
           <option value="it" {% if g.get('lang') == 'it' %}selected{% endif %}>🇮🇹 Italiano</option>
         </select>
+=======
+        <!-- 🌐 Selector de idioma -->
+        <form id="language-form" method="GET" class="language-form">
+          <select name="lang" id="language-select" aria-label="{{ _('Seleccionar idioma') }}">
+            <option value="es"    {% if g.get('lang') in ['es','es_ES'] %}selected{% endif %}>🇪🇸 {{ _('Español') }}</option>
+            <option value="en"    {% if g.get('lang') in ['en','en_US','en_GB'] %}selected{% endif %}>🇺🇸 {{ _('English') }}</option>
+            <option value="pt_PT" {% if g.get('lang') in ['pt','pt_PT'] %}selected{% endif %}>🇵🇹 {{ _('Português (PT)') }}</option>
+            <option value="pt_BR" {% if g.get('lang') in ['br','pt_BR'] %}selected{% endif %}>🇧🇷 {{ _('Português (BR)') }}</option>
+            <option value="de"    {% if g.get('lang') == 'de' %}selected{% endif %}>🇩🇪 {{ _('Deutsch') }}</option>
+            <option value="fr"    {% if g.get('lang') == 'fr' %}selected{% endif %}>🇫🇷 {{ _('Français') }}</option>
+            <option value="it"    {% if g.get('lang') == 'it' %}selected{% endif %}>🇮🇹 {{ _('Italiano') }}</option>
+          </select>
+        </form>
+>>>>>>> 6530948 (feat: i18n + PWA offline; SW v1.0.1, manifest EN y base dinámica; JS chat/toggles/previews/dark-mode)
 
         <!-- 👤 Bienvenida -->
         <h2>{{ _('SafeSpace - Tu lugar de apoyo') }}</h2>
@@ -66,7 +81,7 @@
           <button type="submit" class="btn full-width">{{ _('Iniciar Sesión') }}</button>
           <a href="/register" class="btn full-width">{{ _('Crear Cuenta') }}</a>
           <a href="/login/google" class="btn btn-google full-width">
-            <img src="{{ url_for('static', filename='icons/google.svg') }}" class="icon" />
+            <img src="{{ url_for('static', filename='icons/google.svg') }}" class="icon" alt="{{ _('Google') }}" />
             {{ _('Iniciar sesión con Google') }}
           </a>
         </form>

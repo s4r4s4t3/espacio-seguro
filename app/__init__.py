@@ -1,5 +1,7 @@
 import os
-from flask import Flask, request
+from datetime import timedelta
+
+from flask import Flask, request, g
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_socketio import SocketIO
@@ -8,15 +10,65 @@ from flask_babel import Babel
 
 load_dotenv()
 
+# Extensiones
 db = SQLAlchemy()
 socketio = SocketIO(cors_allowed_origins="*")
 login_manager = LoginManager()
 babel = Babel()
 
+# ---- Configuración de idiomas ----
+# Códigos válidos para Babel (normalizados)
+SUPPORTED_LANGUAGES = ["es", "en", "pt_PT", "pt_BR", "de", "fr", "it"]
+DEFAULT_LOCALE = "es"
+LANG_COOKIE_NAME = "lang"
+LANG_COOKIE_MAX_AGE = 180 * 24 * 3600  # 180 días
+
+def normalize_lang(lang: str | None) -> str | None:
+    """Normaliza variantes a los códigos que maneja Babel en translations/."""
+    if not lang:
+        return None
+    lang = lang.replace("-", "_")
+    mapping = {
+        "pt": "pt_PT",
+        "br": "pt_BR",
+        "es_ES": "es",
+        "en_US": "en",
+        "en_GB": "en",
+    }
+    return mapping.get(lang, lang)
+
+def select_locale() -> str:
+    """
+    Orden de preferencia:
+    1) querystring ?lang=
+    2) cookie 'lang'
+    3) best match Accept-Language
+    4) DEFAULT_LOCALE
+    """
+    # 1) query
+    qlang = normalize_lang(request.args.get("lang"))
+    if qlang in SUPPORTED_LANGUAGES:
+        return qlang
+
+    # 2) cookie
+    clang = normalize_lang(request.cookies.get(LANG_COOKIE_NAME))
+    if clang in SUPPORTED_LANGUAGES:
+        return clang
+
+    # 3) accept-language
+    best = request.accept_languages.best_match(SUPPORTED_LANGUAGES)
+    if best:
+        return best
+
+    # 4) default
+    return DEFAULT_LOCALE
+
+
 def create_app():
     app = Flask(__name__)
     app.config.from_object("config.Config")
 
+<<<<<<< HEAD
     app.config['SESSION_COOKIE_SECURE'] = True
     app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
     app.config['BABEL_DEFAULT_LOCALE'] = 'es'
@@ -25,16 +77,28 @@ def create_app():
     # establecida por /set_language.  También mantenemos los alias 'pt' y 'br'
     # para compatibilidad con los directorios de traducción existentes.
     app.config['LANGUAGES'] = ['es', 'en', 'pt_BR', 'pt', 'br', 'de', 'fr', 'it']
+=======
+    # Cookies/seguridad
+    app.config["SESSION_COOKIE_SECURE"] = True
+    app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
+>>>>>>> 6530948 (feat: i18n + PWA offline; SW v1.0.1, manifest EN y base dinámica; JS chat/toggles/previews/dark-mode)
 
+    # Babel
+    app.config["BABEL_DEFAULT_LOCALE"] = DEFAULT_LOCALE
+    app.config["BABEL_TRANSLATION_DIRECTORIES"] = "translations"
+    # Guardamos por compatibilidad tu lista original pero normalizada
+    app.config["LANGUAGES"] = SUPPORTED_LANGUAGES
+
+    # Inicializar extensiones
     db.init_app(app)
-    # Usar "eventlet" solo si tu entorno lo soporta (Render sí)
-    socketio.init_app(app, async_mode='eventlet')
+    socketio.init_app(app, async_mode="eventlet")
     login_manager.init_app(app)
-    babel.init_app(app)
+    login_manager.login_view = "auth.login"
 
-    login_manager.login_view = 'auth.login'
+    # Inicializar Babel con el selector de locale
+    babel.init_app(app, locale_selector=select_locale)
 
-    # Importa todos los modelos antes de db.create_all()
+    # Modelos (deben importarse antes de create_all)
     from app.models import User, FriendRequest, Message, DiaryEntry, PanicLog, Post
 
     with app.app_context():
@@ -44,7 +108,7 @@ def create_app():
     def load_user(user_id):
         return User.query.get(int(user_id))
 
-    # Blueprints principales
+    # ---- Blueprints ----
     from app.routes.auth import auth_bp
     app.register_blueprint(auth_bp)
 
@@ -66,6 +130,7 @@ def create_app():
     from app.routes.legales import legales_bp
     app.register_blueprint(legales_bp)
 
+<<<<<<< HEAD
     # 📸 Historias/Estados
     from app.routes.stories import stories_bp
     app.register_blueprint(stories_bp)
@@ -132,10 +197,32 @@ def create_app():
             Like.__table__.create(bind=db.engine, checkfirst=True)
     except Exception as _e:
         pass
+=======
+    # ---- Hooks de request para exponer el idioma a los templates y persistir cookie ----
+    @app.before_request
+    def _set_g_lang():
+        # Exponemos el idioma elegido en 'g' para que tus templates lo lean.
+        g.lang = select_locale()
+
+    @app.after_request
+    def _persist_lang_cookie(response):
+        # Si vino ?lang=... y es válido, persistimos cookie
+        qlang = normalize_lang(request.args.get("lang"))
+        if qlang in SUPPORTED_LANGUAGES:
+            response.set_cookie(
+                LANG_COOKIE_NAME,
+                qlang,
+                max_age=LANG_COOKIE_MAX_AGE,
+                secure=True,
+                httponly=False,
+                samesite="Lax",
+            )
+        return response
+>>>>>>> 6530948 (feat: i18n + PWA offline; SW v1.0.1, manifest EN y base dinámica; JS chat/toggles/previews/dark-mode)
 
     return app
 
-    # 🚫 Registrar Blueprint OAuth Google (comentado)
+    # ---- OAuth Google (comentado) ----
     """
     from config import Config
     google_bp = make_google_blueprint(

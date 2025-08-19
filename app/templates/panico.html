@@ -2,22 +2,35 @@
 {% block title %}{{ _('Botón de Pánico - SafeSpace') }}{% endblock %}
 {% block content %}
 
-    <div class="card panic-card">
-      <div class="center-content">
-        <img src="{{ url_for('static', filename='heart.png') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
-        <h2 style="color:#e74747;">{{ _('Botón de Pánico') }}</h2>
-        <p class="info-text red">{{ _('Este botón enviará una alerta inmediata a tus contactos de confianza. Úsalo solo si realmente lo necesitás.') }}</p>
+  <div class="card panic-card">
+    <div class="center-content">
+      <img src="{{ url_for('static', filename='heart.png') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
+      <h2 style="color:#e74747;">{{ _('Botón de Pánico') }}</h2>
 
+<<<<<<< HEAD
         <form method="POST" id="panicForm" class="panic-form" autocomplete="off">
           {# Botón de pánico accesible.  Agregamos aria-label para lectores de pantalla. #}
           <button type="submit" class="panic-btn" aria-label="{{ _('Activar Botón de Pánico') }}">🚨</button>
           <span class="panic-label">{{ _('¡Solo para emergencias reales!') }}</span>
         </form>
+=======
+      <p id="panicHint" class="info-text red" role="alert">
+        {{ _('Este botón enviará una alerta inmediata a tus contactos de confianza. Úsalo solo si realmente lo necesitás.') }}
+      </p>
+>>>>>>> 6530948 (feat: i18n + PWA offline; SW v1.0.1, manifest EN y base dinámica; JS chat/toggles/previews/dark-mode)
 
-        
-      </div>
+      <form method="POST" id="panicForm" class="panic-form" autocomplete="off" aria-describedby="panicHint">
+        <button
+          type="submit"
+          class="panic-btn"
+          aria-label="{{ _('Activar botón de pánico') }}"
+          title="{{ _('Activar botón de pánico') }}"
+        >🚨</button>
+        <span class="panic-label">{{ _('¡Solo para emergencias reales!') }}</span>
+      </form>
     </div>
-  
+  </div>
+
 {% endblock %}
 {% block scripts %}
 <script src="{{ url_for('static', filename='panico.js') }}"></script>

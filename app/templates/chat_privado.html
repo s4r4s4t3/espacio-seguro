@@ -2,6 +2,7 @@
 {% block title %}{{ _('📩 Mensajes Privados - SafeSpace') }}{% endblock %}
 {% block content %}
 
+<<<<<<< HEAD
     <div class="card chat-card">
       <div class="center-content">
         <img src="{{ url_for('static', filename='heart.png') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
@@ -32,17 +33,45 @@
         </form>
 
         
+=======
+  <div class="card chat-card">
+    <div class="center-content">
+      <img src="{{ url_for('static', filename='heart.png') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
+      <h2>{{ _('💬 Chat con %(username)s', username=friend.username) }}</h2>
+
+      <div class="chat-global-box" role="log" aria-live="polite" aria-relevant="additions">
+        {% for msg in mensajes %}
+          <div class="mensaje bubble {% if msg.sender_id == user.id %}yo{% else %}otro{% endif %}">
+            {% if msg.content %}
+              <div class="chat-text">{{ msg.content }}</div>
+            {% endif %}
+            {% if msg.image_url %}
+              <img src="{{ msg.image_url }}" alt="{{ _('Imagen') }}" class="chat-image" />
+            {% endif %}
+          </div>
+        {% else %}
+          <div class="placeholder-msg">{{ _('No hay mensajes todavía...') }}</div>
+        {% endfor %}
+>>>>>>> 6530948 (feat: i18n + PWA offline; SW v1.0.1, manifest EN y base dinámica; JS chat/toggles/previews/dark-mode)
       </div>
+
+      <form id="formularioPrivado" enctype="multipart/form-data" autocomplete="off" class="chat-global-form">
+        <input type="text" id="mensajePrivado" class="chat-input" placeholder="{{ _('Escribí tu mensaje...') }}" />
+        <label class="upload-btn" aria-label="{{ _('Adjuntar imagen') }}">📷
+          <input type="file" id="imagenPrivada" accept="image/*" class="hidden-file" />
+        </label>
+        <img id="img-preview-priv" class="preview-img" style="display:none;" alt="{{ _('Vista previa de la imagen') }}" />
+        <button type="submit" class="btn btn-chat-send">{{ _('Enviar') }}</button>
+      </form>
     </div>
   </div>
 
-  <script>
-    window.USER_ID = "{{ user.id }}";
-    window.FRIEND_ID = "{{ friend.id }}";
-  </script>
 {% endblock %}
 {% block scripts %}
 <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
 <script src="{{ url_for('static', filename='chat_privado.js') }}"></script>
-<script>window.USER_ID = "{{ user.id }}"; window.FRIEND_ID = "{{ friend.id }}";</script>
+<script>
+  window.USER_ID = "{{ user.id }}";
+  window.FRIEND_ID = "{{ friend.id }}";
+</script>
 {% endblock %}

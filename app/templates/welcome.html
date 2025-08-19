@@ -1,6 +1,6 @@
 <!-- templates/welcome.html -->
 <!DOCTYPE html>
-<html lang="es">
+<html lang="{{ g.get('lang', 'es') }}">
 <head>
   <meta charset="UTF-8">
   <title>{{ _('Bienvenido a SafeSpace') }}</title>
@@ -9,12 +9,18 @@
   <script src="{{ url_for('static', filename='main.js') }}"></script>
 </head>
 <body>
-  <main class="welcome-container main-card center-container">
-    <h2 class="welcome-title">{{ _('¡Hola, ') }}{{ user.username }}!</h2>
-    <p class="welcome-text">{{ _('Gracias por unirte a SafeSpace, tu espacio de apoyo y contención.') }}</p>
-    <p class="welcome-text">{{ _('Por favor, acepta nuestros términos para continuar.') }}</p>
+  <main class="welcome-container main-card center-container" role="main" aria-label="{{ _('Pantalla de bienvenida') }}">
+    <h2 class="welcome-title">
+      {{ _('¡Hola, %(username)s!', username=user.username) }}
+    </h2>
+    <p class="welcome-text">
+      {{ _('Gracias por unirte a SafeSpace, tu espacio de apoyo y contención.') }}
+    </p>
+    <p class="welcome-text">
+      {{ _('Por favor, acepta nuestros términos para continuar.') }}
+    </p>
 
-    <form method="POST">
+    <form method="POST" aria-label="{{ _('Aceptar términos y continuar') }}">
       <button type="submit" class="btn welcome-btn">{{ _('Aceptar y Continuar') }}</button>
     </form>
   </main>

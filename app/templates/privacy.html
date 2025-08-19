@@ -2,14 +2,23 @@
 {% block title %}{{ _('Política de Privacidad - SafeSpace') }}{% endblock %}
 {% block content %}
 
-    <div class="card legal-card">
-      <h2>{{ _('Política de Privacidad - SafeSpace') }}</h2>
+  <div class="card legal-card" role="article" aria-label="{{ _('Política de Privacidad') }}">
+    <h2>{{ _('Política de Privacidad - SafeSpace') }}</h2>
 
-      <p>{{ _('Aquí irá tu política de privacidad completa cuando esté lista.') }}</p>
-      <p>{{ _('Este documento explica cómo SafeSpace recopila, utiliza y protege la información personal de los usuarios.') }}</p>
-      <p>{{ _('Recomendación: redactar con ayuda de un profesional legal para cumplir con leyes de protección de datos (por ejemplo GDPR o similares).') }}</p>
+    <p>{{ _('Aquí irá tu política de privacidad completa cuando esté lista.') }}</p>
+    <p>{{ _('Este documento explica cómo SafeSpace recopila, utiliza y protege la información personal de los usuarios.') }}</p>
+    <p>{{ _('Recomendación: redactar con ayuda de un profesional legal para cumplir con leyes de protección de datos (por ejemplo GDPR o similares).') }}</p>
+  </div>
 
-      
-    </div>
-  
 {% endblock %}
+{% extends 'base.html' %}
+{% block title %}{{ _('Política de Privacidad - SafeSpace') }}{% endblock %}
+{% block content %}
+
+  <div class="card legal-card" role="article" aria-label="{{ _('Política de Privacidad') }}">
+    <h2>{{ _('Política de Privacidad - SafeSpace') }}</h2>
+
+    <p>{{ _('Aquí irá tu política de privacidad completa cuando esté lista.') }}</p>
+    <p>{{ _('Este documento explica cómo SafeSpace recopila, utiliza y protege la información personal de los usuarios.') }}</p>
+    <p>{{ _('Recomendación: redactar con ayuda de un profesional legal para cumplir con leyes de protección de datos (por ejemplo GDPR o similares).') }}</p>
+  </div>

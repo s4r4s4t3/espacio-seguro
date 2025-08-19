@@ -1,8 +1,59 @@
 {% extends 'base.html' %}
+<<<<<<< HEAD
 {% block title %}{{ _('Offline') }}{% endblock %}
 {% block content %}
   <div class="card" role="status" aria-live="polite">
     <h1>{{ _('Sin conexión') }}</h1>
     <p>{{ _('Parece que no tienes internet. Puedes seguir navegando parte del contenido ya cargado.') }}</p>
   </div>
+=======
+{% block title %}{{ _('Sin conexión - SafeSpace') }}{% endblock %}
+{% block content %}
+
+  <div class="card offline-card">
+    <div class="center-content">
+      <img src="{{ url_for('static', filename='heart.png') }}"
+           alt="{{ _('Mascota SafeSpace') }}"
+           class="landing-logo" />
+
+      <h2>{{ _('Estás sin conexión') }}</h2>
+      <p class="subtitle">
+        {{ _('No pudimos conectarnos. Podés seguir navegando lo que esté guardado y reintentar más tarde.') }}
+      </p>
+
+      <ul class="offline-tips">
+        <li>{{ _('Activá los datos o el Wi-Fi.') }}</li>
+        <li>{{ _('Revisá si el modo avión está desactivado.') }}</li>
+        <li>{{ _('Volvé a intentar la conexión.') }}</li>
+      </ul>
+
+      <div class="offline-actions">
+        <button class="btn full-width" onclick="window.location.reload()">
+          {{ _('Reintentar') }}
+        </button>
+        <a class="btn full-width" href="{{ url_for('home.home') }}">
+          {{ _('Ir al inicio') }}
+        </a>
+      </div>
+
+      <div class="offline-status">
+        <small>{{ _('Estado:') }} <span id="net-status">{{ _('Sin conexión') }}</span></small>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      function update() {
+        var el = document.getElementById('net-status');
+        if (!el) return;
+        el.textContent = navigator.onLine ? '{{ _("Con conexión") }}' : '{{ _("Sin conexión") }}';
+      }
+      window.addEventListener('online', update);
+      window.addEventListener('offline', update);
+      update();
+    })();
+  </script>
+
+>>>>>>> 6530948 (feat: i18n + PWA offline; SW v1.0.1, manifest EN y base dinámica; JS chat/toggles/previews/dark-mode)
 {% endblock %}

@@ -2,48 +2,73 @@
 {% block title %}{{ _('💬 Chat Global - SafeSpace') }}{% endblock %}
 {% block content %}
 
-    <div class="card chat-card">
-      <div class="center-content">
-        <img src="{{ url_for('static', filename='heart.png') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
-        <h2>{{ _('💬 Chat Global') }}</h2>
+  <div class="card chat-card">
+    <div class="center-content">
+      <img src="{{ url_for('static', filename='heart.png') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
+      <h2>{{ _('💬 Chat Global') }}</h2>
 
-        <div id="mensajes" class="chat-global-box">
-          {% if messages %}
-            {% for msg in messages %}
-              <div class="mensaje-global bubble {% if msg.sender_id == user.id %}yo{% else %}otro{% endif %}">
-                {% if msg.content %}
-                  <div class="chat-global-text">{{ msg.content }}</div>
-                {% endif %}
-                {% if msg.image_url %}
-                  <img src="{{ msg.image_url }}" alt="{{ _('Imagen') }}" class="chat-image" />
-                {% endif %}
-                <div class="mensaje-meta">👤 {{ msg.sender_username or msg.sender_id }} | 🕒 {{ msg.timestamp }}</div>
-              </div>
-            {% endfor %}
-          {% else %}
-            <div class="placeholder-msg">{{ _('No hay mensajes todavía...') }}</div>
-          {% endif %}
-        </div>
-
-        <form id="formulario" enctype="multipart/form-data" autocomplete="off" class="chat-global-form">
-          <input type="text" id="mensaje" placeholder="{{ _('Escribí tu mensaje...') }}" class="chat-input" />
-          <label class="upload-btn">📷
-            <input type="file" id="imagen" accept="image/*" class="hidden-file" />
-          </label>
-          <img id="img-preview" class="preview-img" style="display:none;" />
-          <button type="submit" class="btn btn-chat-send">{{ _('Enviar') }}</button>
-        </form>
-
-        
+      <div id="mensajes" class="chat-global-box" role="log" aria-live="polite" aria-relevant="additions">
+        {% if messages %}
+          {% for msg in messages %}
+            <div class="mensaje-global bubble {% if msg.sender_id == user.id %}yo{% else %}otro{% endif %}">
+              {% if msg.content %}
+                <div class="chat-global-text">{{ msg.content }}</div>
+              {% endif %}
+              {% if msg.image_url %}
+                <img src="{{ msg.image_url }}" alt="{{ _('Imagen') }}" class="chat-image" />
+              {% endif %}
+              <div class="mensaje-meta">👤 {{ msg.sender_username or msg.sender_id }} | 🕒 {{ msg.timestamp }}</div>
+            </div>
+          {% endfor %}
+        {% else %}
+          <div class="placeholder-msg">{{ _('No hay mensajes todavía...') }}</div>
+        {% endif %}
       </div>
+
+      <form id="formulario" enctype="multipart/form-data" autocomplete="off" class="chat-global-form">
+        <input type="text" id="mensaje" placeholder="{{ _('Escribí tu mensaje...') }}" class="chat-input" />
+        <label class="upload-btn" aria-label="{{ _('Adjuntar imagen') }}">📷
+          <input type="file" id="imagen" accept="image/*" class="hidden-file" />
+        </label>
+        <img id="img-preview" class="preview-img" style="display:none;" alt="{{ _('Vista previa de la imagen') }}" />
+        <button type="submit" class="btn btn-chat-send">{{ _('Enviar') }}</button>
+      </form>
     </div>
   </div>
-  <script>
-    window.USER_ID = "{{ user.id }}";
-  </script>
+
 {% endblock %}
 {% block scripts %}
 <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
 <script src="{{ url_for('static', filename='chat.js') }}"></script>
-<script>window.USER_ID = "{{ user.id }}";</script>
+<script>
+  window.USER_ID = "{{ user.id }}";
+</script>
 {% endblock %}
+{% block title %}{{ _('💬 Chat Global - SafeSpace') }}{% endblock %}
+{% block content %}
+
+  <div class="card chat-card">
+    <div class="center-content">
+      <img src="{{ url_for('static', filename='heart.png') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
+      <h2>{{ _('💬 Chat Global') }}</h2>
+
+      <div id="mensajes" class="chat-global-box" role="log" aria-live="polite" aria-relevant="additions">
+        {% if messages %}
+          {% for msg in messages %}
+            <div class="mensaje-global bubble {% if msg.sender_id == user.id %}yo{% else %}otro{% endif %}">
+              {% if msg.content %}
+                <div class="chat-global-text">{{ msg.content }}</div>
+              {% endif %}
+              {% if msg.image_url %}
+                <img src="{{ msg.image_url }}" alt="{{ _('Imagen') }}" class="chat-image" />
+              {% endif %}
+              <div class="mensaje-meta">👤 {{ msg.sender_username or msg.sender_id }} | 🕒 {{ msg.timestamp }}</div>
+            </div>
+          {% endfor %}
+        {% else %}
+          <div class="placeholder-msg">{{ _('No hay mensajes todavía...') }}</div>
+        {% endif %}
+      </div>
+
+      <form id="formulario" enctype="multipart/form-data" autocomplete="off" class="chat-global-form">
+        <input type="text" id="mensaje" placeholder="{{ _('Escribí tu mensaje...') }}" class="chat-input

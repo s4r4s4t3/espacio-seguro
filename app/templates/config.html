@@ -2,34 +2,48 @@
 {% block title %}{{ _('Mi Perfil - SafeSpace') }}{% endblock %}
 {% block content %}
 
-    <div class="card profile-card">
-      <div class="center-content">
-        <img src="{{ url_for('static', filename='heart.png') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
-        <h2>{{ _('Mi Perfil') }}</h2>
+  <div class="card profile-card">
+    <div class="center-content">
+      <img src="{{ url_for('static', filename='heart.png') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
+      <h2>{{ _('Mi Perfil') }}</h2>
 
-        {% with messages = get_flashed_messages(with_categories=true) %}
-          {% if messages %}
-            {% for category, message in messages %}
-              <div class="flash {{ category }}">{{ message }}</div>
-            {% endfor %}
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
+      <form method="POST" enctype="multipart/form-data" class="profile-form">
+        <div class="profile-img-container">
+          <img
+            src="{{ user.profile_picture if user.profile_picture and ('http' in user.profile_picture) else url_for('static', filename='profile_pics/' + (user.profile_picture or 'default.png')) }}"
+            alt="{{ _('Foto de perfil') }}"
+            class="profile-img preview-img"
+            id="profileImage"
+          />
+        </div>
+
+        <div class="upload-section">
+          <label class="label-pretty">{{ _('Foto de Perfil') }}</label>
+
+          <label for="profile_picture" class="upload-btn" aria-label="{{ _('Subir Foto de Perfil') }}">
+            {{ _('Subir Foto de Perfil') }}
+          </label>
+          <input type="file" id="profile_picture" name="profile_picture" accept="image/*" class="hidden-file" />
+
+          {% if user.profile_picture %}
+            <button type="submit" name="delete_photo" value="1" class="upload-btn delete-photo-btn">
+              {{ _('Eliminar Foto de Perfil') }}
+            </button>
           {% endif %}
-        {% endwith %}
+        </div>
 
-        <form method="POST" enctype="multipart/form-data" class="profile-form">
-          <div class="profile-img-container">
-            <img src="{% if user.profile_picture and 'http' in user.profile_picture %}
-                        {{ user.profile_picture }}
-                      {% elif user.profile_picture %}
-                        {{ url_for('static', filename='profile_pics/' ~ (user.profile_picture or 'default.png')) }}
-                      {% else %}
-                        {{ url_for('static', filename='profile_pics/default.png') }}
-                      {% endif %}"
-                alt="{{ _('Foto de perfil') }}"
-                class="profile-img preview-img"
-                id="profileImage"
-            />
-          </div>
+        <label for="bio" class="label-pretty">{{ _('Bio') }}</label>
+        <textarea id="bio" name="bio" rows="4" placeholder="{{ _('Contanos algo de vos...') }}">{{ user.bio }}</textarea>
 
+<<<<<<< HEAD
           <div class="upload-section">
             <label class="label-pretty">{{ _('Foto de Perfil') }}</label>
             <label for="profile_picture" class="upload-btn">{{ _('Subir Foto de Perfil') }}</label>
@@ -83,9 +97,15 @@
         </div>
 
       </div>
+=======
+        <button type="submit" class="save-btn full-width">{{ _('Guardar cambios') }}</button>
+      </form>
+>>>>>>> 6530948 (feat: i18n + PWA offline; SW v1.0.1, manifest EN y base dinámica; JS chat/toggles/previews/dark-mode)
     </div>
-  
+  </div>
+
 {% endblock %}
+<<<<<<< HEAD
 
 {% block scripts %}
   {{ super() }}
@@ -120,3 +140,19 @@
   });
   </script>
 {% endblock %}
+=======
+{% block scripts %}
+  <script>
+    document.getElementById('profile_picture').addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById('profileImage').src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  </script>
+{% endblock %}
+>>>>>>> 6530948 (feat: i18n + PWA offline; SW v1.0.1, manifest EN y base dinámica; JS chat/toggles/previews/dark-mode)

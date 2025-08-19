@@ -44,12 +44,30 @@
         <img src="{{ url_for('static', filename='heart.png') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
         <h2>{{ _('Iniciar Sesión') }}</h2>
 
-        <form method="POST" autocomplete="off" class="login-form">
-          <input type="text" name="username" placeholder="{{ _('Usuario') }}" required class="login-input" autofocus />
-          <input type="password" name="password" id="loginPassword" placeholder="{{ _('Contraseña') }}" required class="login-input" />
+        <form method="POST" autocomplete="off" class="login-form" aria-label="{{ _('Formulario de inicio de sesión') }}">
+          <input
+            type="text"
+            name="username"
+            placeholder="{{ _('Usuario') }}"
+            aria-label="{{ _('Usuario') }}"
+            autocomplete="username"
+            required
+            class="login-input"
+            autofocus
+          />
+          <input
+            type="password"
+            name="password"
+            id="loginPassword"
+            placeholder="{{ _('Contraseña') }}"
+            aria-label="{{ _('Contraseña') }}"
+            autocomplete="current-password"
+            required
+            class="login-input"
+          />
 
-          <label class="login-checkbox">
-            <input type="checkbox" id="toggleLoginPassword" />
+          <label class="login-checkbox" aria-label="{{ _('Ver contraseña') }}">
+            <input type="checkbox" id="toggleLoginPassword" aria-controls="loginPassword" />
             <span>{{ _('Ver contraseña') }}</span>
           </label>
 

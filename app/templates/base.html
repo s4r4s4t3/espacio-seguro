@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>{% block title %}SafeSpace{% endblock %}</title>
+<<<<<<< HEAD
   <meta name="viewport"
 <link rel="preconnect" href="https://res.cloudinary.com">
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
@@ -52,6 +53,13 @@
     {% set manifest_file = 'manifest_es.json' %}
   {% endif %}
   <link rel="manifest" href="{{ url_for('static', filename='manifest_' + (g.get('lang','es')|replace('-', '_')) + '.json') }}">
+=======
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Estilos y PWA -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="manifest" href="{% if g.get('lang') in ['en','en_US','en_GB'] %}{{ url_for('static', filename='manifest.en.json') }}{% else %}{{ url_for('static', filename='manifest.json') }}{% endif %}">
+>>>>>>> 6530948 (feat: i18n + PWA offline; SW v1.0.1, manifest EN y base dinámica; JS chat/toggles/previews/dark-mode)
   <meta name="theme-color" content="#219150">
   <link rel="apple-touch-icon" href="{{ url_for('static', filename='icon-192x192.png') }}">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -77,6 +85,7 @@
   <div class="app-container">
     <nav class="sidebar">
       <div class="logo">
+<<<<<<< HEAD
         <!-- Logo con texto integrado para un aspecto más profesional -->
         <img src="{{ url_for('static', filename='heart_with_text2.png') }}" alt="SafeSpace logo" class="logo-img">
       </div>
@@ -91,6 +100,26 @@
         <option value="fr" {% if g.get('lang') == 'fr' %}selected{% endif %}>🇫🇷 Français</option>
         <option value="it" {% if g.get('lang') == 'it' %}selected{% endif %}>🇮🇹 Italiano</option>
       </select>
+=======
+        <img src="{{ url_for('static', filename='heart.png') }}" alt="{{ _('Logo SafeSpace') }}">
+        <span>SafeSpace</span>
+      </div>
+
+      <!-- 🌐 Selector de idioma -->
+      <form id="language-form" method="GET">
+        <select name="lang" id="language-select" aria-label="{{ _('Seleccionar idioma') }}" onchange="this.form.submit()">
+          {# NOTA: aceptamos varios códigos para no romper estados previos #}
+          <option value="es"    {% if g.get('lang') in ['es','es_ES'] %}selected{% endif %}>🇪🇸 {{ _('Español') }}</option>
+          <option value="en"    {% if g.get('lang') in ['en','en_US','en_GB'] %}selected{% endif %}>🇺🇸 {{ _('English') }}</option>
+          <option value="pt_PT" {% if g.get('lang') in ['pt','pt_PT'] %}selected{% endif %}>🇵🇹 {{ _('Português (PT)') }}</option>
+          <option value="pt_BR" {% if g.get('lang') in ['br','pt_BR'] %}selected{% endif %}>🇧🇷 {{ _('Português (BR)') }}</option>
+          <option value="de"    {% if g.get('lang') == 'de' %}selected{% endif %}>🇩🇪 {{ _('Deutsch') }}</option>
+          <option value="fr"    {% if g.get('lang') == 'fr' %}selected{% endif %}>🇫🇷 {{ _('Français') }}</option>
+          <option value="it"    {% if g.get('lang') == 'it' %}selected{% endif %}>🇮🇹 {{ _('Italiano') }}</option>
+        </select>
+      </form>
+
+>>>>>>> 6530948 (feat: i18n + PWA offline; SW v1.0.1, manifest EN y base dinámica; JS chat/toggles/previews/dark-mode)
       {% if current_user.is_authenticated %}
       <!-- Navegación principal: incluye accesos directos al feed, amigos, diario,
            botón de pánico, perfil, configuración y cerrar sesión.  La creación
@@ -105,6 +134,7 @@
       <a href="{{ url_for('auth.logout') }}">{{ _('Cerrar sesión') }}</a>
       {% endif %}
     </nav>
+
     <main class="main-content">
       {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
@@ -115,6 +145,7 @@
       {% endwith %}
       {% block content %}{% endblock %}
     </main>
+
     <aside class="right-sidebar">
       <h3>{{ _('Bienvenido a SafeSpace') }}</h3>
       <p>{{ _('Tu espacio de contención y apoyo real') }}</p>
@@ -167,9 +198,44 @@
     </nav>
     {% endif %}
   </div>
+
   <script src="{{ url_for('static', filename='main.js') }}"></script>
   {% block scripts %}{% endblock %}
 <script defer src="{{ url_for('static', filename='stories.js') }}"></script>
 <script defer src="{{ url_for('static', filename='doubletap-like.js') }}"></script>
 </body>
 </html>
+<script>
+  // Mostrar el botón de instalación si es compatible
+  if ('serviceWorker' in navigator && 'BeforeInstallPromptEvent' in window) {
+    let deferredPrompt;
+    const installBtn = document.getElementById('install-btn');
+    
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBtn.style.display = 'block';
+    });
+
+    installBtn.addEventListener('click', () => {
+      installBtn.style.display = 'none';
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('Usuario aceptó la instalación');
+        } else {
+          console.log('Usuario rechazó la instalación');
+        }
+        deferredPrompt = null;
+      });
+    });
+  }
+  // Manejar el cambio de idioma
+  document.getElementById('language-select').addEventListener('change', function() {
+    const selectedLang = this.value;
+    const currentUrl = new URL(window.location.href);
+    currentUrl.searchParams.set('lang', selectedLang);
+    window.location.href = currentUrl.toString();
+  });
+</script>
+<script>

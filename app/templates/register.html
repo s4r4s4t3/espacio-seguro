@@ -43,13 +43,38 @@
       <div class="center-content">
         <h2>{{ _('Crear Cuenta') }}</h2>
 
-        <form method="POST" autocomplete="off" class="register-form">
-          <input type="text" name="username" placeholder="{{ _('Usuario') }}" class="register-input" required />
-          <input type="email" name="email" placeholder="{{ _('Email') }}" class="register-input" required />
-          <input type="password" name="password" id="registerPassword" placeholder="{{ _('Contraseña') }}" class="register-input" required />
+        <form method="POST" autocomplete="off" class="register-form" aria-label="{{ _('Formulario de registro') }}">
+          <input
+            type="text"
+            name="username"
+            placeholder="{{ _('Usuario') }}"
+            aria-label="{{ _('Usuario') }}"
+            autocomplete="username"
+            required
+            class="register-input"
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="{{ _('Email') }}"
+            aria-label="{{ _('Email') }}"
+            autocomplete="email"
+            required
+            class="register-input"
+          />
+          <input
+            type="password"
+            name="password"
+            id="registerPassword"
+            placeholder="{{ _('Contraseña') }}"
+            aria-label="{{ _('Contraseña') }}"
+            autocomplete="new-password"
+            required
+            class="register-input"
+          />
 
-          <label class="register-checkbox">
-            <input type="checkbox" id="toggleRegisterPassword" />
+          <label class="register-checkbox" aria-label="{{ _('Ver contraseña') }}">
+            <input type="checkbox" id="toggleRegisterPassword" aria-controls="registerPassword" />
             <span>{{ _('Ver contraseña') }}</span>
           </label>
 

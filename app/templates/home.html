@@ -2,10 +2,50 @@
 {% block title %}{{ _('Inicio - SafeSpace') }}{% endblock %}
 {% block content %}
 
+<<<<<<< HEAD
     <div class="card home-card">
       <h2>{{ _('Bienvenido, %(username)s', username=user.username) }}</h2>
       <p>{{ _('Gracias por unirte a SafeSpace. Navega utilizando el menú de la izquierda.') }}</p>
     
+=======
+  <div class="card home-card">
+    <div class="center-content">
+      <img src="{{ url_for('static', filename='heart.png') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
+
+      <!-- 🌐 Selector de idioma -->
+      <form id="language-form" method="GET" class="language-form">
+        <select name="lang" id="language-select" aria-label="{{ _('Seleccionar idioma') }}">
+          <option value="es"    {% if g.get('lang') in ['es','es_ES'] %}selected{% endif %}>🇪🇸 {{ _('Español') }}</option>
+          <option value="en"    {% if g.get('lang') in ['en','en_US','en_GB'] %}selected{% endif %}>🇺🇸 {{ _('English') }}</option>
+          <option value="pt_PT" {% if g.get('lang') in ['pt','pt_PT'] %}selected{% endif %}>🇵🇹 {{ _('Português (PT)') }}</option>
+          <option value="pt_BR" {% if g.get('lang') in ['br','pt_BR'] %}selected{% endif %}>🇧🇷 {{ _('Português (BR)') }}</option>
+          <option value="de"    {% if g.get('lang') == 'de' %}selected{% endif %}>🇩🇪 {{ _('Deutsch') }}</option>
+          <option value="fr"    {% if g.get('lang') == 'fr' %}selected{% endif %}>🇫🇷 {{ _('Français') }}</option>
+          <option value="it"    {% if g.get('lang') == 'it' %}selected{% endif %}>🇮🇹 {{ _('Italiano') }}</option>
+        </select>
+      </form>
+
+      <!-- 👤 Bienvenida -->
+      <h2>{{ _('Bienvenido, %(username)s', username=user.username) }}</h2>
+
+      <!-- 📲 Botón de instalación PWA -->
+      <button id="install-btn" class="btn full-width" style="display:none;">
+        {{ _('📲 Instalar SafeSpace') }}
+      </button>
+
+      <!-- 🧭 Navegación principal -->
+      <div class="home-nav">
+        <a href="{{ url_for('config.config') }}" class="btn">{{ _('Perfil') }}</a>
+        <a href="{{ url_for('home.chat') }}" class="btn">{{ _('Chat Global') }}</a>
+        <a href="{{ url_for('amigos.amigos') }}" class="btn">{{ _('Amigos') }}</a>
+        <a href="{{ url_for('home.panico') }}" class="btn btn-reject">{{ _('Botón de Pánico') }}</a>
+        <a href="{{ url_for('diary.diary') }}" class="btn">{{ _('Diario') }}</a>
+        <a href="{{ url_for('home.feed') }}" class="btn">{{ _('Feed') }}</a>
+        <a href="{{ url_for('home.nueva_publicacion') }}" class="btn btn-add">{{ _('Nueva publicación') }}</a>
+        <a href="{{ url_for('auth.logout') }}" class="btn">{{ _('Cerrar sesión') }}</a>
+      </div>
+    </div>
+>>>>>>> 6530948 (feat: i18n + PWA offline; SW v1.0.1, manifest EN y base dinámica; JS chat/toggles/previews/dark-mode)
   </div>
 
   <!-- 🔧 Service Worker + PWA -->

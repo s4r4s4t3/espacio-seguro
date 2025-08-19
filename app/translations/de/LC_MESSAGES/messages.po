@@ -483,3 +483,37 @@ msgstr ""
 #~ "Empfehlung: Mit juristischer Hilfe an "
 #~ "die lokalen Vorschriften anpassen."
 
+<<<<<<< HEAD
+=======
+msgid "Recomendación: redactar con ayuda de un profesional legal para adaptarse a la normativa local."
+msgstr "Empfehlung: Mit juristischer Hilfe an die lokalen Vorschriften anpassen."
+
+msgid ""
+msgstr ""
+"Project-Id-Version: SafeSpace\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Español"
+msgstr "Spanisch"
+
+msgid "English"
+msgstr "Englisch"
+
+msgid "Português"
+msgstr "Portugiesisch"
+
+msgid "Deutsch"
+msgstr "Deutsch"
+
+msgid "Français"
+msgstr "Französisch"
+
+msgid "Italiano"
+msgstr "Italienisch"
+
+msgid "¿Qué quieres compartir?"
+msgstr "Was möchten Sie teilen?"
+>>>>>>> 6530948 (feat: i18n + PWA offline; SW v1.0.1, manifest EN y base dinámica; JS chat/toggles/previews/dark-mode)
