@@ -1,13 +1,9 @@
 <!DOCTYPE html>
-<html lang="{{ g.get('lang','es').replace('_','-') }}">
+<html lang="{{ g.get('lang', 'es') }}">
 <head>
   <meta charset="UTF-8">
   <title>{% block title %}SafeSpace{% endblock %}</title>
-  <meta name="viewport"
-<link rel="preconnect" href="https://res.cloudinary.com">
-<link rel="preconnect" href="https://cdn.jsdelivr.net">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
- content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
   {#
@@ -17,11 +13,7 @@
   #}
   <meta name="description" content="{{ _('SafeSpace es una red social de apoyo emocional donde podés compartir tus pensamientos, conectar con amistades y encontrar contención en un entorno seguro.') }}">
   <meta name="keywords" content="SafeSpace, apoyo emocional, red social, bienestar, salud mental, comunidad">
-  <meta name="robots"
-<link rel="alternate" hreflang="es-ES" href="{{ url_for(request.endpoint, **request.view_args, _external=True) }}?hl=es">
-<link rel="alternate" hreflang="pt-BR" href="{{ url_for(request.endpoint, **request.view_args, _external=True) }}?hl=pt_BR">
-<link rel="alternate" hreflang="en-US" href="{{ url_for(request.endpoint, **request.view_args, _external=True) }}?hl=en">
- content="index, follow">
+  <meta name="robots" content="index, follow">
   <meta property="og:title" content="SafeSpace">
   <meta property="og:description" content="{{ _('Una red social de apoyo emocional pensada para compartir historias, estados y conectar con amigos de manera segura y empática.') }}">
   <meta property="og:image" content="{{ url_for('static', filename='icon-512x512-new.png', _external=True) }}">
@@ -51,7 +43,7 @@
   {% else %}
     {% set manifest_file = 'manifest_es.json' %}
   {% endif %}
-  <link rel="manifest" href="{{ url_for('static', filename='manifest_' + (g.get('lang','es')|replace('-', '_')) + '.json') }}">
+  <link rel="manifest" href="{{ url_for('static', filename=manifest_file) }}">
   <meta name="theme-color" content="#219150">
   <link rel="apple-touch-icon" href="{{ url_for('static', filename='icon-192x192.png') }}">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -63,15 +55,12 @@
     del lado del cliente.  Las claves se referencian en chat.js y panico.js.
   #}
   <script type="text/javascript">
-    window.APP_LANG = "{{ g.get('lang','es').replace('_','-') }}";
+    window.APP_LANG = "{{ g.get('lang', 'es') }}";
     window.TRANSLATIONS = {
       chat_no_content: "{{ _('Debes escribir un mensaje o subir una imagen.') }}",
       panic_alert_sent: "{{ _('🚨 ¡Alerta enviada a tus contactos de confianza!') }}"
     };
   </script>
-<link rel="stylesheet" href="{{ url_for('static', filename='instagram-ui.css') }}">
-<script defer src="{{ url_for('static', filename='perf.js') }}"></script>
-<script defer src="{{ url_for('static', filename='i18n.js') }}"></script>
 </head>
 <body>
   <div class="app-container">
@@ -169,7 +158,5 @@
   </div>
   <script src="{{ url_for('static', filename='main.js') }}"></script>
   {% block scripts %}{% endblock %}
-<script defer src="{{ url_for('static', filename='stories.js') }}"></script>
-<script defer src="{{ url_for('static', filename='doubletap-like.js') }}"></script>
 </body>
 </html>

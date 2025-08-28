@@ -134,8 +134,7 @@ def feed():
 def nueva_publicacion():
     if request.method == 'POST':
         content = request.form.get('content', '').strip()
-        alt_text = request.form.get('alt_text','').strip()
-        if not content or not alt_text:
+        if not content:
             flash(_('El contenido no puede estar vacío.'), 'warning')
             return redirect(url_for('home.nueva_publicacion'))
 
@@ -143,7 +142,7 @@ def nueva_publicacion():
         image_url = None
         if image and image.filename:
             try:
-                upload_result = cloudinary.uploader.upload(image, context={'alt': alt_text})
+                upload_result = cloudinary.uploader.upload(image)
                 image_url = upload_result['secure_url']
             except Exception as e:
                 print("Error al subir imagen:", e)

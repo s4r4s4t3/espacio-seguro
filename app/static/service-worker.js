@@ -1,5 +1,4 @@
 // Nombre y versiones del caché.  Actualiza el sufijo cuando cambies archivos en producción
-const OFFLINE_FALLBACK_URL = '/offline';
 const CACHE_NAME = 'safespace-v1';
 const urlsToCache = [
   '/',

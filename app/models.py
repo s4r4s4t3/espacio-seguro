@@ -136,14 +136,3 @@ class Story(db.Model):
 # Añadimos relación de historias al usuario para un acceso más cómodo.
 # Utilizamos lazy='dynamic' para poder consultar y filtrar fácilmente las historias de un usuario.
 User.stories = db.relationship('Story', backref='author', lazy='dynamic', cascade='all, delete-orphan')
-
-
-# --------------------
-# 👍 Likes
-# --------------------
-class Like(db.Model):
-    __tablename__ = 'like'
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False, index=True)
-    post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False, index=True)
-    __table_args__ = (db.UniqueConstraint('user_id','post_id', name='uq_like_user_post'),)

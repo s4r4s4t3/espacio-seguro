@@ -1,7 +1,0 @@
-{
-  "scripts": {
-    "i18n:extract": "pybabel extract -F babel.cfg -o messages.pot .",
-    "i18n:update": "pybabel update -i messages.pot -d app/translations -l es -l en -l pt_BR",
-    "i18n:compile": "pybabel compile -d app/translations"
-  }
-}
