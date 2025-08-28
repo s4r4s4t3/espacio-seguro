@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="{{ g.get('lang', 'es') }}">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}SafeSpace{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  {#
+    Seleccionamos el archivo de manifiesto según el idioma activo.
+    Flask‑Babel utiliza códigos como es, en, pt_BR, de, fr e it.  Para las
+    variantes de portugués distinguimos entre Brasil (pt_BR) y Portugal
+    (pt-pt).  Si aparece un alias no contemplado, usamos el manifiesto
+    en español por defecto.
+  #}
+  {% set lang_code = g.get('lang', 'es') %}
+  {% if lang_code.lower() in ('pt', 'br', 'pt_br') %}
+    {% set manifest_file = 'manifest_pt.json' %}
+  {% elif lang_code.lower() in ('pt-pt', 'pt_pt') %}
+    {% set manifest_file = 'manifest_pt-pt.json' %}
+  {% elif lang_code.lower() == 'en' %}
+    {% set manifest_file = 'manifest_en.json' %}
+  {% elif lang_code.lower() == 'de' %}
+    {% set manifest_file = 'manifest_de.json' %}
+  {% elif lang_code.lower() == 'fr' %}
+    {% set manifest_file = 'manifest_fr.json' %}
+  {% elif lang_code.lower() == 'it' %}
+    {% set manifest_file = 'manifest_it.json' %}
+  {% else %}
+    {% set manifest_file = 'manifest_es.json' %}
+  {% endif %}
+  <link rel="manifest" href="{{ url_for('static', filename=manifest_file) }}">
+  <meta name="theme-color" content="#219150">
+  <link rel="apple-touch-icon" href="{{ url_for('static', filename='icon-192x192.png') }}">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+  {#
+    Inyectamos algunas traducciones al ámbito global de JavaScript para que
+    los scripts puedan mostrar mensajes localizados sin depender de lógica
+    del lado del cliente.  Las claves se referencian en chat.js y panico.js.
+  #}
+  <script type="text/javascript">
+    window.APP_LANG = "{{ g.get('lang', 'es') }}";
+    window.TRANSLATIONS = {
+      chat_no_content: "{{ _('Debes escribir un mensaje o subir una imagen.') }}",
+      panic_alert_sent: "{{ _('🚨 ¡Alerta enviada a tus contactos de confianza!') }}"
+    };
+  </script>
+</head>
+<body>
+  <div class="app-container">
+    <nav class="sidebar">
+      <div class="logo">
+        <!-- Logo con texto integrado para un aspecto más profesional -->
+        <img src="{{ url_for('static', filename='heart_with_text2.png') }}" alt="SafeSpace logo" class="logo-img">
+      </div>
+      <!-- Idioma: reemplazamos el formulario por un selector independiente. Al cambiar
+           se redirigirá a /set_language/<lang> mediante JavaScript (ver main.js) -->
+      <select id="language-select" class="lang-select">
+        <option value="es" {% if g.get('lang') == 'es' %}selected{% endif %}>🇪🇸 Español</option>
+        <option value="en" {% if g.get('lang') == 'en' %}selected{% endif %}>🇺🇸 English</option>
+        <!-- La traducción portuguesa disponible corresponde al portugués de Brasil -->
+        <option value="pt_BR" {% if g.get('lang') == 'pt_BR' %}selected{% endif %}>🇧🇷 Português</option>
+        <option value="de" {% if g.get('lang') == 'de' %}selected{% endif %}>🇩🇪 Deutsch</option>
+        <option value="fr" {% if g.get('lang') == 'fr' %}selected{% endif %}>🇫🇷 Français</option>
+        <option value="it" {% if g.get('lang') == 'it' %}selected{% endif %}>🇮🇹 Italiano</option>
+      </select>
+      {% if current_user.is_authenticated %}
+      <!-- Navegación principal: incluye accesos directos al feed, amigos, diario,
+           botón de pánico, perfil, configuración y cerrar sesión.  La creación
+           de publicaciones se realiza en el feed y no existe un chat global
+           separado. -->
+      <a href="{{ url_for('home.feed') }}">{{ _('Feed') }}</a>
+      <a href="{{ url_for('amigos.amigos') }}">{{ _('Amigos') }}</a>
+      <a href="{{ url_for('diary.diary') }}">{{ _('Diario') }}</a>
+      <a href="{{ url_for('home.panico') }}">{{ _('Botón de Pánico') }}</a>
+      <a href="{{ url_for('config.config') }}">{{ _('Perfil') }}</a>
+      <a href="{{ url_for('settings.settings') }}">{{ _('Configuración') }}</a>
+      <a href="{{ url_for('auth.logout') }}">{{ _('Cerrar sesión') }}</a>
+      {% endif %}
+    </nav>
+    <main class="main-content">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+      {% block content %}{% endblock %}
+    </main>
+    <aside class="right-sidebar">
+      <h3>{{ _('Bienvenido a SafeSpace') }}</h3>
+      <p>{{ _('Tu espacio de contención y apoyo real') }}</p>
+      <button id="install-btn" style="display:none;">{{ _('📲 Instalar SafeSpace') }}</button>
+    </aside>
+
+    <!-- Modal para ver imágenes en grande. Se muestra al hacer clic en una imagen de una publicación -->
+    <div id="imgModal" class="modal">
+      {#
+        Envolvemos la imagen y el icono de cierre dentro de un contenedor
+        relativo para poder posicionar la X dentro de la foto.  De esta
+        forma, el botón de modo oscuro de la página no se superpone con el
+        botón de cierre al abrir una imagen.
+      #}
+      <div class="modal-inner">
+        <img class="modal-content" id="imgModalContent" />
+        <span class="close" id="imgModalClose">&times;</span>
+      </div>
+    </div>
+
+    <!-- Barra de navegación inferior para pantallas pequeñas.  Incluye
+         accesos directos a las principales secciones de la aplicación.
+         Se oculta en escritorio mediante CSS. -->
+    {% if current_user.is_authenticated %}
+    <nav class="bottom-nav">
+      <!-- Selector de idioma en la barra inferior para móviles -->
+      <select class="lang-select bottom-lang-select">
+        <option value="es" {% if g.get('lang') == 'es' %}selected{% endif %}>🇪🇸 Español</option>
+        <option value="en" {% if g.get('lang') == 'en' %}selected{% endif %}>🇺🇸 English</option>
+        <!-- Sólo hay una traducción portuguesa disponible: portugués de Brasil -->
+        <option value="pt_BR" {% if g.get('lang') == 'pt_BR' %}selected{% endif %}>🇧🇷 Português</option>
+        <option value="de" {% if g.get('lang') == 'de' %}selected{% endif %}>🇩🇪 Deutsch</option>
+        <option value="fr" {% if g.get('lang') == 'fr' %}selected{% endif %}>🇫🇷 Français</option>
+        <option value="it" {% if g.get('lang') == 'it' %}selected{% endif %}>🇮🇹 Italiano</option>
+      </select>
+      <a href="{{ url_for('home.feed') }}">
+        <span class="icon">🏠</span>
+        <span class="label">{{ _('Feed') }}</span>
+      </a>
+      <a href="{{ url_for('amigos.amigos') }}">
+        <span class="icon">🤝</span>
+        <span class="label">{{ _('Amigos') }}</span>
+      </a>
+      <a href="{{ url_for('diary.diary') }}">
+        <span class="icon">📓</span>
+        <span class="label">{{ _('Diario') }}</span>
+      </a>
+      <a href="{{ url_for('home.panico') }}">
+        <span class="icon">🚨</span>
+        <span class="label">{{ _('Pánico') }}</span>
+      </a>
+      <a href="{{ url_for('config.config') }}">
+        <span class="icon">👤</span>
+        <span class="label">{{ _('Perfil') }}</span>
+      </a>
+      <a href="{{ url_for('settings.settings') }}">
+        <span class="icon">⚙️</span>
+        <span class="label">{{ _('Config') }}</span>
+      </a>
+    </nav>
+    {% endif %}
+  </div>
+  <script src="{{ url_for('static', filename='main.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

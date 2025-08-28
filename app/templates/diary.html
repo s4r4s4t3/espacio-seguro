@@ -1,32 +1,31 @@
-<!-- templates/diary.html -->
+{% extends 'base.html' %}
+{% block title %}{{ _('Mi Diario - SafeSpace') }}{% endblock %}
+{% block content %}
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ _('Mi Diario') }}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-    <h1>{{ _('Mi Diario Personal') }}</h1>
+    <div class="card diary-card">
+      <div class="center-content">
+        <img src="{{ url_for('static', filename='heart.png') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
+        <h1>{{ _('Mi Diario Personal') }}</h1>
 
-    <!-- Formulario para nueva entrada -->
-    <form method="POST">
-        <textarea name="content" rows="4" cols="50" placeholder="{{ _('Escribí tu entrada...') }}"></textarea><br>
-        <button type="submit">{{ _('Guardar Entrada') }}</button>
-    </form>
+        <form method="POST" class="diary-form">
+          <textarea name="content" rows="5" placeholder="{{ _('Escribí tu entrada...') }}" class="diary-textarea"></textarea>
+          <button type="submit" class="btn btn-diary-save">{{ _('Guardar Entrada') }}</button>
+        </form>
 
-    <h2>{{ _('Entradas Anteriores') }}</h2>
-    {% for entry in entries %}
-        <div>
-            <p><strong>{{ entry.date_created.strftime('%Y-%m-%d %H:%M') }}</strong></p>
-            <p>{{ entry.content }}</p>
-            <hr>
+        <h2>{{ _('Entradas Anteriores') }}</h2>
+        <div class="diary-entries-list">
+          {% for entry in entries %}
+            <div class="diary-entry">
+              <div class="diary-entry-date">{{ entry.date_created.strftime('%Y-%m-%d %H:%M') }}</div>
+              <div class="diary-entry-content">{{ entry.content }}</div>
+            </div>
+          {% else %}
+            <div class="diary-empty">{{ _('No tenés entradas aún.') }}</div>
+          {% endfor %}
         </div>
-    {% else %}
-        <p>{{ _('No tenés entradas aún.') }}</p>
-    {% endfor %}
 
-    <a href="{{ url_for('home.home') }}">⬅ {{ _('Volver al inicio') }}</a>
-</body>
-</html>
+        
+      </div>
+    </div>
+  
+{% endblock %}

@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% block title %}{{ _('Configuración - SafeSpace') }}{% endblock %}
+{% block content %}
+
+  <div class="settings-card card">
+    <h2>{{ _('Configuración') }}</h2>
+
+    <!-- Sección de idioma -->
+    <div class="settings-section">
+      <h3>{{ _('Idioma') }}</h3>
+      <p>{{ _('Selecciona tu idioma preferido:') }}</p>
+      <select id="settings-lang-select" class="lang-select">
+        <option value="es">🇪🇸 Español</option>
+        <option value="en">🇺🇸 English</option>
+        <option value="pt_BR">🇧🇷 Português</option>
+        <option value="pt">🇵🇹 Português (PT)</option>
+        <option value="de">🇩🇪 Deutsch</option>
+        <option value="fr">🇫🇷 Français</option>
+        <option value="it">🇮🇹 Italiano</option>
+      </select>
+    </div>
+
+    <!-- Sección de tema (modo oscuro) -->
+    <div class="settings-section">
+      <h3>{{ _('Tema') }}</h3>
+      <div class="settings-item">
+        <label for="themeToggle">{{ _('Modo oscuro') }}</label>
+        <label class="switch">
+          <input type="checkbox" id="themeToggle">
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Sección de información de la app -->
+    <div class="settings-section">
+      <h3>{{ _('Información de la app') }}</h3>
+      <p>{{ _('SafeSpace es una red social de apoyo emocional que te permite compartir tus emociones, conectarte con amigos y encontrar ayuda en momentos difíciles.') }}</p>
+      <p>{{ _('Versión') }} 3.0</p>
+    </div>
+
+    <!-- Sección de legales -->
+    <div class="settings-section">
+      <h3>{{ _('Legales') }}</h3>
+      <ul class="settings-links">
+        <li><a href="{{ url_for('legales.terms') }}">{{ _('Términos y Condiciones') }}</a></li>
+        <li><a href="{{ url_for('legales.privacy') }}">{{ _('Política de Privacidad') }}</a></li>
+      </ul>
+    </div>
+
+    <!-- Acción cerrar sesión -->
+    <div class="settings-section">
+      <form action="{{ url_for('auth.logout') }}" method="GET">
+        <button type="submit" class="logout-btn">{{ _('Cerrar sesión') }}</button>
+      </form>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Inicializar selector de idioma con el idioma actual
+    const langSelect = document.getElementById('settings-lang-select');
+    if (langSelect) {
+      langSelect.value = '{{ g.get('lang', 'es') }}';
+      langSelect.addEventListener('change', function() {
+        const lang = this.value;
+        // Redirige al endpoint que guarda la cookie y recarga la página
+        window.location.href = `/set_language/${lang}`;
+      });
+    }
+    // Sincronizar el estado del modo oscuro con localStorage
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+      const isDark = localStorage.getItem('darkMode') === 'on';
+      themeToggle.checked = isDark;
+      themeToggle.addEventListener('change', function() {
+        // Utiliza la función global de main.js para aplicar la preferencia
+        if (typeof window.applyDarkMode === 'function') {
+          window.applyDarkMode(this.checked);
+        }
+      });
+    }
+  });
+  </script>
+{% endblock %}

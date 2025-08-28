@@ -1,71 +1,121 @@
-<!-- templates/landing.html -->
 <!DOCTYPE html>
-<html lang="es">
+<html lang="{{ g.get('lang', 'es') }}">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>{{ _('SafeSpace - Tu lugar de apoyo') }}</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Web App Manifest -->
+  {#
+    Seleccionamos el manifiesto correcto según el idioma igual que en base.html.
+    Esto asegura que la PWA se instale con los metadatos en el idioma del usuario.
+  #}
+  {% set lang_code = g.get('lang', 'es') %}
+  {% if lang_code.lower() in ('pt', 'br', 'pt_br') %}
+    {% set manifest_file = 'manifest_pt.json' %}
+  {% elif lang_code.lower() in ('pt-pt', 'pt_pt') %}
+    {% set manifest_file = 'manifest_pt-pt.json' %}
+  {% elif lang_code.lower() == 'en' %}
+    {% set manifest_file = 'manifest_en.json' %}
+  {% elif lang_code.lower() == 'de' %}
+    {% set manifest_file = 'manifest_de.json' %}
+  {% elif lang_code.lower() == 'fr' %}
+    {% set manifest_file = 'manifest_fr.json' %}
+  {% elif lang_code.lower() == 'it' %}
+    {% set manifest_file = 'manifest_it.json' %}
+  {% else %}
+    {% set manifest_file = 'manifest_es.json' %}
+  {% endif %}
+  <link rel="manifest" href="{{ url_for('static', filename=manifest_file) }}">
+  <meta name="theme-color" content="#219150">
+
+  <!-- iOS Support -->
+  <link rel="apple-touch-icon" href="{{ url_for('static', filename='icon-192x192.png') }}">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 </head>
 <body>
-  <!-- Header con logo y selector idioma con banderas -->
-  <header>
-    <div class="logo">
-      <h1>SafeSpace</h1>
-    </div>
-    <div class="language-selector dropdown">
-      <button class="dropbtn">{{ _('🌐 Idioma') }}</button>
-      <div class="dropdown-content">
-        <a href="{{ url_for('home.set_language', lang_code='es') }}">
-          <img src="{{ url_for('static', filename='flags/es.png') }}" alt="{{ _('Español') }}"> {{ _('Español') }}
-        </a>
-        <a href="{{ url_for('home.set_language', lang_code='en') }}">
-          <img src="{{ url_for('static', filename='flags/en.png') }}" alt="{{ _('English') }}"> {{ _('English') }}
-        </a>
-        <a href="{{ url_for('home.set_language', lang_code='pt') }}">
-          <img src="{{ url_for('static', filename='flags/pt.png') }}" alt="{{ _('Português') }}"> {{ _('Português') }}
-        </a>
-        <a href="{{ url_for('home.set_language', lang_code='br') }}">
-          <img src="{{ url_for('static', filename='flags/br.png') }}" alt="{{ _('Português (Brasil)') }}"> {{ _('Português (Brasil)') }}
-        </a>
-        <a href="{{ url_for('home.set_language', lang_code='de') }}">
-          <img src="{{ url_for('static', filename='flags/de.png') }}" alt="{{ _('Deutsch') }}"> {{ _('Deutsch') }}
-        </a>
-        <a href="{{ url_for('home.set_language', lang_code='fr') }}">
-          <img src="{{ url_for('static', filename='flags/fr.png') }}" alt="{{ _('Français') }}"> {{ _('Français') }}
-        </a>
-        <a href="{{ url_for('home.set_language', lang_code='it') }}">
-          <img src="{{ url_for('static', filename='flags/it.png') }}" alt="{{ _('Italiano') }}"> {{ _('Italiano') }}
-        </a>
-      </div>
-    </div>
-  </header>
+  <div class="page-wrapper">
+    <div class="card landing-card">
+      <div class="center-content">
+        <img src="{{ url_for('static', filename='heart.png') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
 
-  <!-- Hero principal -->
-  <main>
-    <section class="hero">
-      <h2>{{ _('Tu espacio de contención y apoyo real') }}</h2>
-      <p>{{ _('Conectá con personas que entienden lo que sentís, sin juicios.') }}</p>
-      <div class="cta-buttons">
-        <a href="{{ url_for('auth.login') }}" class="btn">{{ _('Iniciar Sesión') }}</a>
-        <a href="{{ url_for('auth.register') }}" class="btn secondary">{{ _('Crear Cuenta') }}</a>
-      </div>
-      <div class="google-btn">
-        <a href="/login/google" class="btn google">
-          <img src="{{ url_for('static', filename='icons/google.svg') }}" alt="Google Icon">
-          {{ _('Iniciar sesión con Google') }}
-        </a>
-      </div>
-    </section>
-  </main>
+        <!-- 🌐 Selector de idioma: se aplica el mismo estilo que en la app. Cambia idioma vía JS. -->
+        <select id="language-select" class="lang-select">
+          <option value="es" {% if g.get('lang') == 'es' %}selected{% endif %}>🇪🇸 Español</option>
+          <option value="en" {% if g.get('lang') == 'en' %}selected{% endif %}>🇺🇸 English</option>
+          <!-- Única traducción portuguesa disponible (pt_BR) -->
+          <option value="pt_BR" {% if g.get('lang') == 'pt_BR' %}selected{% endif %}>🇧🇷 Português</option>
+          <option value="de" {% if g.get('lang') == 'de' %}selected{% endif %}>🇩🇪 Deutsch</option>
+          <option value="fr" {% if g.get('lang') == 'fr' %}selected{% endif %}>🇫🇷 Français</option>
+          <option value="it" {% if g.get('lang') == 'it' %}selected{% endif %}>🇮🇹 Italiano</option>
+        </select>
 
-  <!-- Footer -->
-  <footer>
-    <p>{{ _('© 2025 SafeSpace. Todos los derechos reservados.') }}</p>
-    <p>
-      <a href="{{ url_for('legales.terms') }}">{{ _('Términos y Condiciones') }}</a> |
-      <a href="{{ url_for('legales.privacy') }}">{{ _('Política de Privacidad') }}</a>
-    </p>
-    <p>{{ _('Síguenos en Instagram y TikTok') }}</p>
-  </footer>
+        <!-- 👤 Bienvenida -->
+        <h2>{{ _('SafeSpace - Tu lugar de apoyo') }}</h2>
+        <p class="subtitle">{{ _('Tu espacio de contención y apoyo real') }}</p>
+
+        <!-- 📲 Botón de instalación PWA -->
+        <button id="install-btn" class="btn full-width" style="display:none;">
+          {{ _('📲 Instalar SafeSpace') }}
+        </button>
+
+        <!-- 🔐 Autenticación -->
+        <form method="GET" action="/login" class="auth-form">
+          <button type="submit" class="btn full-width">{{ _('Iniciar Sesión') }}</button>
+          <a href="/register" class="btn full-width">{{ _('Crear Cuenta') }}</a>
+          <a href="/login/google" class="btn btn-google full-width">
+            <img src="{{ url_for('static', filename='icons/google.svg') }}" class="icon" />
+            {{ _('Iniciar sesión con Google') }}
+          </a>
+        </form>
+
+        <!-- 💬 Frase -->
+        <p class="quote">{{ _('Recuerda: aquí nunca estás solo/a. Cada paso, aunque pequeño, cuenta.') }}</p>
+
+        <!-- 📄 Footer -->
+        <footer class="footer">
+          <small>{{ _('© 2025 SafeSpace') }}</small>
+          <div>
+            <a href="/privacy">{{ _('Política de Privacidad') }}</a> | 
+            <a href="/terms">{{ _('Términos y Condiciones') }}</a>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="{{ url_for('static', filename='landing.js') }}"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register("{{ url_for('static', filename='service-worker.js') }}")
+        .then(function(reg) {
+          console.log("✅ Service Worker registrado con éxito:", reg.scope);
+        })
+        .catch(function(error) {
+          console.error("❌ Error al registrar el Service Worker:", error);
+        });
+    }
+
+    let deferredPrompt;
+    const installBtn = document.getElementById('install-btn');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBtn.style.display = 'block';
+
+      installBtn.addEventListener('click', async () => {
+        installBtn.style.display = 'none';
+        deferredPrompt.prompt();
+        const choiceResult = await deferredPrompt.userChoice;
+        console.log("✅ Instalación:", choiceResult.outcome);
+        deferredPrompt = null;
+      });
+    });
+  </script>
+  <script src="{{ url_for('static', filename='main.js') }}"></script>
 </body>
 </html>

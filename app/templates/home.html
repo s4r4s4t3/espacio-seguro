@@ -1,49 +1,40 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ _('Inicio - Espacio Seguro') }}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <style>
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-            width: 100%;
-            max-width: 900px;
-        }
+{% extends 'base.html' %}
+{% block title %}{{ _('Inicio - SafeSpace') }}{% endblock %}
+{% block content %}
 
-        .card {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            transition: transform 0.2s;
-        }
+    <div class="card home-card">
+      <h2>{{ _('Bienvenido, %(username)s', username=user.username) }}</h2>
+      <p>{{ _('Gracias por unirte a SafeSpace. Navega utilizando el menú de la izquierda.') }}</p>
+    
+  </div>
 
-        .card:hover {
-            transform: scale(1.05);
-        }
+  <!-- 🔧 Service Worker + PWA -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register("{{ url_for('static', filename='service-worker.js') }}")
+        .then(function(reg) {
+          console.log("✅ Service Worker registrado con éxito:", reg.scope);
+        })
+        .catch(function(error) {
+          console.error("❌ Error al registrar el Service Worker:", error);
+        });
+    }
 
-        .card a {
-            text-decoration: none;
-            color: #2e7d32;
-            font-weight: bold;
-        }
-    </style>
-</head>
-<body>
-    <h2>{{ _('Bienvenido, %(username)s', username=user.username) }}</h2>
-    <div class="grid">
-        <div class="card"><a href="/config">👤 {{ _('Perfil') }}</a></div>
-        <div class="card"><a href="/chat">💬 {{ _('Chat Global') }}</a></div>
-        <div class="card"><a href="/amigos">👥 {{ _('Amigos') }}</a></div>
-        <div class="card"><a href="/panico">🚨 {{ _('Botón de Pánico') }}</a></div>
-        <div class="card"><a href="{{ url_for('diary.diary') }}">📝 {{ _('Diario') }}</a></div>
-        <div class="card"><a href="/logout">🔒 {{ _('Cerrar sesión') }}</a></div>
-    </div>
-</body>
-</html>
+    let deferredPrompt;
+    const installBtn = document.getElementById('install-btn');
 
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBtn.style.display = 'block';
+
+      installBtn.addEventListener('click', async () => {
+        installBtn.style.display = 'none';
+        deferredPrompt.prompt();
+        const choiceResult = await deferredPrompt.userChoice;
+        console.log("✅ Instalación:", choiceResult.outcome);
+        deferredPrompt = null;
+      });
+    });
+  </script>
+{% endblock %}

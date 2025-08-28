@@ -1,109 +1,49 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>{{ _('💬 Chat Global') }}</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
-</head>
-<body>
-  <h2>{{ _('💬 Chat Global') }}</h2>
+{% extends 'base.html' %}
+{% block title %}{{ _('💬 Chat Global - SafeSpace') }}{% endblock %}
+{% block content %}
 
-  <div id="mensajes">
-    {% if messages %}
-      {% for msg in messages %}
-        <div class="mensaje-global">
-          {% if msg.content %}
-            <p>{{ msg.content }}</p>
+    <div class="card chat-card">
+      <div class="center-content">
+        <img src="{{ url_for('static', filename='heart.png') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
+        <h2>{{ _('💬 Chat Global') }}</h2>
+
+        <div id="mensajes" class="chat-global-box">
+          {% if messages %}
+            {% for msg in messages %}
+              <div class="mensaje-global bubble {% if msg.sender_id == user.id %}yo{% else %}otro{% endif %}">
+                {% if msg.content %}
+                  <div class="chat-global-text">{{ msg.content }}</div>
+                {% endif %}
+                {% if msg.image_url %}
+                  <img src="{{ msg.image_url }}" alt="{{ _('Imagen') }}" class="chat-image" />
+                {% endif %}
+                <div class="mensaje-meta">👤 {{ msg.sender_username or msg.sender_id }} | 🕒 {{ msg.timestamp }}</div>
+              </div>
+            {% endfor %}
+          {% else %}
+            <div class="placeholder-msg">{{ _('No hay mensajes todavía...') }}</div>
           {% endif %}
-          {% if msg.image_url %}
-            <img src="{{ msg.image_url }}" alt="{{ _('Imagen') }}" class="chat-image">
-          {% endif %}
-          <p class="mensaje-meta">👤 {{ msg.sender_id }} | 🕒 {{ msg.timestamp }}</p>
         </div>
-      {% endfor %}
-    {% else %}
-      <p class="placeholder-msg">{{ _('No hay mensajes todavía...') }}</p>
-    {% endif %}
+
+        <form id="formulario" enctype="multipart/form-data" autocomplete="off" class="chat-global-form">
+          <input type="text" id="mensaje" placeholder="{{ _('Escribí tu mensaje...') }}" class="chat-input" />
+          <label class="upload-btn">📷
+            <input type="file" id="imagen" accept="image/*" class="hidden-file" />
+          </label>
+          <img id="img-preview" class="preview-img" style="display:none;" />
+          <button type="submit" class="btn btn-chat-send">{{ _('Enviar') }}</button>
+        </form>
+
+        
+      </div>
+    </div>
   </div>
-
-  <form id="formulario" enctype="multipart/form-data">
-    <input type="text" id="mensaje" placeholder="{{ _('Escribí tu mensaje...') }}" autocomplete="off">
-
-    <label class="upload-btn">
-      📷 {{ _('Adjuntar imagen') }}
-      <input type="file" id="imagen" accept="image/*" class="hidden-file">
-    </label>
-
-    <button type="submit">{{ _('Enviar') }}</button>
-  </form>
-
-  <p><a href="/">⬅ {{ _('Volver al inicio') }}</a></p>
-
   <script>
-    const socket = io();
-    const mensajes = document.getElementById('mensajes');
-    const formulario = document.getElementById('formulario');
-    const inputMensaje = document.getElementById('mensaje');
-    const inputImagen = document.getElementById('imagen');
-
-    formulario.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const mensaje = inputMensaje.value.trim();
-      const imagen = inputImagen.files[0];
-
-      if (!mensaje && !imagen) {
-        alert("{{ _('Debes escribir un mensaje o subir una imagen.') }}");
-        return;
-      }
-
-      const formData = new FormData();
-      formData.append('content', mensaje);
-      if (imagen) {
-        formData.append('image', imagen);
-      }
-
-      const response = await fetch('/send_message_global', {
-        method: 'POST',
-        body: formData
-      });
-
-      const result = await response.json();
-
-      socket.emit('mensaje', result);
-
-      inputMensaje.value = '';
-      inputImagen.value = '';
-    });
-
-    socket.on('mensaje', (data) => {
-      const div = document.createElement('div');
-      div.className = 'mensaje-global';
-
-      if (data.content) {
-        const texto = document.createElement('p');
-        texto.textContent = data.content;
-        div.appendChild(texto);
-      }
-
-      if (data.image_url) {
-        const img = document.createElement('img');
-        img.src = data.image_url;
-        img.className = 'chat-image';
-        div.appendChild(img);
-      }
-
-      const meta = document.createElement('p');
-      meta.className = 'mensaje-meta';
-      meta.textContent = `👤 ${data.sender_username} | 🕒 {{ _('ahora') }}`;
-      div.appendChild(meta);
-
-      mensajes.appendChild(div);
-      mensajes.scrollTop = mensajes.scrollHeight;
-      document.querySelector('.placeholder-msg')?.remove();
-    });
+    window.USER_ID = "{{ user.id }}";
   </script>
-</body>
-</html>
-
+{% endblock %}
+{% block scripts %}
+<script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+<script src="{{ url_for('static', filename='chat.js') }}"></script>
+<script>window.USER_ID = "{{ user.id }}";</script>
+{% endblock %}

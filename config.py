@@ -40,7 +40,7 @@ class Config:
     GOOGLE_CLIENT_SECRET = os.environ.get("GOOGLE_CLIENT_SECRET")
 
     # ✅ Flask-Babel
-    LANGUAGES = ['es', 'en', 'pt']
+    LANGUAGES = ['es', 'en', 'pt', 'br', 'de', 'fr', 'it']
     BABEL_DEFAULT_LOCALE = 'es'
 
 

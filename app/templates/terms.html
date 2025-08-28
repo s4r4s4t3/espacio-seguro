@@ -1,35 +1,18 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>{{ _('Términos y Condiciones - SafeSpace') }}</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-  <header>
-    <div class="logo">
-      <h1>SafeSpace</h1>
+{% extends 'base.html' %}
+{% block title %}{{ _('Términos y Condiciones - SafeSpace') }}{% endblock %}
+{% block content %}
+<div class="main-card center-container legal-wrapper" style="max-width:680px;margin:auto;padding:30px 22px;">
+    <!-- Mascota/logo -->
+    <div style="text-align:center;margin-bottom:15px;">
+      <img src="{{ url_for('static', filename='heart.png') }}" alt="{{ _('Mascota SafeSpace') }}" width="50" height="50" style="border-radius:12px;box-shadow:0 2px 9px rgba(60,170,90,0.08);background:#f6faf6;">
     </div>
-  </header>
 
-  <main>
-    <section class="legal">
-      <h2>{{ _('Términos y Condiciones') }}</h2>
-      <p>{{ _('Aquí irán tus términos legales completos cuando estén listos.') }}</p>
-      <p>{{ _('Este documento describe los términos de uso de la plataforma, las responsabilidades y derechos de los usuarios y de SafeSpace.') }}</p>
-      <p>{{ _('Recomendación: redactar con ayuda de un profesional legal para adaptarse a la normativa local.') }}</p>
-    </section>
-  </main>
+    <h2 style="text-align:center;margin-bottom:16px;">{{ _('Términos y Condiciones - SafeSpace') }}</h2>
 
-  <footer>
-    <p>{{ _('© 2025 SafeSpace. Todos los derechos reservados.') }}</p>
-    <p>
-      <a href="{{ url_for('legales.terms') }}">{{ _('Términos y Condiciones') }}</a> |
-      <a href="{{ url_for('legales.privacy') }}">{{ _('Política de Privacidad') }}</a>
-    </p>
-    <p>{{ _('Síguenos en Instagram y TikTok') }}</p>
-  </footer>
-</body>
-</html>
+    <p style="margin-bottom:14px;">{{ _('Aquí irán tus términos legales completos cuando estén listos.') }}</p>
+    <p style="margin-bottom:14px;">{{ _('Este documento describe los términos de uso de la plataforma, las responsabilidades y derechos de los usuarios y de SafeSpace.') }}</p>
+    <p style="margin-bottom:18px;">{{ _('Recomendación: redactar con ayuda de un profesional legal para adaptarse a la normativa local.') }}</p>
 
-
+    <a href="{{ url_for('home.home') }}" class="btn" style="display:block;text-align:center;margin-top:20px;">⬅ {{ _('Volver al inicio') }}</a>
+  
+{% endblock %}

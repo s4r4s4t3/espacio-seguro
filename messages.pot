@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-07-15 17:38-0300\n"
+"POT-Creation-Date: 2025-08-07 14:36-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,53 +17,114 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
 
-#: app/routes/auth.py:25
+#: app/routes/auth.py:23
 #, python-format
 msgid "Bienvenido de nuevo, %(username)s!"
 msgstr ""
 
-#: app/routes/auth.py:34
+#: app/routes/auth.py:31
 msgid "Credenciales inválidas. Intenta de nuevo."
 msgstr ""
 
-#: app/routes/auth.py:50
+#: app/routes/auth.py:46
 #, python-format
 msgid "El usuario \"%(username)s\" ya existe. Elige otro nombre."
 msgstr ""
 
-#: app/routes/auth.py:60
+#: app/routes/auth.py:56
 msgid "Usuario creado con éxito. Ahora puedes iniciar sesión."
 msgstr ""
 
-#: app/routes/auth.py:73
+#: app/routes/auth.py:67
 msgid "Sesión cerrada correctamente."
+msgstr ""
+
+#: app/routes/config.py:40
+msgid "La bio no puede tener más de 300 caracteres."
+msgstr ""
+
+#: app/routes/config.py:54
+msgid "Foto de perfil eliminada."
+msgstr ""
+
+#: app/routes/config.py:61
+msgid "Solo se permiten imágenes: png, jpg, jpeg, gif."
+msgstr ""
+
+#: app/routes/config.py:69
+msgid "La imagen excede el tamaño máximo de 10 MB."
+msgstr ""
+
+#: app/routes/config.py:80
+msgid "Imagen subida a Cloudinary correctamente."
+msgstr ""
+
+#: app/routes/config.py:83
+#, python-format
+msgid "Error al subir a Cloudinary: %(err)s. Guardando localmente."
+msgstr ""
+
+#: app/routes/config.py:92
+msgid "Imagen guardada localmente."
+msgstr ""
+
+#: app/routes/config.py:95
+msgid "Perfil actualizado correctamente."
 msgstr ""
 
 #: app/routes/diary.py:18
 msgid "No podés guardar una entrada vacía."
 msgstr ""
 
-#: app/routes/diary.py:24
+#: app/routes/diary.py:23
 msgid "Entrada guardada con éxito."
 msgstr ""
 
-#: app/routes/friends.py:36
+#: app/routes/friends.py:70
+msgid "No puedes enviarte solicitud a vos mismo/a."
+msgstr ""
+
+#: app/routes/friends.py:84
 msgid "Solicitud enviada"
 msgstr ""
 
-#: app/routes/friends.py:46
+#: app/routes/friends.py:86
+msgid "Ya existe una solicitud entre vos y este usuario."
+msgstr ""
+
+#: app/routes/friends.py:100
 msgid "Solicitud aceptada"
 msgstr ""
 
-#: app/routes/friends.py:56
+#: app/routes/friends.py:102
+msgid "No puedes aceptar esta solicitud."
+msgstr ""
+
+#: app/routes/friends.py:115
 msgid "Solicitud rechazada"
 msgstr ""
 
-#: app/routes/home.py:33
+#: app/routes/friends.py:117
+msgid "No puedes rechazar esta solicitud."
+msgstr ""
+
+#: app/routes/home.py:51
 msgid "¡Gracias por aceptar nuestros términos!"
 msgstr ""
 
-#: app/routes/home.py:73
+#: app/routes/home.py:102
 msgid "Botón de Pánico activado. Tus contactos recibirán una alerta."
+msgstr ""
+
+#: app/routes/home.py:121
+msgid "El contenido no puede estar vacío."
+msgstr ""
+
+#: app/routes/home.py:132
+msgid "Error al subir la imagen."
+msgstr ""
+
+#: app/routes/home.py:138
+msgid "✅ Publicación creada con éxito."
 msgstr ""
 

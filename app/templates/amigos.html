@@ -1,41 +1,94 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ _('🤝 Amigos') }}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-    <h2>{{ _('🤝 Tus Amigos') }}</h2>
+{% extends 'base.html' %}
+{% block title %}{{ _('🤝 Amigos - SafeSpace') }}{% endblock %}
+{% block content %}
 
-    {% for amigo in amigos %}
-        <p>
-            ✅ {{ amigo.username }}
-            <a href="{{ url_for('chat.chat', friend_id=amigo.id) }}">💬 {{ _('Chatear') }}</a>
-        </p>
-    {% else %}
-        <p>{{ _('Aún no agregaste amigos. 💚') }}</p>
-    {% endfor %}
+    <div class="card amigos-card">
+      <div class="center-content">
+        <img src="{{ url_for('static', filename='heart.png') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
+        <h2>{{ _('Tus Amigos') }}</h2>
+        <!-- Lista de amigos aceptados -->
+        <div class="section-title">{{ _('Amigos') }}</div>
+        <div class="friends-list">
+          {% for amigo in amigos %}
+            <div class="card-row">
+              <div class="avatar">
+                {% if amigo.profile_picture and 'http' in amigo.profile_picture %}
+                  <img src="{{ amigo.profile_picture }}" alt="{{ _('Foto de perfil') }}" class="mini-avatar" />
+                {% else %}
+                  <img src="{{ url_for('static', filename='profile_pics/' + (amigo.profile_picture or 'default.png')) }}" alt="{{ _('Foto de perfil') }}" class="mini-avatar" />
+                {% endif %}
+              </div>
+              <div class="username">{{ amigo.username }}</div>
+              <div class="actions">
+                <a href="{{ url_for('config.perfil', username=amigo.username) }}" class="btn-view">{{ _('Ver perfil') }}</a>
+                <a href="{{ url_for('amigos.eliminar_amigo', user_id=amigo.id) }}" class="btn-reject">{{ _('Eliminar') }}</a>
+              </div>
+            </div>
+          {% else %}
+            <div class="empty-msg">{{ _('Aún no agregaste amigos.') }}</div>
+          {% endfor %}
+        </div>
 
-    <h3>{{ _('📥 Solicitudes Recibidas') }}</h3>
-    {% for solicitud in solicitudes %}
-        <p>
-            {{ _('Usuario ID') }} {{ solicitud.sender_id }} →
-            <a href="/aceptar/{{ solicitud.id }}">{{ _('Aceptar') }}</a> |
-            <a href="/rechazar/{{ solicitud.id }}">{{ _('Rechazar') }}</a>
-        </p>
-    {% else %}
-        <p>{{ _('No tenés solicitudes nuevas.') }}</p>
-    {% endfor %}
+        <!-- Solicitudes recibidas -->
+        <div class="section-title">📥 {{ _('Solicitudes recibidas') }}</div>
+        <div class="requests-list">
+          {% for solicitud in solicitudes %}
+            <div class="card-row">
+              <div class="avatar">👤</div>
+              <div class="username">{{ solicitud.sender_username }}</div>
+              <div class="actions">
+                <a href="{{ url_for('amigos.aceptar', solicitud_id=solicitud.id) }}" class="btn-accept">{{ _('Aceptar') }}</a>
+                <a href="{{ url_for('amigos.rechazar', solicitud_id=solicitud.id) }}" class="btn-reject">{{ _('Rechazar') }}</a>
+              </div>
+            </div>
+          {% else %}
+            <div class="empty-msg">{{ _('No tenés solicitudes nuevas.') }}</div>
+          {% endfor %}
+        </div>
 
-    <h3>{{ _('🌍 Otros usuarios') }}</h3>
-    {% for user in usuarios %}
-        <p>
-            {{ user.username }}
-            <a href="/enviar_solicitud/{{ user.id }}">[{{ _('Agregar amigo') }}]</a>
-        </p>
-    {% endfor %}
+        <!-- Buscador y otros usuarios -->
+        <div class="section-title">🌍 {{ _('Buscar usuarios') }}</div>
+        <input type="text" id="friendSearch" class="search-input" placeholder="{{ _('Buscar por nombre...') }}" />
+        <div class="users-list" id="usersList">
+          {% for user in usuarios %}
+            <div class="card-row user-row">
+              <div class="avatar">👤</div>
+              <div class="username">{{ user.username }}</div>
+              <div class="actions">
+                <a href="{{ url_for('amigos.enviar_solicitud', user_id=user.id) }}" class="btn-add">{{ _('Agregar amigo') }}</a>
+              </div>
+            </div>
+          {% else %}
+            <div class="empty-msg">{{ _('No hay usuarios disponibles.') }}</div>
+          {% endfor %}
+        </div>
 
-    <p><a href="/">{{ _('Volver al inicio') }}</a></p>
-</body>
-</html>
+        
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const searchInput = document.getElementById('friendSearch');
+      const userRows = document.querySelectorAll('#usersList .user-row');
+      if (searchInput) {
+        searchInput.addEventListener('input', function() {
+          const term = this.value.toLowerCase();
+          userRows.forEach(row => {
+            const username = row.querySelector('.username').textContent.toLowerCase();
+            if (username.includes(term)) {
+              row.style.display = 'flex';
+            } else {
+              row.style.display = 'none';
+            }
+          });
+        });
+      }
+    });
+  </script>
+{% endblock %}

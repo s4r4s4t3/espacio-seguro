@@ -1,24 +1,24 @@
-<!-- templates/panico.html -->
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ _('🚨 Botón de Pánico') }}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-    <h2>{{ _('🚨 Botón de Pánico') }}</h2>
+{% extends 'base.html' %}
+{% block title %}{{ _('Botón de Pánico - SafeSpace') }}{% endblock %}
+{% block content %}
 
-    <div class="info-text">
-        <p>{{ _('Este botón enviará una alerta inmediata a tus contactos de confianza. Úsalo solo si realmente lo necesitás.') }}</p>
+    <div class="card panic-card">
+      <div class="center-content">
+        <img src="{{ url_for('static', filename='heart.png') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
+        <h2 style="color:#e74747;">{{ _('Botón de Pánico') }}</h2>
+        <p class="info-text red">{{ _('Este botón enviará una alerta inmediata a tus contactos de confianza. Úsalo solo si realmente lo necesitás.') }}</p>
+
+        <form method="POST" id="panicForm" class="panic-form" autocomplete="off">
+          {# Botón de pánico accesible.  Agregamos aria-label para lectores de pantalla. #}
+          <button type="submit" class="panic-btn" aria-label="{{ _('Activar Botón de Pánico') }}">🚨</button>
+          <span class="panic-label">{{ _('¡Solo para emergencias reales!') }}</span>
+        </form>
+
+        
+      </div>
     </div>
-
-    <form method="POST" class="panic-form">
-        <button type="submit" class="panic-btn">🚨</button>
-    </form>
-
-    <p><a href="{{ url_for('home.home') }}">⬅ {{ _('Volver al inicio') }}</a></p>
-</body>
-</html>
-
-
+  
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='panico.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}{{ _('📝 Nueva publicación - SafeSpace') }}{% endblock %}
+{% block content %}
+
+    <div class="card nueva-publicacion-card">
+      <div class="center-content">
+        <img src="{{ url_for('static', filename='heart.png') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
+        <h2>{{ _('📝 Crear una nueva publicación') }}</h2>
+
+        <form method="POST" enctype="multipart/form-data" class="nueva-publicacion-form">
+          <label for="content">{{ _('¿Qué querés compartir?') }}</label>
+          <textarea id="content" name="content" rows="4" placeholder="{{ _('Escribí algo...') }}" required></textarea>
+
+          <label for="image" class="upload-btn">📎 {{ _('Subir foto') }}</label>
+          <input type="file" id="image" name="image" accept="image/*" class="hidden-file" />
+          <img id="img-preview-np" class="preview-img" style="display:none;" />
+
+          <button type="submit" class="btn btn-nueva-publicacion">{{ _('Publicar') }}</button>
+        </form>
+
+        
+      </div>
+    </div>
+  
+{% endblock %}

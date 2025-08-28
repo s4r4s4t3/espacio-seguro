@@ -1,104 +1,122 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>{{ _('🧑‍🦱 Mi Perfil') }}</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-  <h2>{{ _('🧑‍🦱 Mi Perfil') }}</h2>
+{% extends 'base.html' %}
+{% block title %}{{ _('Mi Perfil - SafeSpace') }}{% endblock %}
+{% block content %}
 
-  <!-- ✅ Flashes -->
-  {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-      {% for category, message in messages %}
-        <div class="flash {{ category }}">{{ message }}</div>
-      {% endfor %}
-    {% endif %}
-  {% endwith %}
+    <div class="card profile-card">
+      <div class="center-content">
+        <img src="{{ url_for('static', filename='heart.png') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
+        <h2>{{ _('Mi Perfil') }}</h2>
 
-  <form method="POST" enctype="multipart/form-data">
-    {% if user.profile_picture %}
-      {% if 'http' in user.profile_picture %}
-        <div class="profile-container">
-          <img src="{{ user.profile_picture }}" alt="" class="profile" id="profileImage">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <form method="POST" enctype="multipart/form-data" class="profile-form">
+          <div class="profile-img-container">
+            <img src="{% if user.profile_picture and 'http' in user.profile_picture %}
+                        {{ user.profile_picture }}
+                      {% elif user.profile_picture %}
+                        {{ url_for('static', filename='profile_pics/' ~ (user.profile_picture or 'default.png')) }}
+                      {% else %}
+                        {{ url_for('static', filename='profile_pics/default.png') }}
+                      {% endif %}"
+                alt="{{ _('Foto de perfil') }}"
+                class="profile-img preview-img"
+                id="profileImage"
+            />
+          </div>
+
+          <div class="upload-section">
+            <label class="label-pretty">{{ _('Foto de Perfil') }}</label>
+            <label for="profile_picture" class="upload-btn">{{ _('Subir Foto de Perfil') }}</label>
+            <input type="file" id="profile_picture" name="profile_picture" accept="image/*" class="hidden-file" />
+            {% if user.profile_picture %}
+              <button type="submit" name="delete_photo" value="1" class="upload-btn delete-photo-btn">
+                {{ _('Eliminar Foto de Perfil') }}
+              </button>
+            {% endif %}
+          </div>
+
+          <label for="bio" class="label-pretty">{{ _('Bio') }}</label>
+          <textarea id="bio" name="bio" rows="4" placeholder="{{ _('Contanos algo de vos...') }}">{{ user.bio }}</textarea>
+
+          <button type="submit" class="save-btn full-width">{{ _('Guardar cambios') }}</button>
+        </form>
+
+        <!-- Galería de estados y publicaciones del usuario -->
+        <div class="user-gallery">
+          <h3>{{ _('Mis Estados') }}</h3>
+          <div class="my-stories-row">
+            {% for story in historias %}
+              <div class="my-story-item">
+                {% set story_src = story.image_url if story.image_url.startswith('http') else url_for('static', filename='stories/' + story.image_url) %}
+                <img src="{{ story_src }}" alt="{{ _('Estado') }}"
+                     class="story-thumb"
+                     data-image="{{ story.image_url }}"
+                     data-caption="{{ story.caption or '' }}"
+                     data-story-id="{{ story.id }}"
+                     data-author-id="{{ story.user_id }}" />
+              </div>
+            {% else %}
+              <div>{{ _('No has subido estados aún.') }}</div>
+            {% endfor %}
+          </div>
+          <h3>{{ _('Mis Publicaciones') }}</h3>
+          <div class="my-posts-grid">
+            {% for post in publicaciones %}
+              <div class="my-post-item">
+                {% if post.image_url %}
+                  <img src="{{ post.image_url }}" alt="{{ _('Imagen de publicación') }}" class="post-image" />
+                {% else %}
+                  <div class="post-text-only">{{ post.content }}</div>
+                {% endif %}
+                <div class="my-post-date">{{ post.timestamp.strftime('%d/%m/%Y %H:%M') }}</div>
+              </div>
+            {% else %}
+              <div>{{ _('Aún no tienes publicaciones.') }}</div>
+            {% endfor %}
+          </div>
         </div>
-      {% else %}
-        <div class="profile-container">
-          <img src="{{ url_for('static', filename='profile_pics/' ~ (user.profile_picture or 'default.png')) }}" alt="" class="profile" id="profileImage">
-        </div>
-      {% endif %}
-    {% else %}
-      <!-- ✅ Imagen por defecto -->
-      <div class="profile-container">
-        <img src="{{ url_for('static', filename='profile_pics/default.png') }}" alt="" class="profile" id="profileImage">
+
       </div>
-    {% endif %}
+    </div>
+  
+{% endblock %}
 
-    <label class="label-pretty" for="profile_picture">{{ _('Foto de Perfil') }}</label>
-    <label for="profile_picture" class="upload-btn">{{ _('Subir Foto de Perfil') }}</label>
-    <input type="file" id="profile_picture" name="profile_picture" accept="image/*" class="hidden-file">
-
-    <!-- ✅ Botón para eliminar foto de perfil -->
-    {% if user.profile_picture %}
-      <button type="submit" name="delete_photo" value="1" class="upload-btn">{{ _('Eliminar Foto de Perfil') }}</button>
-    {% endif %}
-
-    <label class="label-pretty" for="bio">{{ _('Bio') }}</label>
-    <textarea id="bio" name="bio" rows="4" placeholder="{{ _('Contanos algo de vos...') }}">{{ user.bio }}</textarea>
-
-    <button type="submit" class="save-btn">{{ _('Guardar cambios') }}</button>
-  </form>
-
-  <!-- ✅ Modal Lightbox -->
-  <div id="modal" class="modal">
-    <span class="close">&times;</span>
-    <img class="modal-content" id="modalImage">
-  </div>
-
-  <p><a href="{{ url_for('home.home') }}">⬅ {{ _('Volver al inicio') }}</a></p>
-
+{% block scripts %}
+  {{ super() }}
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // ✅ Flashes
-      const flashMessages = document.querySelectorAll('.flash.success');
-      if (flashMessages.length > 0) {
-        setTimeout(() => {
-          flashMessages.forEach(msg => msg.remove());
-        }, 3000);
-      }
-
-      // ✅ Modal Lightbox
-      const modal = document.getElementById("modal");
-      const img = document.getElementById("profileImage");
-      const modalImg = document.getElementById("modalImage");
-      const closeBtn = document.getElementsByClassName("close")[0];
-
-      img.onclick = function(){
-        modal.style.display = "block";
-        modalImg.src = this.src;
-      }
-
-      closeBtn.onclick = function() {
-        modal.style.display = "none";
-      }
-
-      window.onclick = function(event) {
-        if (event.target == modal) {
-          modal.style.display = "none";
+  document.addEventListener('DOMContentLoaded', function() {
+    // Manejo de previsualización de historias en la página de perfil
+    document.querySelectorAll('.story-thumb').forEach(elem => {
+      elem.addEventListener('click', function() {
+        const imageUrl = this.dataset.image;
+        const caption = this.dataset.caption;
+        const storyId = this.dataset.storyId;
+        const authorId = parseInt(this.dataset.authorId || '0');
+        const username = '{{ current_user.username }}';
+        const modal = document.getElementById('storyModal');
+        const modalImg = document.getElementById('storyModalContent');
+        const modalCaption = document.getElementById('storyCaption');
+        const deleteForm = document.getElementById('deleteStoryForm');
+        let fullUrl = imageUrl;
+        if (imageUrl && !imageUrl.startsWith('http')) {
+          fullUrl = "{{ url_for("static", filename="stories/") }}" + imageUrl;
         }
-      }
-
-      // ✅ Vista previa inmediata de la imagen
-      const fileInput = document.getElementById('profile_picture');
-      fileInput.addEventListener('change', function(event) {
-        const file = event.target.files[0];
-        if (file) {
-          const previewUrl = URL.createObjectURL(file);
-          img.src = previewUrl;
+        modalImg.src = fullUrl;
+        modalCaption.textContent = caption ? `${username}: ${caption}` : `${username}`;
+        deleteForm.style.display = (authorId === {{ current_user.id }}) ? 'block' : 'none';
+        if (authorId === {{ current_user.id }}) {
+          deleteForm.action = '{{ url_for('stories.eliminar_estado', story_id=0) }}'.replace('0', storyId);
         }
+        modal.style.display = 'block';
       });
     });
+    // Las imágenes de publicaciones ya tienen manejador en main.js
+  });
   </script>
-</body>
-</html>
+{% endblock %}
