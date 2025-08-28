@@ -3,19 +3,6 @@
 {% block content %}
 
     <div class="card feed-card">
-        {#
-          Formulario para crear una nueva publicación directamente en el feed.
-          Incluye campo de texto y opción de subir imagen con vista previa.
-        #}
-        <form method="POST" action="{{ url_for('home.nueva_publicacion') }}" enctype="multipart/form-data" class="nueva-publicacion-form feed-nueva-publicacion">
-          <label for="content-feed" class="nueva-publicacion-label">{{ _('¿Qué querés compartir?') }}</label>
-          <textarea id="content-feed" name="content" rows="3" class="nueva-publicacion-textarea" placeholder="{{ _('Escribí algo...') }}" required></textarea>
-          <label for="image-feed" class="file-label">📎 {{ _('Subir foto') }}</label>
-          <input type="file" id="image-feed" name="image" accept="image/*" class="hidden-input" />
-          <img id="img-preview-feed" class="preview-img" style="display:none;" />
-          <button type="submit" class="btn btn-nueva-publicacion">{{ _('Publicar') }}</button>
-        </form>
-
         <!-- Historias/estados en la parte superior del feed -->
         <div class="stories-row">
           <!-- Botón para crear un nuevo estado -->
@@ -49,6 +36,17 @@
             </div>
           {% endfor %}
         </div>
+
+        {# Formulario para crear una nueva publicación directamente en el feed.
+           Incluye campo de texto y opción de subir imagen con vista previa. #}
+        <form method="POST" action="{{ url_for('home.nueva_publicacion') }}" enctype="multipart/form-data" class="nueva-publicacion-form feed-nueva-publicacion">
+          <label for="content-feed" class="nueva-publicacion-label">{{ _('¿Qué querés compartir?') }}</label>
+          <textarea id="content-feed" name="content" rows="3" class="nueva-publicacion-textarea" placeholder="{{ _('Escribí algo...') }}" required></textarea>
+          <label for="image-feed" class="file-label">📎 {{ _('Subir foto') }}</label>
+          <input type="file" id="image-feed" name="image" accept="image/*" class="hidden-input" />
+          <img id="img-preview-feed" class="preview-img" style="display:none;" />
+          <button type="submit" class="btn btn-nueva-publicacion">{{ _('Publicar') }}</button>
+        </form>
 
         <div class="feed-list">
         {% for post in publicaciones %}

@@ -5,6 +5,21 @@
   <title>{% block title %}SafeSpace{% endblock %}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+  {#
+    Metadatos para SEO: mejoran la visibilidad de SafeSpace en buscadores
+    y redes sociales.  El contenido se traduce automáticamente según el
+    idioma actual.  Ajusta la descripción y palabras clave a tu nicho.
+  #}
+  <meta name="description" content="{{ _('SafeSpace es una red social de apoyo emocional donde podés compartir tus pensamientos, conectar con amistades y encontrar contención en un entorno seguro.') }}">
+  <meta name="keywords" content="SafeSpace, apoyo emocional, red social, bienestar, salud mental, comunidad">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="SafeSpace">
+  <meta property="og:description" content="{{ _('Una red social de apoyo emocional pensada para compartir historias, estados y conectar con amigos de manera segura y empática.') }}">
+  <meta property="og:image" content="{{ url_for('static', filename='icon-512x512-new.png', _external=True) }}">
+  <meta property="og:url" content="{{ request.url_root }}">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
   {#
     Seleccionamos el archivo de manifiesto según el idioma activo.
     Flask‑Babel utiliza códigos como es, en, pt_BR, de, fr e it.  Para las
@@ -114,39 +129,29 @@
          Se oculta en escritorio mediante CSS. -->
     {% if current_user.is_authenticated %}
     <nav class="bottom-nav">
-      <!-- Selector de idioma en la barra inferior para móviles -->
-      <select class="lang-select bottom-lang-select">
-        <option value="es" {% if g.get('lang') == 'es' %}selected{% endif %}>🇪🇸 Español</option>
-        <option value="en" {% if g.get('lang') == 'en' %}selected{% endif %}>🇺🇸 English</option>
-        <!-- Sólo hay una traducción portuguesa disponible: portugués de Brasil -->
-        <option value="pt_BR" {% if g.get('lang') == 'pt_BR' %}selected{% endif %}>🇧🇷 Português</option>
-        <option value="de" {% if g.get('lang') == 'de' %}selected{% endif %}>🇩🇪 Deutsch</option>
-        <option value="fr" {% if g.get('lang') == 'fr' %}selected{% endif %}>🇫🇷 Français</option>
-        <option value="it" {% if g.get('lang') == 'it' %}selected{% endif %}>🇮🇹 Italiano</option>
-      </select>
-      <a href="{{ url_for('home.feed') }}">
+      {#
+        Barra inferior móvil simplificada.  Sólo muestra iconos para
+        acceder a las secciones principales de la aplicación.  Los
+        títulos se ocultan en móviles para ganar espacio; la
+        funcionalidad es equivalente a la navegación lateral.
+      #}
+      <a href="{{ url_for('home.feed') }}" title="{{ _('Feed') }}">
         <span class="icon">🏠</span>
-        <span class="label">{{ _('Feed') }}</span>
       </a>
-      <a href="{{ url_for('amigos.amigos') }}">
+      <a href="{{ url_for('amigos.amigos') }}" title="{{ _('Amigos') }}">
         <span class="icon">🤝</span>
-        <span class="label">{{ _('Amigos') }}</span>
       </a>
-      <a href="{{ url_for('diary.diary') }}">
+      <a href="{{ url_for('diary.diary') }}" title="{{ _('Diario') }}">
         <span class="icon">📓</span>
-        <span class="label">{{ _('Diario') }}</span>
       </a>
-      <a href="{{ url_for('home.panico') }}">
+      <a href="{{ url_for('home.panico') }}" title="{{ _('Pánico') }}">
         <span class="icon">🚨</span>
-        <span class="label">{{ _('Pánico') }}</span>
       </a>
-      <a href="{{ url_for('config.config') }}">
+      <a href="{{ url_for('config.config') }}" title="{{ _('Perfil') }}">
         <span class="icon">👤</span>
-        <span class="label">{{ _('Perfil') }}</span>
       </a>
-      <a href="{{ url_for('settings.settings') }}">
+      <a href="{{ url_for('settings.settings') }}" title="{{ _('Configuración') }}">
         <span class="icon">⚙️</span>
-        <span class="label">{{ _('Config') }}</span>
       </a>
     </nav>
     {% endif %}

@@ -39,6 +39,17 @@
       <p>{{ _('Versión') }} 3.0</p>
     </div>
 
+    <!-- Sección de opciones adicionales inspiradas en el menú de Instagram -->
+    <div class="settings-section">
+      <h3>{{ _('Opciones') }}</h3>
+      <ul class="settings-links">
+        <li><a href="#" onclick="alert('{{ _('Tu actividad estará disponible próximamente.') }}'); return false;">{{ _('Tu actividad') }}</a></li>
+        <li><a href="#" onclick="alert('{{ _('La sección de elementos guardados estará disponible pronto.') }}'); return false;">{{ _('Guardado') }}</a></li>
+        <li><a href="#" onclick="if(window.applyDarkMode){ window.applyDarkMode(); } return false;">{{ _('Cambiar apariencia') }}</a></li>
+        <li><a href="mailto:soporte@safespace.com?subject={{ _('Reporte de problema') }}&body={{ _('Describe tu problema...') }}">{{ _('Reportar un problema') }}</a></li>
+      </ul>
+    </div>
+
     <!-- Sección de legales -->
     <div class="settings-section">
       <h3>{{ _('Legales') }}</h3>
