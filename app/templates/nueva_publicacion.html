@@ -4,7 +4,7 @@
 
     <div class="card nueva-publicacion-card">
       <div class="center-content">
-        <img src="{{ url_for('static', filename='heart.png') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
+        <img class="skeleton" src="{{ url_for('static', filename='heart.png') }}" alt="{{ _('Mascota SafeSpace') }}" class="landing-logo" />
         <h2>{{ _('📝 Crear una nueva publicación') }}</h2>
 
         <form method="POST" enctype="multipart/form-data" class="nueva-publicacion-form">
@@ -13,7 +13,8 @@
 
           <label for="image" class="upload-btn">📎 {{ _('Subir foto') }}</label>
           <input type="file" id="image" name="image" accept="image/*" class="hidden-file" />
-          <img id="img-preview-np" class="preview-img" style="display:none;" />
+<p><small>{{ _(\'Describe tu imagen (alt)\') }}</small><input type="text" name="alt_text" required></p>
+          <img class="skeleton" id="img-preview-np" class="preview-img" style="display:none;" />
 
           <button type="submit" class="btn btn-nueva-publicacion">{{ _('Publicar') }}</button>
         </form>

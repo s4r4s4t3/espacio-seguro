@@ -89,7 +89,21 @@ def create_app():
         lang = request.cookies.get('lang')
         if lang in app.config['LANGUAGES']:
             return lang
-        return app.config['BABEL_DEFAULT_LOCALE']
+            from .routes.offline import bp as offline_bp
+    app.register_blueprint(offline_bp)
+
+        from .routes.posts import bp as posts_actions_bp
+    app.register_blueprint(posts_actions_bp)
+    from .routes.stories import bp as stories_bp
+    app.register_blueprint(stories_bp)
+
+    # Create tables for new features if missing (safe no-op in prod)
+    try:
+        with app.app_context():
+            from .models import Like
+            Like.__table__.create(bind=db.engine, checkfirst=True)
+    except Exception as _e:
+        pass
 
     @app.before_request
     def set_global_language():
@@ -102,6 +116,22 @@ def create_app():
         from flask import g as global_g  # import here to avoid circular import
         # Use the same logic as get_locale() to determine the active language
         global_g.lang = get_locale()
+
+        from .routes.offline import bp as offline_bp
+    app.register_blueprint(offline_bp)
+
+        from .routes.posts import bp as posts_actions_bp
+    app.register_blueprint(posts_actions_bp)
+    from .routes.stories import bp as stories_bp
+    app.register_blueprint(stories_bp)
+
+    # Create tables for new features if missing (safe no-op in prod)
+    try:
+        with app.app_context():
+            from .models import Like
+            Like.__table__.create(bind=db.engine, checkfirst=True)
+    except Exception as _e:
+        pass
 
     return app
 
